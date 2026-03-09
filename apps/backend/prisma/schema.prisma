@@ -1,0 +1,123 @@
+// prisma/schema.prisma
+// Phase 1.1 - Snapshot Core Schema
+// Node v24 compatible
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+//////////////////////////////
+// Snapshot Sequence (Authority)
+//////////////////////////////
+
+model SnapshotSequence {
+  scope        String   @id
+  currentSeq   BigInt   @default(0)
+  updatedAt   DateTime @updatedAt
+
+  @@map("snapshot_sequences")
+}
+
+//////////////////////////////
+// Snapshot Metadata
+//////////////////////////////
+
+model SnapshotMetadata {
+  snapshotSeq      BigInt   @id
+  aggregateType    String
+  aggregateId      String
+  market           String
+
+  priceVersion     Int
+  inventoryVersion Int
+  storyVersion     Int
+  taxVersion       Int
+
+  causalHash       String
+  eventId          String?
+
+  generatedAt      DateTime @default(now())
+  validFrom        DateTime
+  validUntil       DateTime?
+
+  signature        String?
+  signedBy         String?
+
+  productViews     ProductPublicView[]
+
+  @@index([aggregateType, market, generatedAt(sort: Desc)])
+  @@map("snapshot_metadata")
+}
+
+//////////////////////////////
+// Product Public Read Model
+//////////////////////////////
+
+model ProductPublicView {
+  productId        String
+  market           String
+  snapshotSeq      BigInt
+
+  // Pricing
+  priceAmount      Decimal @db.Decimal(12, 2)
+  priceCurrency    String
+  priceBreakdown   Json
+
+  // Inventory
+  availableQty     Int
+  reservedQty      Int
+
+  // Storytelling
+  storyTitle       Json
+  storySummary     Json?
+  storyChapterCnt  Int
+
+  // Consistency
+  consistencyStatus String  @default("consistent")
+  lastVerifiedAt    DateTime?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  snapshot SnapshotMetadata @relation(fields: [snapshotSeq], references: [snapshotSeq])
+
+  @@id([productId, market, snapshotSeq])
+  @@index([productId, market, snapshotSeq(sort: Desc)])
+  @@map("product_public_views")
+}
+
+//////////////////////////////
+// Transactional Outbox
+//////////////////////////////
+
+model OutboxEvent {
+  eventId        String   @id @default(uuid())
+  aggregateType  String
+  aggregateId    String
+  eventType      String
+
+  payload        Json
+  metadata       Json     @default("{}")
+
+  causationId    String?
+  correlationId  String
+
+  status         String   @default("pending")
+  retryCount     Int      @default(0)
+  lastRetryAt    DateTime?
+  errorMessage   String?
+
+  createdAt      DateTime @default(now())
+  processedAt    DateTime?
+
+  @@index([status, createdAt])
+  @@index([aggregateType, aggregateId, createdAt])
+  @@index([correlationId])
+  @@map("outbox_events")
+}
