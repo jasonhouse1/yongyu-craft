@@ -5,7 +5,8 @@
       "Bash(pnpm --filter frontend typecheck)",
       "Bash(pnpm --filter backend db:seed)",
       "Bash(pnpm --version)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(pnpm typecheck *)"
     ]
   }
 }
