@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "brand": "Yongyu Craft",
+    "works": "Works",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "tagline": "Handcrafted Goldsmithing",
+    "line1": "Every Process",
+    "line2": "Carries Our Heart",
+    "cta": "Explore Works"
+  },
+  "works": {
+    "sectionLabel": "Selected Works",
+    "inquiryLabel": "Inquire",
+    "viewAll": "View All Works",
+    "noWorks": "No works available",
+    "pricePrefix": "NT$",
+    "customizable": "Customizable",
+    "notAvailable": "Sold"
+  },
+  "inquiry": {
+    "title": "Inquiry",
+    "subtitle": "Please fill in the form below and we will get back to you shortly",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "lineId": "LINE ID",
+    "whatsapp": "WhatsApp",
+    "country": "Country / Region",
+    "inquiryType": "Inquiry Type",
+    "inquiryTypes": {
+      "artwork": "Artwork Inquiry",
+      "custom": "Custom Order",
+      "appointment": "Schedule Viewing",
+      "corporate": "Corporate Gift",
+      "international": "International Inquiry"
+    },
+    "budgetRange": "Budget Range",
+    "purpose": "Purpose",
+    "message": "Message",
+    "needsShipping": "Shipping Required",
+    "contactPreference": "Preferred Contact",
+    "submit": "Submit Inquiry",
+    "submitting": "Submitting...",
+    "successTitle": "Inquiry Submitted",
+    "successMessage": "Thank you for your inquiry. We will contact you shortly.",
+    "errorMessage": "Submission failed. Please try again."
+  },
+  "about": {
+    "title": "About Yongyu Craft",
+    "subtitle": "Preserving Handcrafted Goldsmithing",
+    "story": "Every piece is a crystallization of the artisan's heart"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "email": "Email",
+    "line": "LINE",
+    "whatsapp": "WhatsApp",
+    "or": "or"
+  },
+  "footer": {
+    "brand": "Yongyu Craft",
+    "copyright": "© 2026 Yongyu Craft. All rights reserved."
+  },
+  "ai": {
+    "greeting": "Hello, I am Yongyu Craft AI guide. How can I help you?",
+    "placeholder": "Ask about this piece...",
+    "send": "Send",
+    "fallback": "Details for this piece are being prepared. Please feel free to inquire for more information.",
+    "inquiryPrompt": "Want to learn more?",
+    "inquiryCta": "Inquire Now"
+  },
+  "meta": {
+    "siteName": "Yongyu Craft",
+    "defaultTitle": "Yongyu Craft | Handcrafted Gold Jewelry",
+    "defaultDescription": "Yongyu Craft preserves the art of handcrafted goldsmithing. Every piece carries the heart and spirit of the artisan."
+  }
+}

@@ -1,0 +1,30 @@
+# railway.toml — 永裕工藝 Railway 部署設定
+#
+# Railway 的 railway.toml 為「單服務」設定檔。
+# 本專案需在 Railway Dashboard 建立兩個獨立服務，設定如下：
+#
+#   服務 1：backend
+#     Root Directory  : .  (monorepo root，讓 Docker 能存取 pnpm workspace)
+#     Dockerfile Path : apps/backend/Dockerfile
+#     Port            : 3000
+#     Environment Variables:
+#       DATABASE_URL, RESEND_API_KEY, INQUIRY_NOTIFY_EMAIL,
+#       RESEND_FROM_EMAIL, PORT
+#
+#   服務 2：frontend
+#     Root Directory  : .  (monorepo root)
+#     Dockerfile Path : apps/frontend/Dockerfile
+#     Port            : 3000
+#     Environment Variables:
+#       NEXT_PUBLIC_API_URL  (設為後端服務的 Railway 內部 URL)
+#
+# 此 railway.toml 套用於 backend 服務：
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "apps/backend/Dockerfile"
+
+[deploy]
+numReplicas = 1
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10

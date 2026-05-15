@@ -1,122 +1,220 @@
-// prisma/schema.prisma
-// Phase 1.1 - Snapshot Core Schema
-// Node v24 compatible
-
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
+model Product {
+  id          String    @id @default(uuid())
+  name        String
+  category    String
+  description String?
+  priceType   PriceType @default(inquiry)
+  price       Decimal?  @db.Decimal(12, 2)
+  priceMin    Decimal?  @db.Decimal(12, 2)
+  priceMax    Decimal?  @db.Decimal(12, 2)
+  currency    String    @default("TWD")
+  imageUrl    String?
+  isAvailable Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
-//////////////////////////////
-// Snapshot Sequence (Authority)
-//////////////////////////////
+  @@map("products")
+}
+
+enum PriceType {
+  fixed
+  range
+  inquiry
+}
+
+model Work {
+  id                   String        @id @default(uuid())
+  slug                 String        @unique
+  titleZh              String
+  titleEn              String?
+  subtitleZh           String?
+  subtitleEn           String?
+  descriptionZh        String
+  descriptionEn        String?
+  storyZh              String?
+  storyEn              String?
+  categoryId           String
+  materials            String[]
+  techniques           String[]
+  dimensions           String?
+  weight               String?
+  year                 String?
+  priceType            WorkPriceType @default(inquiry)
+  price                Decimal?      @db.Decimal(12, 2)
+  priceMin             Decimal?      @db.Decimal(12, 2)
+  priceMax             Decimal?      @db.Decimal(12, 2)
+  currency             String        @default("TWD")
+  isAvailable          Boolean       @default(true)
+  isCustomizable       Boolean       @default(false)
+  isFeatured           Boolean       @default(false)
+  status               WorkStatus    @default(draft)
+  coverImage           String        @default("")
+  images               Json          @default("[]")
+  videoUrl             String?
+  sortOrder            Int           @default(0)
+  seoTitleZh           String?
+  seoTitleEn           String?
+  seoDescriptionZh     String?
+  seoDescriptionEn     String?
+  aiSummaryZh          String?
+  aiSummaryEn          String?
+  aiKnowledgeZh        String?
+  aiKnowledgeEn        String?
+  careInstructionsZh   String?
+  careInstructionsEn   String?
+  inquiryNotesZh       String?
+  inquiryNotesEn       String?
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+
+  @@index([categoryId])
+  @@index([status, sortOrder])
+  @@index([isFeatured])
+  @@map("works")
+}
+
+enum WorkPriceType {
+  fixed
+  range
+  inquiry
+}
+
+enum WorkStatus {
+  draft
+  published
+  archived
+}
+
+model WorkImage {
+  id         String   @id @default(uuid())
+  workId     String
+  url        String
+  altZh      String?
+  altEn      String?
+  captionZh  String?
+  captionEn  String?
+  sortOrder  Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  @@index([workId, sortOrder])
+  @@map("work_images")
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  slugZh    String   @unique
+  slugEn    String   @unique
+  nameZh    String
+  nameEn    String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categories")
+}
+
+model Inquiry {
+  id                String        @id @default(uuid())
+  name              String
+  email             String
+  phone             String?
+  message           String
+  products          Json?
+  lineId            String?
+  whatsapp          String?
+  country           String?
+  inquiryType       InquiryType   @default(artwork)
+  workId            String?
+  budgetRange       String?
+  purpose           String?
+  needsShipping     Boolean       @default(false)
+  contactPreference String?
+  status            InquiryStatus @default(newInquiry)
+  adminNote         String?
+  repliedAt         DateTime?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  @@index([status, createdAt])
+  @@index([inquiryType])
+  @@map("inquiries")
+}
+
+enum InquiryType {
+  artwork
+  custom
+  appointment
+  corporate
+  international
+}
+
+enum InquiryStatus {
+  newInquiry @map("new")
+  pending
+  replied
+  contacted
+  negotiating
+  completed
+  closed
+}
+
+model Order {
+  id            String      @id @default(uuid())
+  inquiryId     String?
+  status        OrderStatus @default(pending)
+  totalAmount   Decimal     @db.Decimal(12, 2)
+  currency      String      @default("TWD")
+  paymentMethod String?
+  paidAt        DateTime?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@map("orders")
+}
+
+enum OrderStatus {
+  pending
+  paid
+  cancelled
+  refunded
+}
 
 model SnapshotSequence {
-  scope        String   @id
-  currentSeq   BigInt   @default(0)
-  updatedAt   DateTime @updatedAt
+  scope      String   @id
+  currentSeq BigInt   @default(0)
+  updatedAt  DateTime @updatedAt
 
   @@map("snapshot_sequences")
 }
 
-//////////////////////////////
-// Snapshot Metadata
-//////////////////////////////
-
-model SnapshotMetadata {
-  snapshotSeq      BigInt   @id
-  aggregateType    String
-  aggregateId      String
-  market           String
-
-  priceVersion     Int
-  inventoryVersion Int
-  storyVersion     Int
-  taxVersion       Int
-
-  causalHash       String
-  eventId          String?
-
-  generatedAt      DateTime @default(now())
-  validFrom        DateTime
-  validUntil       DateTime?
-
-  signature        String?
-  signedBy         String?
-
-  productViews     ProductPublicView[]
-
-  @@index([aggregateType, market, generatedAt(sort: Desc)])
-  @@map("snapshot_metadata")
-}
-
-//////////////////////////////
-// Product Public Read Model
-//////////////////////////////
-
-model ProductPublicView {
-  productId        String
-  market           String
-  snapshotSeq      BigInt
-
-  // Pricing
-  priceAmount      Decimal @db.Decimal(12, 2)
-  priceCurrency    String
-  priceBreakdown   Json
-
-  // Inventory
-  availableQty     Int
-  reservedQty      Int
-
-  // Storytelling
-  storyTitle       Json
-  storySummary     Json?
-  storyChapterCnt  Int
-
-  // Consistency
-  consistencyStatus String  @default("consistent")
-  lastVerifiedAt    DateTime?
-
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-
-  snapshot SnapshotMetadata @relation(fields: [snapshotSeq], references: [snapshotSeq])
-
-  @@id([productId, market, snapshotSeq])
-  @@index([productId, market, snapshotSeq(sort: Desc)])
-  @@map("product_public_views")
-}
-
-//////////////////////////////
-// Transactional Outbox
-//////////////////////////////
-
 model OutboxEvent {
-  eventId        String   @id @default(uuid())
-  aggregateType  String
-  aggregateId    String
-  eventType      String
+  eventId       String    @id @default(uuid())
+  topic         String    @default("default")
+  aggregateType String
+  aggregateId   String
+  eventType     String
+  payload       Json
+  metadata      Json      @default("{}")
+  causationId   String?
+  correlationId String
+  status        String    @default("pending")
+  retryCount    Int       @default(0)
+  lastRetryAt   DateTime?
+  errorMessage  String?
+  createdAt     DateTime  @default(now())
+  processedAt   DateTime?
 
-  payload        Json
-  metadata       Json     @default("{}")
-
-  causationId    String?
-  correlationId  String
-
-  status         String   @default("pending")
-  retryCount     Int      @default(0)
-  lastRetryAt    DateTime?
-  errorMessage   String?
-
-  createdAt      DateTime @default(now())
-  processedAt    DateTime?
-
-  @@index([status, createdAt])
+  @@index([status, processedAt])
   @@index([aggregateType, aggregateId, createdAt])
   @@index([correlationId])
   @@map("outbox_events")

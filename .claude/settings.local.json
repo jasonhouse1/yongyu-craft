@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node *)",
+      "Bash(pnpm --filter frontend typecheck)",
+      "Bash(pnpm --filter backend db:seed)",
+      "Bash(pnpm --version)",
+      "Bash(git *)"
+    ]
+  }
+}

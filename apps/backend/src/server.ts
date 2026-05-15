@@ -1,22 +1,38 @@
-import "./shared/events/event-logger"; // 初始化事件系統（logger）
-import "./modules/product/product-snapshot-subscriber"; // Phase 2.3-2：事件 → Snapshot
-
+﻿import "dotenv/config";
 import express from "express";
-import { productRouter } from "./modules/product/product.controller";
+import { workRouter } from "./modules/work/work.controller";
+import { inquiryRouter } from "./modules/inquiry/inquiry.controller";
+import { outboxProcessor } from "./shared/outbox/outbox-processor";
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT ?? 3000;
 
 app.use(express.json());
 
-// Health check
-app.get("/health", (_req, res) => {
-  res.json({ status: "ok" });
+app.use((req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("X-XSS-Protection", "1; mode=block");
+  next();
 });
 
-// Product APIs
-app.use("/api/v1/products", productRouter);
+app.get("/health", (_req, res) => {
+  res.json({
+    status: "ok",
+    uptime: process.uptime(),
+    version: "1.0.0",
+  });
+});
 
-app.listen(PORT, () => {
-  console.log(`🚀 Backend server running at http://localhost:${PORT}`);
+app.use("/api/works", workRouter);
+app.use("/api/inquiries", inquiryRouter);
+
+const server = app.listen(PORT, () => {
+  console.log(`Backend running at http://localhost:${PORT}`);
+  outboxProcessor.start();
+});
+
+process.on("SIGTERM", () => {
+  outboxProcessor.stop();
+  server.close(() => process.exit(0));
 });

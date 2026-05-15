@@ -1,31 +1,40 @@
+﻿// apps/backend/src/modules/product/product.controller.ts
 import { Router, Request, Response } from "express";
 import { ProductService } from "./product.service";
-import { ValueAuthority } from "../../shared/value-authority/value-authority";
+import { ProductRepository } from "./product.repository";
+import { z } from "zod";
 
 export const productRouter = Router();
 
-const productService = new ProductService();
-const valueAuthority = new ValueAuthority(productService);
+const productService = new ProductService(new ProductRepository());
 
-/**
- * GET /api/v1/products/:id/snapshot
- */
-productRouter.get("/:id/snapshot", (req: Request, res: Response) => {
-  const rawProductId = req.params.id;
+const QuerySchema = z.object({
+  category: z.string().optional(),
+  page: z.coerce.number().int().positive().default(1),
+  limit: z.coerce.number().int().positive().max(100).default(20),
+});
 
-  //  Controller 層負責輸入正規化
-  const productId =
-    Array.isArray(rawProductId) ? rawProductId[0] : rawProductId;
-
-  if (!productId) {
-    return res.status(400).json({ message: "Invalid product id" });
+productRouter.get("/", async (req: Request, res: Response) => {
+  const query = QuerySchema.safeParse(req.query);
+  if (!query.success) {
+    return res.status(400).json({
+      code: "VALIDATION_ERROR",
+      message: "Invalid query parameters",
+      details: query.error.flatten(),
+    });
   }
+  const result = await productService.getProducts(query.data);
+  res.json(result);
+});
 
-  const snapshot = valueAuthority.getProductSnapshot(productId);
-
+productRouter.get("/:id", async (req: Request, res: Response) => {
+  const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+  if (!id) {
+    return res.status(400).json({ code: "INVALID_ID", message: "Invalid product id" });
+  }
+  const snapshot = await productService.getProduct(id);
   if (!snapshot) {
-    return res.status(404).json({ message: "Product not found" });
+    return res.status(404).json({ code: "PRODUCT_NOT_FOUND", message: "Product not found" });
   }
-
   res.json(snapshot);
 });

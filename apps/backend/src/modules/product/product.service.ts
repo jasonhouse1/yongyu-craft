@@ -1,44 +1,76 @@
-import { mockProducts } from "./product.mock";
-import { Product } from "./product.types";
-import { eventBus } from "../../shared/events/event-bus";
-import { DomainEvent } from "../../shared/events/domain-event";
-import { randomUUID } from "crypto";
+﻿import {
+  Product,
+  ProductRepository,
+  FindProductsOptions,
+} from "./product.repository";
+import type { ProductSnapshot } from "./snapshot/product-snapshot";
+import { outboxProcessor } from "../../shared/outbox/outbox-processor";
 
-/**
- * ProductService
- * ====================================================
- * 【責任】
- * - 提供產品「事實資料」
- * - 可選擇是否發出 Domain Event
- *
- * 【設計重點】
- * - 預設會發 PRODUCT_REQUESTED
- * - Read Model / Snapshot 可透過 suppressEvent 關閉事件
- */
+export interface GetProductOptions {
+  suppressEvent?: boolean;
+}
+
+function createProductSnapshot(product: Product): ProductSnapshot {
+  return {
+    product,
+    snapshotSeq: "0",
+    generatedAt: new Date().toISOString(),
+    consistency: "strong",
+    causedBy: {
+      type: "compat",
+      id: product.id,
+    },
+  } as unknown as ProductSnapshot;
+}
+
 export class ProductService {
-  getProduct(
-    productId: string,
-    options?: { suppressEvent?: boolean }
-  ): Product | null {
-    const product = mockProducts.find((p) => p.id === productId) ?? null;
+  constructor(private readonly repo: ProductRepository) {}
 
-    // 預設會發事件，除非明確抑制
+  async getProduct(
+    id: string,
+    options?: GetProductOptions
+  ): Promise<ProductSnapshot | null> {
+    const product = await this.repo.findById(id);
+    if (!product) return null;
+
     if (!options?.suppressEvent) {
-      const event: DomainEvent = {
-        eventId: randomUUID(),
-        eventType: "PRODUCT_REQUESTED",
+      await outboxProcessor.publish({
         aggregateType: "product",
-        aggregateId: productId,
-        occurredAt: new Date(),
-        payload: {
-          productId,
-          found: product !== null,
-        },
-      };
-
-      eventBus.publish(event);
+        aggregateId: id,
+        eventType: "PRODUCT_VIEWED",
+        payload: { productId: id },
+      });
     }
 
-    return product;
+    return createProductSnapshot(product);
+  }
+
+  async getProductBySlug(slug: string): Promise<ProductSnapshot | null> {
+    const product = await this.repo.findBySlug(slug);
+    if (!product) return null;
+
+    return createProductSnapshot(product);
+  }
+
+  async getProducts(options?: FindProductsOptions): Promise<{
+    items: ProductSnapshot[];
+    total: number;
+    page: number;
+    limit: number;
+  }> {
+    const result = await this.repo.findAll(options);
+
+    return {
+      ...result,
+      items: result.items.map((product: Product) => createProductSnapshot(product)),
+    };
+  }
+
+  async getFeaturedProducts(limit = 3): Promise<ProductSnapshot[]> {
+    const result = await this.repo.findAll({ limit });
+
+    return result.items
+      .slice(0, limit)
+      .map((product: Product) => createProductSnapshot(product));
   }
 }

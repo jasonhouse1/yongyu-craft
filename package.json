@@ -1,23 +1,24 @@
 {
   "name": "yongyu-craft",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
+  "workspaces": ["apps/*"],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "@prisma/client": "^7.2.0",
-    "express": "^5.2.1"
+    "dev:backend": "pnpm --filter backend dev",
+    "dev:frontend": "pnpm --filter frontend dev",
+    "build:backend": "pnpm --filter backend build",
+    "build:frontend": "pnpm --filter frontend build",
+    "db:migrate": "pnpm --filter backend db:migrate",
+    "db:seed": "pnpm --filter backend db:seed",
+    "db:studio": "pnpm --filter backend db:studio",
+    "typecheck": "pnpm --filter backend typecheck",
+    "test": "pnpm --filter backend test"
   },
   "devDependencies": {
-    "@types/express": "^5.0.6",
-    "@types/node": "^25.0.10",
-    "prisma": "^7.2.0",
-    "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
   }
 }

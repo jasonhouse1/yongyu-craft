@@ -1,0 +1,113 @@
+{
+  "nav": {
+    "brand": "永裕工藝",
+    "works": "作品",
+    "about": "關於",
+    "contact": "聯絡"
+  },
+  "hero": {
+    "tagline": "Handcrafted Goldsmithing",
+    "line1": "每一道工序",
+    "line2": "都承載著心意",
+    "cta": "瀏覽作品"
+  },
+  "works": {
+    "sectionLabel": "Selected Works",
+    "inquiryLabel": "洽詢價格",
+    "viewAll": "查看全部作品",
+    "noWorks": "目前尚無作品",
+    "pricePrefix": "NT$",
+    "customizable": "可客製",
+    "notAvailable": "已售出",
+    "pageTitle": "作品型錄",
+    "pageSubtitle": "每一件作品都是工匠心意的結晶",
+    "filterAll": "全部",
+    "materials": "材質",
+    "techniques": "工法",
+    "dimensions": "尺寸",
+    "year": "年份",
+    "inquiryBtn": "立即詢價",
+    "backToWorks": "返回作品列表",
+    "breadcrumbHome": "首頁",
+    "breadcrumbWorks": "作品"
+  },
+  "inquiry": {
+    "title": "詢價",
+    "subtitle": "請填寫以下資料，我們將盡快與您聯繫",
+    "name": "姓名",
+    "email": "電子郵件",
+    "phone": "電話",
+    "lineId": "LINE ID",
+    "whatsapp": "WhatsApp",
+    "country": "國家 / 地區",
+    "inquiryType": "詢價類型",
+    "inquiryTypes": {
+      "artwork": "作品詢價",
+      "custom": "客製化詢價",
+      "appointment": "預約賞件",
+      "corporate": "企業禮品",
+      "international": "國際詢問"
+    },
+    "budgetRange": "預算區間",
+    "purpose": "使用目的",
+    "message": "需求說明",
+    "needsShipping": "需要配送",
+    "contactPreference": "偏好聯絡方式",
+    "submit": "送出詢價",
+    "submitting": "送出中...",
+    "successTitle": "詢價已送出",
+    "successMessage": "感謝您的詢價，我們將盡快與您聯繫",
+    "errorMessage": "送出失敗，請稍後再試",
+    "relatedWork": "關聯作品"
+  },
+  "about": {
+    "title": "關於永裕工藝",
+    "subtitle": "傳承手工金工技藝",
+    "story": "品牌故事",
+    "storyBody": "永裕工藝創立於台灣，由數十年金工經驗的師傅親手打造每一件作品。我們相信真正的精品不只是材料的堆疊，而是工匠對每一道工序的專注與堅持，以及對美的獨到詮釋。",
+    "craftsmanship": "工藝傳承",
+    "craftBody": "我們堅持使用最高品質的貴金屬與天然寶石，透過傳統手工鍛造、失蠟鑄造、手工鑲嵌等工法，將數百年傳承的技藝融入現代設計美學。每一件作品從設計草圖到成品，歷經數十道工序，耗時數週乃至數月。",
+    "values": "品牌精神",
+    "value1": "工匠精神",
+    "value1Body": "拒絕量產，每一件作品皆由匠人親手完成，注重每一個細節。",
+    "value2": "傳承工藝",
+    "value2Body": "承襲傳統金工技藝，融合現代設計美學，創作出跨越時代的精品。",
+    "value3": "獨一無二",
+    "value3Body": "每件作品都承載著獨特的故事與心意，是送給自己或摯愛最真誠的禮物。"
+  },
+  "contact": {
+    "title": "聯絡我們",
+    "subtitle": "有任何問題或詢價需求，歡迎透過以下方式與我們聯繫",
+    "email": "電子郵件",
+    "emailValue": "yongyucraft@gmail.com",
+    "line": "LINE",
+    "lineValue": "@yongyucraft",
+    "whatsapp": "WhatsApp",
+    "whatsappValue": "+886 912 345 678",
+    "or": "或",
+    "inquiryBtn": "填寫詢價單"
+  },
+  "notFound": {
+    "title": "找不到頁面",
+    "message": "您所尋找的頁面不存在或已移除",
+    "backHome": "返回首頁",
+    "browseWorks": "瀏覽作品"
+  },
+  "footer": {
+    "brand": "永裕工藝",
+    "copyright": "© 2026 Yongyu Craft. All rights reserved."
+  },
+  "ai": {
+    "greeting": "您好，我是永裕工藝的 AI 導覽，有什麼可以幫您？",
+    "placeholder": "詢問關於這件作品的問題...",
+    "send": "送出",
+    "fallback": "這件作品的詳細資料正在整理中，歡迎直接詢價了解更多",
+    "inquiryPrompt": "想進一步了解？",
+    "inquiryCta": "立即詢價"
+  },
+  "meta": {
+    "siteName": "永裕工藝",
+    "defaultTitle": "永裕工藝 | 手工金工精品",
+    "defaultDescription": "永裕工藝，傳承手工金工技藝，每一件作品都承載著工匠的心意與精神。"
+  }
+}
