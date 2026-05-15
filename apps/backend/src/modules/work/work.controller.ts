@@ -1,9 +1,10 @@
 ﻿import { Router, Request, Response } from "express";
+import type { Router as ExpressRouter } from "express";
 import { WorkService } from "./work.service";
 import { WorkRepository } from "./work.repository";
 import { z } from "zod";
 
-export const workRouter = Router();
+export const workRouter: ExpressRouter = Router();
 const workService = new WorkService(new WorkRepository());
 
 const QuerySchema = z.object({

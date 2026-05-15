@@ -1,9 +1,10 @@
 ﻿import { Router, Request, Response } from "express";
+import type { Router as ExpressRouter } from "express";
 import { z } from "zod";
 import { InquiryService } from "./inquiry.service";
 import { InquiryRepository } from "./inquiry.repository";
 
-export const inquiryRouter = Router();
+export const inquiryRouter: ExpressRouter = Router();
 const inquiryService = new InquiryService(new InquiryRepository());
 
 const CreateInquirySchema = z.object({

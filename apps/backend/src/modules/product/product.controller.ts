@@ -1,10 +1,11 @@
 ﻿// apps/backend/src/modules/product/product.controller.ts
 import { Router, Request, Response } from "express";
+import type { Router as ExpressRouter } from "express";
 import { ProductService } from "./product.service";
 import { ProductRepository } from "./product.repository";
 import { z } from "zod";
 
-export const productRouter = Router();
+export const productRouter: ExpressRouter = Router();
 
 const productService = new ProductService(new ProductRepository());
 
