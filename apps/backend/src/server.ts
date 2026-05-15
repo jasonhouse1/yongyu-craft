@@ -3,6 +3,7 @@ import express from "express";
 import { workRouter } from "./modules/work/work.controller";
 import { inquiryRouter } from "./modules/inquiry/inquiry.controller";
 import { outboxProcessor } from "./shared/outbox/outbox-processor";
+import { prisma } from "./shared/db/prisma";
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -16,12 +17,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/health", (_req, res) => {
-  res.json({
-    status: "ok",
-    uptime: process.uptime(),
-    version: "1.0.0",
-  });
+app.get("/health", async (_req, res) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    res.json({ status: "ok", db: "connected", uptime: process.uptime() });
+  } catch {
+    res.status(503).json({ status: "error", db: "disconnected" });
+  }
 });
 
 app.use("/api/works", workRouter);
