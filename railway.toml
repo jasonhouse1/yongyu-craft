@@ -18,11 +18,11 @@
 #     Environment Variables:
 #       NEXT_PUBLIC_API_URL  (設為後端服務的 Railway 內部 URL)
 #
-# 此 railway.toml 套用於 backend 服務：
+# 此 railway.toml 套用於 frontend 服務：
 
 [build]
 builder = "DOCKERFILE"
-dockerfilePath = "apps/backend/Dockerfile"
+dockerfilePath = "apps/frontend/Dockerfile"
 
 [deploy]
 numReplicas = 1
