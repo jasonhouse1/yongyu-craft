@@ -2,6 +2,8 @@
 import express from "express";
 import { workRouter } from "./modules/work/work.controller";
 import { inquiryRouter } from "./modules/inquiry/inquiry.controller";
+import { adminWorksRouter } from "./modules/admin/admin-works.controller";
+import { adminInquiriesRouter } from "./modules/admin/admin-inquiries.controller";
 import { outboxProcessor } from "./shared/outbox/outbox-processor";
 import { prisma } from "./shared/db/prisma";
 
@@ -28,6 +30,8 @@ app.get("/health", async (_req, res) => {
 
 app.use("/api/works", workRouter);
 app.use("/api/inquiries", inquiryRouter);
+app.use("/api/admin/works", adminWorksRouter);
+app.use("/api/admin/inquiries", adminInquiriesRouter);
 
 const server = app.listen(PORT, () => {
   console.log(`Backend running at http://localhost:${PORT}`);
