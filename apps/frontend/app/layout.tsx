@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_TC, Noto_Serif_TC } from "next/font/google";
 import messages from "@/messages/zh.json";
+import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import "./globals.css";
 
 const notoSansTC = Noto_Sans_TC({
@@ -40,7 +41,9 @@ export default function RootLayout({
       lang="zh-TW"
       className={`${notoSansTC.variable} ${notoSerifTC.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+      </body>
     </html>
   );
 }
