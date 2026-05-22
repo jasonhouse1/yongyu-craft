@@ -8,7 +8,8 @@
   --color-gold-dark: #8C6E42;
   --color-gold-light: #D4B896;
   --color-text-primary: #E8ECF0;
-  --color-text-secondary: #6B6560;
+  --color-text-secondary: #9A9590;
+  --color-text-tertiary: #7A7570;
   --color-jade: #3D6B5C;
   --color-ember: #8B4A28;
 
@@ -82,28 +83,74 @@ a {
   left: 0;
   height: 1px;
   width: 0;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: #C49A5A;
   transition: width 0.3s ease;
 }
 .nav-link-hero:hover::after {
   width: 100%;
 }
 
-/* CTA button: transparent border → gold fill on hover */
-.btn-cta-outline {
-  display: inline-block;
-  padding: 1rem 3rem;
-  border: 1px solid rgba(196, 154, 90, 0.4);
-  color: rgba(232, 236, 240, 0.75);
-  background: transparent;
-  font-size: 0.875rem;
+/* Global nav links */
+nav a {
+  color: #C8C4BE !important;
   letter-spacing: 0.15em;
-  font-weight: 300;
+  font-size: 0.8rem;
+}
+
+/* Form fields */
+input, textarea, select {
+  color: #E8ECF0;
+  border-bottom-color: #5A5550 !important;
+}
+input::placeholder,
+textarea::placeholder {
+  color: #7A7570 !important;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  border-bottom-color: #C49A5A !important;
+  box-shadow: 0 1px 0 #C49A5A;
+}
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C49A5A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 28px;
+  cursor: pointer;
+}
+
+/* CTA button: scaleX fill from left */
+.btn-cta-outline {
+  border: 1px solid #C49A5A;
+  color: #C49A5A;
+  padding: 14px 48px;
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  transition: color 0.4s ease;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
   font-family: var(--font-noto-sans-tc);
-  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+  font-weight: 300;
+}
+.btn-cta-outline::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #C49A5A;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+  z-index: -1;
 }
 .btn-cta-outline:hover {
-  background-color: var(--color-gold);
-  border-color: var(--color-gold);
-  color: var(--color-bg-primary);
+  color: #080706;
+}
+.btn-cta-outline:hover::before {
+  transform: scaleX(1);
 }

@@ -65,7 +65,7 @@ export default function RingHero() {
         }}
       />
 
-      {/* Top elliptical gold halo above ring */}
+      {/* Top elliptical gold halo */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -78,7 +78,29 @@ export default function RingHero() {
           width: '300px',
           height: '500px',
           background:
-            'radial-gradient(ellipse 300px 500px at 50% -10%, rgba(196,154,90,0.12) 0%, transparent 65%)',
+            'radial-gradient(ellipse 300px 500px at 50% -10%, rgba(196,154,90,0.22) 0%, transparent 65%)',
+          pointerEvents: 'none',
+          zIndex: 2,
+        }}
+      />
+
+      {/* Side light */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(ellipse 200px 600px at 75% 40%, rgba(196,154,90,0.06) 0%, transparent 70%)',
+          pointerEvents: 'none',
+          zIndex: 2,
+        }}
+      />
+
+      {/* Ground reflection light */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(ellipse 400px 80px at 50% 85%, rgba(196,154,90,0.08) 0%, transparent 60%)',
           pointerEvents: 'none',
           zIndex: 2,
         }}
@@ -94,8 +116,8 @@ export default function RingHero() {
         <span
           style={{
             fontFamily: 'var(--font-noto-serif-tc)',
-            fontSize: '1.125rem',
-            letterSpacing: '0.08em',
+            fontSize: '1rem',
+            letterSpacing: '0.3em',
             color: '#C49A5A',
             fontWeight: 300,
           }}
@@ -128,9 +150,9 @@ export default function RingHero() {
             href={item.href}
             className="nav-link-hero"
             style={{
-              fontSize: '0.75rem',
-              letterSpacing: '0.2em',
-              color: 'rgba(255,255,255,0.4)',
+              fontSize: '0.8rem',
+              letterSpacing: '0.15em',
+              color: '#C8C4BE',
               fontWeight: 300,
             }}
           >
@@ -157,8 +179,20 @@ export default function RingHero() {
               onHoverStart={() => setIsRingHovered(true)}
               onHoverEnd={() => setIsRingHovered(false)}
             >
-              {/* Main ring */}
-              <div style={{ position: 'relative' }}>
+              {/* Main ring with mask removal */}
+              <div
+                style={{
+                  position: 'relative',
+                  WebkitMaskImage: "url('/images/works/lumiere-ring/alpha.png')",
+                  maskImage: "url('/images/works/lumiere-ring/alpha.png')",
+                  WebkitMaskSize: 'contain',
+                  maskSize: 'contain',
+                  WebkitMaskRepeat: 'no-repeat',
+                  maskRepeat: 'no-repeat',
+                  WebkitMaskPosition: 'center',
+                  maskPosition: 'center',
+                }}
+              >
                 <Image
                   src="/images/works/lumiere-ring/main.png"
                   alt="Lumière Ring"
@@ -166,7 +200,7 @@ export default function RingHero() {
                   height={326}
                   priority
                   style={{
-                    height: '55vh',
+                    height: '65vh',
                     width: 'auto',
                     objectFit: 'contain',
                     display: 'block',
@@ -195,7 +229,7 @@ export default function RingHero() {
                   width={371}
                   height={326}
                   style={{
-                    height: '55vh',
+                    height: '65vh',
                     width: 'auto',
                     objectFit: 'contain',
                     display: 'block',
@@ -266,7 +300,7 @@ export default function RingHero() {
             style={{
               fontSize: '0.7rem',
               letterSpacing: '0.25em',
-              color: '#6B6560',
+              color: '#9A9590',
               fontWeight: 300,
               margin: '0 0 1rem',
             }}
@@ -289,30 +323,23 @@ export default function RingHero() {
           />
         </div>
 
-        {/* Center: scroll CTA */}
+        {/* Center: SCROLL with flowing line */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 7.0, duration: 1.0 }}
-          style={{ textAlign: 'center' }}
+          style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}
         >
-          <motion.div
-            animate={{ y: [0, -6, 0] }}
-            transition={{ duration: 2.5, ease: 'easeInOut', repeat: Infinity, delay: 7.5 }}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '0.3rem',
-              color: 'rgba(255,255,255,0.25)',
-              fontSize: '0.6875rem',
-              letterSpacing: '0.22em',
-              fontWeight: 300,
-            }}
-          >
-            <span style={{ fontSize: '0.875rem' }}>↓</span>
-            <span>探索</span>
-          </motion.div>
+          <span style={{ color: '#C49A5A', fontSize: '0.65rem', letterSpacing: '0.4em', fontWeight: 300 }}>
+            SCROLL
+          </span>
+          <div style={{ width: '1px', height: '40px', background: 'rgba(196,154,90,0.2)', position: 'relative', overflow: 'hidden' }}>
+            <motion.div
+              animate={{ y: ['-100%', '100%'] }}
+              transition={{ duration: 1.4, ease: 'linear', repeat: Infinity }}
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: '#C49A5A' }}
+            />
+          </div>
         </motion.div>
 
         {/* Right: subtitle */}

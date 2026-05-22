@@ -63,11 +63,20 @@ export default async function InquiryPage({
         }}>
           INQUIRY
         </p>
+        <p style={{
+          fontSize: "0.65rem",
+          letterSpacing: "0.5em",
+          color: "#C49A5A",
+          marginBottom: "1rem",
+          textTransform: "uppercase",
+        }}>
+          PRIVATE CONSULTATION
+        </p>
         <h1 style={{
           fontFamily: "var(--font-noto-serif-tc)",
-          fontSize: "clamp(2rem, 5vw, 3.5rem)",
+          fontSize: "clamp(2.5rem, 5vw, 5rem)",
           fontWeight: 300,
-          letterSpacing: "0.1em",
+          letterSpacing: "0.3em",
           color: "#E8ECF0",
           marginBottom: "1rem",
           lineHeight: 1.3,
@@ -76,9 +85,11 @@ export default async function InquiryPage({
         </h1>
         <p style={{
           fontSize: "0.875rem",
-          color: "#6B6560",
+          color: "#9A9590",
           letterSpacing: "0.08em",
           lineHeight: 1.8,
+          borderLeft: "2px solid #C49A5A",
+          paddingLeft: "1rem",
         }}>
           每一件作品，都從一個故事開始
         </p>
