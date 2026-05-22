@@ -66,6 +66,9 @@ importers:
       '@gsap/react':
         specifier: ^2.1.2
         version: 2.1.2(gsap@3.15.0)(react@19.2.5)
+      '@studio-freight/lenis':
+        specifier: ^1.0.42
+        version: 1.0.42
       framer-motion:
         specifier: ^12.40.0
         version: 12.40.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -921,6 +924,10 @@ packages:
 
   '@stablelib/base64@1.0.1':
     resolution: {integrity: sha512-1bnPQqSxSuc3Ii6MhBysoWCg58j97aUjuCSZrGSmDxNqtytIi0k8utUenAwTZN4V5mXXYGsVUI9zeBqy+jBOSQ==}
+
+  '@studio-freight/lenis@1.0.42':
+    resolution: {integrity: sha512-HJAGf2DeM+BTvKzHv752z6Z7zy6bA643nZM7W88Ft9tnw2GsJSp6iJ+3cekjyMIWH+cloL2U9X82dKXgdU8kPg==}
+    deprecated: 'The ''@studio-freight/lenis'' package has been renamed to ''lenis''. Please update your dependencies: npm install lenis and visit the documentation: https://www.npmjs.com/package/lenis'
 
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
@@ -3494,6 +3501,8 @@ snapshots:
   '@rushstack/eslint-patch@1.16.1': {}
 
   '@stablelib/base64@1.0.1': {}
+
+  '@studio-freight/lenis@1.0.42': {}
 
   '@swc/helpers@0.5.15':
     dependencies:

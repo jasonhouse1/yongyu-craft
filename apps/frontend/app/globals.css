@@ -32,8 +32,43 @@ body {
 }
 
 ::selection {
-  background-color: var(--yyc-gold);
-  color: var(--yyc-white);
+  background-color: #B8965A;
+  color: #080706;
+}
+
+/* Hide native cursor on pointer devices; CustomCursor replaces it */
+@media (hover: hover) {
+  * {
+    cursor: none !important;
+  }
+}
+
+/* Hide scrollbar, preserve scroll functionality */
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* Nav link hover underline slide-in */
+.nav-link-hero {
+  position: relative;
+  display: inline-block;
+}
+.nav-link-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  height: 1px;
+  width: 0;
+  background-color: rgba(255, 255, 255, 0.3);
+  transition: width 0.3s ease;
+}
+.nav-link-hero:hover::after {
+  width: 100%;
 }
 
 img {
