@@ -27,7 +27,6 @@ export default function RingHero() {
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
-
     const handleMouse = (e: MouseEvent) => {
       const rect = el.getBoundingClientRect()
       mouseX.set((e.clientX - rect.left - rect.width / 2) / rect.width)
@@ -37,7 +36,6 @@ export default function RingHero() {
         y: ((e.clientY - rect.top) / rect.height) * 100,
       })
     }
-
     window.addEventListener('mousemove', handleMouse)
     return () => window.removeEventListener('mousemove', handleMouse)
   }, [mouseX, mouseY])
@@ -61,36 +59,30 @@ export default function RingHero() {
           position: 'absolute',
           inset: 0,
           pointerEvents: 'none',
-          background: `radial-gradient(900px circle at ${lightPos.x}% ${lightPos.y}%, rgba(184,150,80,0.045), transparent 65%)`,
+          background: `radial-gradient(900px circle at ${lightPos.x}% ${lightPos.y}%, rgba(196,154,90,0.04), transparent 65%)`,
           transition: 'background 0.4s ease',
           zIndex: 1,
         }}
       />
 
-      {/* Vertical light line from top */}
-      <div
+      {/* Top elliptical gold halo above ring */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.0, duration: 2.0 }}
         style={{
           position: 'absolute',
-          top: 0,
+          top: '5%',
           left: '50%',
           transform: 'translateX(-50%)',
+          width: '300px',
+          height: '500px',
+          background:
+            'radial-gradient(ellipse 300px 500px at 50% -10%, rgba(196,154,90,0.12) 0%, transparent 65%)',
           pointerEvents: 'none',
           zIndex: 2,
         }}
-      >
-        <motion.div
-          initial={{ scaleY: 0, opacity: 0 }}
-          animate={{ scaleY: 1, opacity: 1 }}
-          transition={{ delay: 1.0, duration: 2.0, ease: [0.25, 0.1, 0.25, 1] }}
-          style={{
-            width: '2px',
-            height: '44vh',
-            background:
-              'linear-gradient(to bottom, rgba(255,255,255,0.55), rgba(184,150,90,0.25), transparent)',
-            transformOrigin: 'top',
-          }}
-        />
-      </div>
+      />
 
       {/* Left: YY logo */}
       <motion.div
@@ -104,7 +96,7 @@ export default function RingHero() {
             fontFamily: 'var(--font-noto-serif-tc)',
             fontSize: '1.125rem',
             letterSpacing: '0.08em',
-            color: '#B8965A',
+            color: '#C49A5A',
             fontWeight: 300,
           }}
         >
@@ -147,7 +139,7 @@ export default function RingHero() {
         ))}
       </motion.nav>
 
-      {/* Ring: perspective → entry → float → tilt + hover scale */}
+      {/* Ring + reflection */}
       <div style={{ perspective: '1200px', zIndex: 10, position: 'relative' }}>
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -165,6 +157,7 @@ export default function RingHero() {
               onHoverStart={() => setIsRingHovered(true)}
               onHoverEnd={() => setIsRingHovered(false)}
             >
+              {/* Main ring */}
               <div style={{ position: 'relative' }}>
                 <Image
                   src="/images/works/lumiere-ring/main.png"
@@ -177,10 +170,10 @@ export default function RingHero() {
                     width: 'auto',
                     objectFit: 'contain',
                     display: 'block',
-                    filter: 'drop-shadow(0 16px 60px rgba(184,150,90,0.18))',
+                    filter: 'drop-shadow(0 16px 60px rgba(196,154,90,0.18))',
                   }}
                 />
-                {/* Moving light source on ring surface */}
+                {/* Moving light on ring */}
                 <div
                   style={{
                     position: 'absolute',
@@ -192,31 +185,43 @@ export default function RingHero() {
                   }}
                 />
               </div>
+
+              {/* Reflection */}
+              <div style={{ position: 'relative', marginTop: '-20%' }}>
+                <Image
+                  src="/images/works/lumiere-ring/main.png"
+                  alt=""
+                  aria-hidden
+                  width={371}
+                  height={326}
+                  style={{
+                    height: '55vh',
+                    width: 'auto',
+                    objectFit: 'contain',
+                    display: 'block',
+                    transform: 'scaleY(-1)',
+                    opacity: 0.08,
+                    filter: 'blur(12px)',
+                  }}
+                />
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    height: '70%',
+                    background: 'linear-gradient(to bottom, transparent, #080706)',
+                    pointerEvents: 'none',
+                  }}
+                />
+              </div>
             </motion.div>
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Bottom elliptical gold glow */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 4.0, duration: 2.5 }}
-        style={{
-          position: 'absolute',
-          bottom: '22%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '36vw',
-          height: '5rem',
-          background: 'radial-gradient(ellipse at center, rgba(184,150,90,0.14), transparent 70%)',
-          filter: 'blur(24px)',
-          pointerEvents: 'none',
-          zIndex: 5,
-        }}
-      />
-
-      {/* Bottom three-column layout */}
+      {/* Bottom layout */}
       <div
         style={{
           position: 'absolute',
@@ -231,43 +236,75 @@ export default function RingHero() {
         }}
       >
         {/* Left: brand name char by char */}
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          {BRAND_CHARS.map((char, i) => (
-            <motion.span
-              key={i}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 5.0 + i * 0.15, duration: 0.7, ease: 'easeOut' }}
-              style={{
-                fontFamily: 'var(--font-noto-serif-tc)',
-                fontSize: 'clamp(1.5rem, 2.5vw, 2.25rem)',
-                fontWeight: 300,
-                color: '#FFFFFF',
-                letterSpacing: '0.04em',
-                display: 'block',
-              }}
-            >
-              {char}
-            </motion.span>
-          ))}
+        <div>
+          <div style={{ display: 'flex', gap: '0.4rem', marginBottom: '0.75rem' }}>
+            {BRAND_CHARS.map((char, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 5.0 + i * 0.3, duration: 0.8, ease: 'easeOut' }}
+                style={{
+                  fontFamily: 'var(--font-noto-serif-tc)',
+                  fontSize: 'clamp(2.5rem, 5vw, 5rem)',
+                  fontWeight: 300,
+                  color: '#E8ECF0',
+                  letterSpacing: '0.6em',
+                  display: 'block',
+                }}
+              >
+                {char}
+              </motion.span>
+            ))}
+          </div>
+
+          {/* Subtitle layer 1 */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 6.5, duration: 1.0 }}
+            style={{
+              fontSize: '0.7rem',
+              letterSpacing: '0.25em',
+              color: '#6B6560',
+              fontWeight: 300,
+              margin: '0 0 1rem',
+            }}
+          >
+            YONGYU CRAFT · 台灣手工金工
+          </motion.p>
+
+          {/* Gold line expanding from left */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ delay: 6.8, duration: 1.4, ease: 'easeOut' }}
+            style={{
+              height: '1px',
+              width: '160px',
+              background: '#C49A5A',
+              transformOrigin: 'left',
+              opacity: 0.7,
+            }}
+          />
         </div>
 
-        {/* Center: scroll CTA with float loop */}
+        {/* Center: scroll CTA */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 6.5, duration: 1.0 }}
+          transition={{ delay: 7.0, duration: 1.0 }}
           style={{ textAlign: 'center' }}
         >
           <motion.div
             animate={{ y: [0, -6, 0] }}
-            transition={{ duration: 2.5, ease: 'easeInOut', repeat: Infinity, delay: 7.2 }}
+            transition={{ duration: 2.5, ease: 'easeInOut', repeat: Infinity, delay: 7.5 }}
             style={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               gap: '0.3rem',
-              color: 'rgba(255,255,255,0.28)',
+              color: 'rgba(255,255,255,0.25)',
               fontSize: '0.6875rem',
               letterSpacing: '0.22em',
               fontWeight: 300,
@@ -282,11 +319,11 @@ export default function RingHero() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 5.8, duration: 1.2 }}
+          transition={{ delay: 6.2, duration: 1.2 }}
           style={{
             fontSize: '0.6875rem',
             letterSpacing: '0.16em',
-            color: 'rgba(255,255,255,0.22)',
+            color: 'rgba(255,255,255,0.2)',
             fontWeight: 300,
             margin: 0,
             textAlign: 'right',

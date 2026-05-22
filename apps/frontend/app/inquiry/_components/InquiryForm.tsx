@@ -10,35 +10,15 @@ interface Props {
   workTitle?: string;
 }
 
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: "0.625rem 0.875rem",
-  backgroundColor: "transparent",
-  border: "1px solid var(--yyc-border)",
-  color: "var(--yyc-ink)",
-  fontSize: "0.875rem",
-  letterSpacing: "0.03em",
-  outline: "none",
-  fontFamily: "var(--font-noto-sans-tc)",
-};
-
-const labelStyle: React.CSSProperties = {
-  display: "block",
-  fontSize: "0.6875rem",
-  letterSpacing: "0.12em",
-  color: "var(--yyc-sand)",
-  marginBottom: "0.5rem",
-};
-
 export default function InquiryForm({ workId, workTitle }: Props) {
   const t = messages;
-
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [inquiryType, setInquiryType] = useState("artwork");
+  const [inquiryType, setInquiryType] = useState(workId ? "artwork" : "custom");
   const [message, setMessage] = useState("");
+  const [focusedField, setFocusedField] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,59 +31,72 @@ export default function InquiryForm({ workId, workTitle }: Props) {
     }
   };
 
+  const fieldStyle = (id: string): React.CSSProperties => ({
+    border: "none",
+    borderBottom: `1px solid ${focusedField === id ? "#C49A5A" : "#3A3530"}`,
+    background: "transparent",
+    color: "#E8ECF0",
+    padding: "16px 0",
+    fontSize: "1rem",
+    width: "100%",
+    fontFamily: "var(--font-noto-sans-tc)",
+    fontWeight: 300,
+    letterSpacing: "0.03em",
+    outline: "none",
+    transition: "border-color 0.3s ease",
+  });
+
+  const labelStyle: React.CSSProperties = {
+    display: "block",
+    fontSize: "0.6875rem",
+    letterSpacing: "0.18em",
+    color: "#6B6560",
+    marginBottom: "0",
+    textTransform: "uppercase",
+    fontWeight: 300,
+  };
+
   if (status === "success") {
     return (
-      <div
-        style={{
-          padding: "5rem 3rem 8rem",
-          maxWidth: "520px",
-          textAlign: "center",
-        }}
-      >
-        <p
-          style={{
-            fontSize: "0.75rem",
-            letterSpacing: "0.2em",
-            color: "var(--yyc-gold)",
-            marginBottom: "1rem",
-            textTransform: "uppercase",
-          }}
-        >
-          ✓
-        </p>
-        <h2
-          style={{
-            fontFamily: "var(--font-noto-serif-tc)",
-            fontSize: "1.5rem",
-            fontWeight: 300,
-            letterSpacing: "0.08em",
-            color: "var(--yyc-ink)",
-            marginBottom: "1rem",
-          }}
-        >
-          {t.inquiry.successTitle}
+      <div style={{
+        padding: "6rem 3rem 10rem",
+        maxWidth: "560px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "1.5rem",
+      }}>
+        <div style={{
+          width: "40px",
+          height: "1px",
+          backgroundColor: "#C49A5A",
+        }} />
+        <h2 style={{
+          fontFamily: "var(--font-noto-serif-tc)",
+          fontSize: "1.75rem",
+          fontWeight: 300,
+          letterSpacing: "0.1em",
+          color: "#E8ECF0",
+        }}>
+          感謝您的信任
         </h2>
-        <p
-          style={{
-            fontSize: "0.9375rem",
-            color: "var(--yyc-sand)",
-            letterSpacing: "0.05em",
-            marginBottom: "2.5rem",
-          }}
-        >
-          {t.inquiry.successMessage}
+        <p style={{
+          fontSize: "0.9375rem",
+          color: "#6B6560",
+          letterSpacing: "0.05em",
+          lineHeight: 1.9,
+        }}>
+          師傅將在 48 小時內親自回覆您。
         </p>
         <Link
           href="/works"
           style={{
-            fontSize: "0.8125rem",
-            letterSpacing: "0.1em",
-            color: "var(--yyc-ink)",
-            borderBottom: "1px solid var(--yyc-ink)",
-            paddingBottom: "0.25rem",
+            marginTop: "1rem",
+            fontSize: "0.75rem",
+            letterSpacing: "0.15em",
+            color: "rgba(196,154,90,0.6)",
           }}
         >
-          {t.works.backToWorks}
+          ← {t.works.backToWorks}
         </Link>
       </div>
     );
@@ -113,118 +106,125 @@ export default function InquiryForm({ workId, workTitle }: Props) {
     <form
       onSubmit={handleSubmit}
       style={{
-        padding: "3rem 3rem 8rem",
-        maxWidth: "520px",
+        padding: "4rem 3rem 8rem",
+        maxWidth: "560px",
         display: "flex",
         flexDirection: "column",
-        gap: "1.75rem",
+        gap: "3rem",
       }}
     >
+      {/* Related work badge */}
       {workTitle && (
-        <div
-          style={{
-            padding: "0.875rem 1rem",
-            border: "1px solid var(--yyc-border)",
-            display: "flex",
-            gap: "1rem",
-            alignItems: "center",
-          }}
-        >
-          <span
-            style={{
-              fontSize: "0.6875rem",
-              letterSpacing: "0.12em",
-              color: "var(--yyc-sand)",
-              flexShrink: 0,
-            }}
-          >
+        <div style={{
+          borderBottom: "1px solid rgba(196,154,90,0.15)",
+          paddingBottom: "1rem",
+          display: "flex",
+          gap: "1rem",
+          alignItems: "baseline",
+        }}>
+          <span style={{ fontSize: "0.6875rem", letterSpacing: "0.15em", color: "#6B6560" }}>
             {t.inquiry.relatedWork}
           </span>
-          <span
-            style={{
-              fontSize: "0.875rem",
-              color: "var(--yyc-ink)",
-              letterSpacing: "0.03em",
-            }}
-          >
+          <span style={{ fontSize: "0.9375rem", color: "rgba(232,236,240,0.8)", letterSpacing: "0.03em" }}>
             {workTitle}
           </span>
         </div>
       )}
 
+      {/* Name */}
       <div>
-        <label htmlFor="inquiry-name" style={labelStyle}>{t.inquiry.name} *</label>
+        <label htmlFor="f-name" style={labelStyle}>您的名字 *</label>
         <input
-          id="inquiry-name"
+          id="f-name"
           type="text"
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
-          style={inputStyle}
+          onFocus={() => setFocusedField("f-name")}
+          onBlur={() => setFocusedField(null)}
+          style={fieldStyle("f-name")}
+          autoComplete="name"
         />
       </div>
 
+      {/* Email */}
       <div>
-        <label htmlFor="inquiry-email" style={labelStyle}>{t.inquiry.email} *</label>
+        <label htmlFor="f-email" style={labelStyle}>聯絡方式（Email）*</label>
         <input
-          id="inquiry-email"
+          id="f-email"
           type="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          style={inputStyle}
+          onFocus={() => setFocusedField("f-email")}
+          onBlur={() => setFocusedField(null)}
+          style={fieldStyle("f-email")}
+          autoComplete="email"
         />
       </div>
 
+      {/* Phone */}
       <div>
-        <label htmlFor="inquiry-phone" style={labelStyle}>{t.inquiry.phone}</label>
+        <label htmlFor="f-phone" style={labelStyle}>電話（選填）</label>
         <input
-          id="inquiry-phone"
+          id="f-phone"
           type="tel"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          style={inputStyle}
+          onFocus={() => setFocusedField("f-phone")}
+          onBlur={() => setFocusedField(null)}
+          style={fieldStyle("f-phone")}
+          autoComplete="tel"
         />
       </div>
 
+      {/* Inquiry type */}
       <div>
-        <label htmlFor="inquiry-type" style={labelStyle}>{t.inquiry.inquiryType}</label>
+        <label htmlFor="f-type" style={labelStyle}>您對哪件作品感興趣</label>
         <select
-          id="inquiry-type"
+          id="f-type"
           value={inquiryType}
           onChange={(e) => setInquiryType(e.target.value)}
-          style={{ ...inputStyle, cursor: "pointer" }}
+          onFocus={() => setFocusedField("f-type")}
+          onBlur={() => setFocusedField(null)}
+          style={{
+            ...fieldStyle("f-type"),
+            appearance: "none",
+            WebkitAppearance: "none",
+          }}
         >
-          {(
-            Object.entries(t.inquiry.inquiryTypes) as [string, string][]
-          ).map(([key, label]) => (
-            <option key={key} value={key}>
-              {label}
-            </option>
-          ))}
+          {(Object.entries(t.inquiry.inquiryTypes) as [string, string][]).map(
+            ([key, label]) => (
+              <option key={key} value={key} style={{ backgroundColor: "#111010" }}>
+                {label}
+              </option>
+            )
+          )}
         </select>
       </div>
 
+      {/* Message */}
       <div>
-        <label htmlFor="inquiry-message" style={labelStyle}>{t.inquiry.message} *</label>
+        <label htmlFor="f-message" style={labelStyle}>告訴我們您的故事 *</label>
         <textarea
-          id="inquiry-message"
+          id="f-message"
           required
           rows={5}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          style={{ ...inputStyle, resize: "vertical" }}
+          onFocus={() => setFocusedField("f-message")}
+          onBlur={() => setFocusedField(null)}
+          placeholder="可以是一個場合、一段記憶、或是您心中的畫面⋯⋯"
+          style={{
+            ...fieldStyle("f-message"),
+            resize: "vertical",
+            paddingTop: "20px",
+          }}
         />
       </div>
 
       {status === "error" && (
-        <p
-          style={{
-            fontSize: "0.8125rem",
-            color: "#c0392b",
-            letterSpacing: "0.03em",
-          }}
-        >
+        <p style={{ fontSize: "0.8125rem", color: "#c0392b", letterSpacing: "0.03em" }}>
           {t.inquiry.errorMessage}
         </p>
       )}
@@ -232,20 +232,13 @@ export default function InquiryForm({ workId, workTitle }: Props) {
       <button
         type="submit"
         disabled={status === "submitting"}
+        className="btn-cta-outline"
         style={{
-          padding: "0.875rem 2.5rem",
-          backgroundColor:
-            status === "submitting" ? "var(--yyc-sand)" : "var(--yyc-ink)",
-          color: "var(--yyc-bg)",
-          fontSize: "0.8125rem",
-          letterSpacing: "0.12em",
-          border: "none",
-          cursor: status === "submitting" ? "not-allowed" : "pointer",
-          fontFamily: "var(--font-noto-sans-tc)",
-          transition: "background-color 0.2s",
+          alignSelf: "flex-start",
+          opacity: status === "submitting" ? 0.5 : 1,
         }}
       >
-        {status === "submitting" ? t.inquiry.submitting : t.inquiry.submit}
+        {status === "submitting" ? t.inquiry.submitting : "開始對話"}
       </button>
     </form>
   );

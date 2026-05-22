@@ -1,13 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  --yyc-bg: #F7F5F0;
-  --yyc-ink: #1A1A18;
-  --yyc-gold: #8C7355;
-  --yyc-sand: #C4B49A;
-  --yyc-dark: #2C2C2A;
-  --yyc-white: #FFFFFF;
-  --yyc-border: rgba(26, 26, 24, 0.12);
+  /* New design system */
+  --color-bg-primary: #080706;
+  --color-bg-secondary: #111010;
+  --color-gold: #C49A5A;
+  --color-gold-dark: #8C6E42;
+  --color-gold-light: #D4B896;
+  --color-text-primary: #E8ECF0;
+  --color-text-secondary: #6B6560;
+  --color-jade: #3D6B5C;
+  --color-ember: #8B4A28;
+
+  /* Legacy aliases kept for admin/other pages */
+  --yyc-bg: #080706;
+  --yyc-ink: #E8ECF0;
+  --yyc-gold: #C49A5A;
+  --yyc-sand: #6B6560;
+  --yyc-dark: #0D0D0B;
+  --yyc-white: #E8ECF0;
+  --yyc-border: rgba(196,154,90,0.12);
   --font-noto-sans-tc: "Noto Sans TC", sans-serif;
   --font-noto-serif-tc: "Noto Serif TC", serif;
 }
@@ -17,23 +29,28 @@
 }
 
 html {
-  background-color: var(--yyc-bg);
-  color: var(--yyc-ink);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar {
+  display: none;
 }
 
 body {
   font-family: var(--font-noto-sans-tc);
   font-weight: 300;
   line-height: 1.75;
-  background-color: var(--yyc-bg);
-  color: var(--yyc-ink);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
 }
 
 ::selection {
-  background-color: #B8965A;
-  color: #080706;
+  background-color: var(--color-gold);
+  color: var(--color-bg-primary);
 }
 
 /* Hide native cursor on pointer devices; CustomCursor replaces it */
@@ -43,13 +60,14 @@ body {
   }
 }
 
-/* Hide scrollbar, preserve scroll functionality */
-html {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+img {
+  display: block;
+  max-width: 100%;
 }
-html::-webkit-scrollbar {
-  display: none;
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 /* Nav link hover underline slide-in */
@@ -71,12 +89,21 @@ html::-webkit-scrollbar {
   width: 100%;
 }
 
-img {
-  display: block;
-  max-width: 100%;
+/* CTA button: transparent border → gold fill on hover */
+.btn-cta-outline {
+  display: inline-block;
+  padding: 1rem 3rem;
+  border: 1px solid rgba(196, 154, 90, 0.4);
+  color: rgba(232, 236, 240, 0.75);
+  background: transparent;
+  font-size: 0.875rem;
+  letter-spacing: 0.15em;
+  font-weight: 300;
+  font-family: var(--font-noto-sans-tc);
+  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
 }
-
-a {
-  color: inherit;
-  text-decoration: none;
+.btn-cta-outline:hover {
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-bg-primary);
 }

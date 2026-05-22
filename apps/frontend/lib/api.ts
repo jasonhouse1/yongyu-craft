@@ -13,6 +13,8 @@ export interface WorkSnapshot {
   materials: string[];
   techniques: string[];
   dimensions?: string;
+  weight?: string;
+  year?: string;
   priceType: "fixed" | "range" | "inquiry";
   price?: number;
   priceMin?: number;
