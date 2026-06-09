@@ -82,6 +82,16 @@ adminWorksRouter.post("/", async (req: Request, res: Response) => {
   res.status(201).json(work);
 });
 
+// GET /api/admin/works/:id
+adminWorksRouter.get("/:id", async (req: Request, res: Response) => {
+  const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+  const work = await prisma.work.findUnique({ where: { id } });
+  if (!work) {
+    return res.status(404).json({ code: "WORK_NOT_FOUND", message: "Work not found" });
+  }
+  res.json(work);
+});
+
 // PUT /api/admin/works/:id
 adminWorksRouter.put("/:id", async (req: Request, res: Response) => {
   const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;

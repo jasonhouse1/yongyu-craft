@@ -6,12 +6,13 @@ import InquiryForm from "./_components/InquiryForm";
 export default async function InquiryPage({
   searchParams,
 }: {
-  searchParams: Promise<{ workId?: string }>;
+  searchParams: Promise<{ workId?: string; work?: string }>;
 }) {
-  const { workId } = await searchParams;
+  const { workId, work: workName } = await searchParams;
   const t = messages;
 
   const work = workId ? await getWork(workId).catch(() => null) : null;
+  const displayWorkName = work?.titleZh ?? workName ?? null;
 
   return (
     <main style={{ backgroundColor: "#080706", minHeight: "100vh" }}>
@@ -95,7 +96,15 @@ export default async function InquiryPage({
         </p>
       </section>
 
-      <InquiryForm workId={workId} workTitle={work?.titleZh} />
+      {displayWorkName && (
+        <div style={{ padding: "1.5rem 3rem 0" }}>
+          <p style={{ fontSize: "0.8rem", color: "#C49A5A", letterSpacing: "0.2em", fontWeight: 300 }}>
+            您正在詢問：{displayWorkName}
+          </p>
+        </div>
+      )}
+
+      <InquiryForm workId={workId} workTitle={displayWorkName ?? undefined} />
 
       <footer style={{
         backgroundColor: "#0D0D0B",

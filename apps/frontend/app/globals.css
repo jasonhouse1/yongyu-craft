@@ -165,6 +165,16 @@ select {
   z-index: 1;
 }
 
+/* Contact channel hover gold */
+.contact-channel:hover {
+  border-color: rgba(196,154,90,0.4) !important;
+}
+.contact-channel:hover a,
+.contact-channel:hover span:last-child {
+  color: #C49A5A;
+  transition: color 0.3s ease;
+}
+
 /* Homepage works card hover overlay */
 .works-card-thumb {
   aspect-ratio: 4/5;

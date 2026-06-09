@@ -14,179 +14,84 @@ export default async function WorkDetailPage({
   const work = await getWork(id).catch(() => null);
   if (!work) notFound();
 
-  const hasImage = work.coverImage && work.coverImage.length > 0;
+  const hasImage = !!work.coverImage;
+  const material = work.materials[0] ?? "精選材質";
+  const technique = work.techniques[0] ?? "傳統工法";
+  const processCount = work.techniques.length > 0 ? `${work.techniques.length} 道` : "多道";
 
   return (
     <main style={{ backgroundColor: "#080706" }}>
 
       {/* Fixed nav */}
       <nav style={{
-        position: "fixed",
-        top: 0, left: 0, right: 0,
-        zIndex: 50,
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
         padding: "1.5rem 3rem",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        backgroundColor: "rgba(8,7,6,0.75)",
-        backdropFilter: "blur(12px)",
+        display: "flex", justifyContent: "space-between", alignItems: "center",
+        backgroundColor: "rgba(8,7,6,0.75)", backdropFilter: "blur(12px)",
       }}>
-        <Link href="/" style={{
-          fontFamily: "var(--font-noto-serif-tc)",
-          fontSize: "1rem",
-          letterSpacing: "0.12em",
-          color: "#C49A5A",
-        }}>
+        <Link href="/" style={{ fontFamily: "var(--font-noto-serif-tc)", fontSize: "1rem", letterSpacing: "0.12em", color: "#C49A5A" }}>
           YY
         </Link>
         <div style={{ display: "flex", gap: "2.5rem" }}>
-          {[
-            { href: "/works", label: t.nav.works },
-            { href: "/about", label: t.nav.about },
-            { href: "/contact", label: t.nav.contact },
-          ].map((item) => (
-            <Link key={item.href} href={item.href} style={{
-              fontSize: "0.75rem",
-              letterSpacing: "0.15em",
-              color: "rgba(232,236,240,0.4)",
-              fontWeight: 300,
-            }}>
+          {[{ href: "/works", label: t.nav.works }, { href: "/about", label: t.nav.about }, { href: "/contact", label: t.nav.contact }].map(item => (
+            <Link key={item.href} href={item.href} style={{ fontSize: "0.75rem", letterSpacing: "0.15em", color: "rgba(232,236,240,0.4)", fontWeight: 300 }}>
               {item.label}
             </Link>
           ))}
         </div>
       </nav>
 
-      {/* ── Section 1: Full-screen visual ── */}
-      <section style={{
-        position: "relative",
-        height: "100vh",
-        overflow: "hidden",
-        display: "flex",
-        alignItems: "flex-end",
-      }}>
-        {/* Background image */}
+      {/* ── Section 1: Full-screen hero ── */}
+      <section style={{ position: "relative", height: "100vh", overflow: "hidden", display: "flex", alignItems: "flex-end" }}>
         {hasImage ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={work.coverImage}
-            alt={work.titleZh}
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              zIndex: 0,
-            }}
-          />
+          <img src={work.coverImage} alt={work.titleZh}
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", zIndex: 0 }} />
         ) : (
-          <div style={{
-            position: "absolute",
-            inset: 0,
-            background: "linear-gradient(135deg, rgba(196,154,90,0.08) 0%, #0D0D0B 100%)",
-            zIndex: 0,
-          }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(196,154,90,0.08) 0%, #0D0D0B 100%)", zIndex: 0 }} />
         )}
-
-        {/* Gradient overlay */}
         <div style={{
-          position: "absolute",
-          inset: 0,
-          background: "linear-gradient(to top, rgba(8,7,6,0.95) 0%, rgba(8,7,6,0.4) 50%, rgba(8,7,6,0.1) 100%)",
-          zIndex: 1,
+          position: "absolute", inset: 0, zIndex: 1,
+          background: "linear-gradient(to top, #080706 30%, transparent 70%)",
         }} />
-
-        {/* Title area */}
         <div style={{ position: "relative", zIndex: 2, padding: "0 3rem 5rem", maxWidth: "700px" }}>
-          <p style={{
-            fontSize: "0.6875rem",
-            letterSpacing: "0.2em",
-            color: "rgba(196,154,90,0.7)",
-            textTransform: "uppercase",
-            marginBottom: "1rem",
-          }}>
+          <p style={{ fontSize: "0.6875rem", letterSpacing: "0.2em", color: "rgba(196,154,90,0.7)", textTransform: "uppercase", marginBottom: "1rem" }}>
             {work.categoryId}
           </p>
           <h1 style={{
-            fontFamily: "var(--font-noto-serif-tc)",
-            fontSize: "clamp(2.5rem, 6vw, 5rem)",
-            fontWeight: 300,
-            color: "#E8ECF0",
-            letterSpacing: "0.06em",
-            lineHeight: 1.2,
-            marginBottom: "1rem",
+            fontFamily: "var(--font-noto-serif-tc)", fontWeight: 300, color: "#E8ECF0",
+            fontSize: "clamp(2.5rem, 5vw, 5rem)", letterSpacing: "0.06em", lineHeight: 1.2, marginBottom: "0.75rem",
           }}>
             {work.titleZh}
           </h1>
-          {work.materials.length > 0 && (
-            <p style={{
-              fontSize: "0.875rem",
-              color: "rgba(232,236,240,0.5)",
-              letterSpacing: "0.12em",
-            }}>
-              {work.materials.join(" · ")}
+          {work.subtitleZh && (
+            <p style={{ fontSize: "0.9375rem", color: "#9A9590", letterSpacing: "0.1em", fontWeight: 300 }}>
+              {work.subtitleZh}
             </p>
           )}
         </div>
       </section>
 
       {/* ── Section 2: Craft numbers ── */}
-      <section style={{
-        backgroundColor: "#111010",
-        padding: "6rem 3rem",
-        display: "flex",
-        justifyContent: "center",
-        gap: "0",
-      }}>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: "0",
-          width: "100%",
-          maxWidth: "900px",
-          textAlign: "center",
-        }}>
+      <section style={{ backgroundColor: "#080706", padding: "6rem 3rem" }}>
+        <div style={{ maxWidth: "900px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 0 }}>
           {[
-            {
-              value: work.materials[0] ?? "精選材質",
-              label: t.works.materials,
-            },
-            {
-              value: work.techniques[0] ?? "傳統工法",
-              label: t.works.techniques,
-            },
-            {
-              value: work.techniques.length > 0
-                ? `${work.techniques.length} 道`
-                : "多道",
-              label: "工序",
-            },
+            { value: material, label: t.works.materials },
+            { value: technique, label: t.works.techniques },
+            { value: processCount, label: "工序" },
           ].map((item, i) => (
-            <div
-              key={i}
-              style={{
-                padding: "2rem",
-                borderRight: i < 2 ? "1px solid rgba(196,154,90,0.1)" : "none",
-              }}
-            >
+            <div key={i} style={{
+              padding: "2.5rem 2rem",
+              borderLeft: i === 0 ? "2px solid #C49A5A" : "none",
+              borderRight: i < 2 ? "1px solid rgba(196,154,90,0.1)" : "none",
+            }}>
               <p style={{
-                fontFamily: "var(--font-noto-serif-tc)",
-                fontSize: "clamp(2rem, 4vw, 5rem)",
-                fontWeight: 300,
-                color: "#E8ECF0",
-                letterSpacing: "0.04em",
-                marginBottom: "0.75rem",
-                lineHeight: 1,
+                fontFamily: "var(--font-noto-serif-tc)", fontSize: "3rem", fontWeight: 300,
+                color: "#E8ECF0", letterSpacing: "0.04em", marginBottom: "0.75rem", lineHeight: 1,
               }}>
                 {item.value}
               </p>
-              <p style={{
-                fontSize: "0.8rem",
-                letterSpacing: "0.18em",
-                color: "#6B6560",
-                textTransform: "uppercase",
-              }}>
+              <p style={{ fontSize: "0.8rem", letterSpacing: "0.18em", color: "#9A9590", textTransform: "uppercase" }}>
                 {item.label}
               </p>
             </div>
@@ -195,71 +100,40 @@ export default async function WorkDetailPage({
       </section>
 
       {/* ── Section 3: Story ── */}
-      <section style={{
-        padding: "8rem 3rem",
-        display: "flex",
-        gap: "4rem",
-        maxWidth: "900px",
-        margin: "0 auto",
-      }}>
-        {/* Gold vertical line */}
-        <div style={{
-          width: "1px",
-          background: "linear-gradient(to bottom, transparent, #C49A5A 20%, #C49A5A 80%, transparent)",
-          flexShrink: 0,
-          opacity: 0.4,
-          minHeight: "200px",
-        }} />
-
-        <div style={{ flex: 1 }}>
-          <p style={{
-            fontSize: "0.6875rem",
-            letterSpacing: "0.2em",
-            color: "rgba(196,154,90,0.5)",
-            textTransform: "uppercase",
-            marginBottom: "2rem",
-          }}>
+      <section style={{ backgroundColor: "#0D0C0B", padding: "8rem 3rem" }}>
+        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+          <p style={{ fontSize: "0.65rem", letterSpacing: "0.5em", color: "#C49A5A", textTransform: "uppercase", marginBottom: "3rem" }}>
             STORY
           </p>
-          <p style={{
-            fontFamily: "var(--font-noto-serif-tc)",
-            fontSize: "clamp(1.1rem, 1.8vw, 1.375rem)",
-            fontWeight: 300,
-            color: "rgba(232,236,240,0.8)",
-            lineHeight: 2.2,
-            letterSpacing: "0.06em",
-            marginBottom: "3rem",
-          }}>
-            {work.descriptionZh}
-          </p>
-
-          {/* Specs */}
-          {(work.dimensions || work.weight || work.year) && (
-            <dl style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.875rem",
-              borderTop: "1px solid rgba(196,154,90,0.1)",
-              paddingTop: "2rem",
+          {work.descriptionZh && (
+            <p style={{
+              fontFamily: "var(--font-noto-serif-tc)", fontWeight: 300, color: "rgba(232,236,240,0.85)",
+              fontSize: "clamp(1rem, 2vw, 1.4rem)", lineHeight: 2.2, letterSpacing: "0.06em", marginBottom: "2.5rem",
             }}>
+              {work.descriptionZh}
+            </p>
+          )}
+          {work.storyZh && (
+            <p style={{
+              fontStyle: "italic", color: "#9A9590",
+              fontSize: "clamp(0.875rem, 1.5vw, 1.1rem)", lineHeight: 2, letterSpacing: "0.04em",
+              borderLeft: "2px solid rgba(196,154,90,0.3)", paddingLeft: "1.5rem",
+            }}>
+              {work.storyZh}
+            </p>
+          )}
+          {(work.dimensions || work.year) && (
+            <dl style={{ marginTop: "3rem", display: "flex", flexDirection: "column", gap: "0.875rem", borderTop: "1px solid rgba(196,154,90,0.1)", paddingTop: "2rem" }}>
               {work.dimensions && (
                 <div style={{ display: "flex", gap: "2rem" }}>
-                  <dt style={{ fontSize: "0.6875rem", letterSpacing: "0.12em", color: "#6B6560", minWidth: "4rem" }}>
-                    {t.works.dimensions}
-                  </dt>
-                  <dd style={{ fontSize: "0.875rem", color: "rgba(232,236,240,0.65)" }}>
-                    {work.dimensions}
-                  </dd>
+                  <dt style={{ fontSize: "0.6875rem", letterSpacing: "0.12em", color: "#6B6560", minWidth: "4rem" }}>{t.works.dimensions}</dt>
+                  <dd style={{ fontSize: "0.875rem", color: "rgba(232,236,240,0.65)" }}>{work.dimensions}</dd>
                 </div>
               )}
               {work.year && (
                 <div style={{ display: "flex", gap: "2rem" }}>
-                  <dt style={{ fontSize: "0.6875rem", letterSpacing: "0.12em", color: "#6B6560", minWidth: "4rem" }}>
-                    {t.works.year}
-                  </dt>
-                  <dd style={{ fontSize: "0.875rem", color: "rgba(232,236,240,0.65)" }}>
-                    {work.year}
-                  </dd>
+                  <dt style={{ fontSize: "0.6875rem", letterSpacing: "0.12em", color: "#6B6560", minWidth: "4rem" }}>{t.works.year}</dt>
+                  <dd style={{ fontSize: "0.875rem", color: "rgba(232,236,240,0.65)" }}>{work.year}</dd>
                 </div>
               )}
             </dl>
@@ -269,59 +143,34 @@ export default async function WorkDetailPage({
 
       {/* ── Section 4: CTA ── */}
       <section style={{
-        backgroundColor: "#080706",
-        height: "80vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "2.5rem",
-        textAlign: "center",
-        padding: "0 3rem",
-        borderTop: "1px solid rgba(196,154,90,0.06)",
+        backgroundColor: "#080706", minHeight: "80vh",
+        display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+        gap: "2.5rem", textAlign: "center", padding: "0 3rem",
+        borderTop: "1px solid rgba(196,154,90,0.06)", position: "relative",
       }}>
         <p style={{
-          fontFamily: "var(--font-noto-serif-tc)",
-          fontSize: "clamp(1.25rem, 2.5vw, 2rem)",
-          fontWeight: 300,
-          color: "rgba(232,236,240,0.7)",
-          letterSpacing: "0.1em",
-          lineHeight: 1.8,
+          fontFamily: "var(--font-noto-serif-tc)", fontWeight: 300, color: "#E8ECF0",
+          fontSize: "clamp(1.2rem, 3vw, 2rem)", letterSpacing: "0.1em", lineHeight: 1.8,
         }}>
           這件作品，等待屬於它的主人
         </p>
-
-        <Link href={`/inquiry?workId=${work.id}`} className="btn-cta-outline">
+        <Link href={`/inquiry?work=${encodeURIComponent(work.titleZh)}`} className="btn-cta-outline">
           開始對話
         </Link>
-
         <Link href="/works" style={{
-          fontSize: "0.75rem",
-          letterSpacing: "0.12em",
-          color: "rgba(232,236,240,0.25)",
-          marginTop: "1rem",
+          position: "absolute", bottom: "3rem", left: "3rem",
+          fontSize: "0.75rem", letterSpacing: "0.12em", color: "rgba(232,236,240,0.25)",
         }}>
           ← {t.works.backToWorks}
         </Link>
       </section>
 
-      {/* Footer */}
       <footer style={{
-        backgroundColor: "#0D0D0B",
-        padding: "3rem",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        flexWrap: "wrap",
-        gap: "1rem",
-        borderTop: "1px solid rgba(196,154,90,0.08)",
+        backgroundColor: "#0D0D0B", padding: "3rem",
+        display: "flex", justifyContent: "space-between", alignItems: "center",
+        flexWrap: "wrap", gap: "1rem", borderTop: "1px solid rgba(196,154,90,0.08)",
       }}>
-        <span style={{
-          fontFamily: "var(--font-noto-serif-tc)",
-          fontSize: "0.875rem",
-          letterSpacing: "0.12em",
-          color: "rgba(196,154,90,0.55)",
-        }}>
+        <span style={{ fontFamily: "var(--font-noto-serif-tc)", fontSize: "0.875rem", letterSpacing: "0.12em", color: "rgba(196,154,90,0.55)" }}>
           {t.footer.brand}
         </span>
         <span style={{ fontSize: "0.75rem", color: "rgba(232,236,240,0.18)", letterSpacing: "0.05em" }}>
