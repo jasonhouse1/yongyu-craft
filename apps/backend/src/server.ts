@@ -1,5 +1,6 @@
 ﻿import "dotenv/config";
 import express from "express";
+import cors from "cors";
 import { workRouter } from "./modules/work/work.controller";
 import { inquiryRouter } from "./modules/inquiry/inquiry.controller";
 import { adminWorksRouter } from "./modules/admin/admin-works.controller";
@@ -9,6 +10,15 @@ import { prisma } from "./shared/db/prisma";
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
+
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    process.env.FRONTEND_URL ?? 'https://independent-youth-production-2eba.up.railway.app',
+  ],
+  credentials: true,
+}));
 
 app.use(express.json());
 

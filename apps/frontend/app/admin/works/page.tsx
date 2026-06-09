@@ -41,6 +41,21 @@ export default async function AdminWorksPage() {
             共 {items.length} 筆
           </p>
         </div>
+        <a
+          href="/admin/works/new"
+          style={{
+            padding: "8px 18px",
+            background: "#8c7355",
+            border: "none",
+            borderRadius: 4,
+            color: "#fff",
+            fontSize: 13,
+            textDecoration: "none",
+            whiteSpace: "nowrap",
+          }}
+        >
+          ＋ 新增作品
+        </a>
       </div>
       <WorksTable items={items as Parameters<typeof WorksTable>[0]["items"]} />
     </>

@@ -1,10 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
   return (
     <div
       style={{
@@ -43,9 +47,15 @@ export default function AdminLayout({
         <Link href="/admin/inquiries" style={navLinkStyle}>
           詢價
         </Link>
-        <Link href="/admin/login" style={{ ...navLinkStyle, marginLeft: "auto", color: "#555" }}>
+        <button
+          onClick={() => {
+            document.cookie = "admin_key=; path=/; max-age=0";
+            router.push("/admin/login");
+          }}
+          style={{ ...navLinkStyle, marginLeft: "auto", background: "none", border: "none", cursor: "pointer", color: "#555" }}
+        >
           登出
-        </Link>
+        </button>
       </nav>
       <main
         style={{

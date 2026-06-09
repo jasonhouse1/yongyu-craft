@@ -18,13 +18,13 @@ export default async function HomePage() {
       {works.length > 0 && (
         <section style={{ padding: "6rem 3rem", backgroundColor: "#080706" }}>
           <p style={{
-            fontSize: "0.75rem",
-            letterSpacing: "0.2em",
-            color: "rgba(184,150,90,0.55)",
+            fontSize: "0.7rem",
+            letterSpacing: "0.5em",
+            color: "#C49A5A",
             marginBottom: "3rem",
             textTransform: "uppercase",
           }}>
-            {t.works.sectionLabel}
+            SELECTED WORKS
           </p>
           <div style={{
             display: "grid",
@@ -42,7 +42,29 @@ export default async function HomePage() {
                   backgroundColor: "rgba(184,150,90,0.06)",
                   border: "1px solid rgba(184,150,90,0.1)",
                   marginBottom: "1.25rem",
-                }} />
+                  position: "relative",
+                  overflow: "hidden",
+                }}>
+                  <div
+                    className="works-hover-overlay"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: "rgba(0,0,0,0.55)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      opacity: 0,
+                      transition: "opacity 0.3s ease",
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
+                    onMouseLeave={e => (e.currentTarget.style.opacity = "0")}
+                  >
+                    <span style={{ color: "#E8ECF0", fontSize: "0.85rem", letterSpacing: "0.15em" }}>
+                      查看作品 →
+                    </span>
+                  </div>
+                </div>
                 <p style={{
                   fontSize: "0.75rem",
                   letterSpacing: "0.12em",
@@ -54,7 +76,7 @@ export default async function HomePage() {
                 <p style={{
                   fontSize: "0.9375rem",
                   letterSpacing: "0.05em",
-                  color: "rgba(255,255,255,0.75)",
+                  color: "#E8ECF0",
                 }}>
                   {work.titleZh}
                 </p>

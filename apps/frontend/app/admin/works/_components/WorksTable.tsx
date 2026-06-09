@@ -133,21 +133,37 @@ export default function WorksTable({ items }: { items: WorkItem[] }) {
                 {work.priceType}
               </td>
               <td style={{ padding: "12px 16px", textAlign: "right" }}>
-                <button
-                  onClick={() => handleDelete(work)}
-                  disabled={deleting === work.id}
-                  style={{
-                    padding: "4px 10px",
-                    background: "transparent",
-                    border: "1px solid #333",
-                    borderRadius: 4,
-                    color: deleting === work.id ? "#555" : "#f87171",
-                    cursor: deleting === work.id ? "not-allowed" : "pointer",
-                    fontSize: 12,
-                  }}
-                >
-                  {deleting === work.id ? "..." : "刪除"}
-                </button>
+                <div style={{ display: "flex", gap: 6, justifyContent: "flex-end" }}>
+                  <a
+                    href={`/admin/works/${work.id}/edit`}
+                    style={{
+                      padding: "4px 10px",
+                      background: "transparent",
+                      border: "1px solid #333",
+                      borderRadius: 4,
+                      color: "#888",
+                      fontSize: 12,
+                      textDecoration: "none",
+                    }}
+                  >
+                    編輯
+                  </a>
+                  <button
+                    onClick={() => handleDelete(work)}
+                    disabled={deleting === work.id}
+                    style={{
+                      padding: "4px 10px",
+                      background: "transparent",
+                      border: "1px solid #333",
+                      borderRadius: 4,
+                      color: deleting === work.id ? "#555" : "#f87171",
+                      cursor: deleting === work.id ? "not-allowed" : "pointer",
+                      fontSize: 12,
+                    }}
+                  >
+                    {deleting === work.id ? "..." : "刪除"}
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

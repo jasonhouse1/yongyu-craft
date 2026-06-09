@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <main
       style={{
-        backgroundColor: "var(--yyc-bg)",
+        backgroundColor: "#080706",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
@@ -19,11 +19,13 @@ export default function NotFound() {
     >
       <p
         style={{
-          fontSize: "0.75rem",
-          letterSpacing: "0.3em",
-          color: "var(--yyc-gold)",
-          marginBottom: "1.5rem",
-          textTransform: "uppercase",
+          fontFamily: "var(--font-noto-serif-tc)",
+          fontSize: "8rem",
+          fontWeight: 300,
+          color: "#C49A5A",
+          opacity: 0.3,
+          lineHeight: 1,
+          marginBottom: "2rem",
         }}
       >
         404
@@ -34,7 +36,7 @@ export default function NotFound() {
           fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
           fontWeight: 300,
           letterSpacing: "0.1em",
-          color: "var(--yyc-ink)",
+          color: "#E8ECF0",
           marginBottom: "1rem",
         }}
       >
@@ -43,7 +45,7 @@ export default function NotFound() {
       <p
         style={{
           fontSize: "0.875rem",
-          color: "var(--yyc-sand)",
+          color: "#6B6560",
           letterSpacing: "0.05em",
           marginBottom: "3rem",
         }}
@@ -51,32 +53,10 @@ export default function NotFound() {
         {t.notFound.message}
       </p>
       <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", justifyContent: "center" }}>
-        <Link
-          href="/"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            padding: "0.75rem 2rem",
-            backgroundColor: "var(--yyc-ink)",
-            color: "var(--yyc-bg)",
-            fontSize: "0.8125rem",
-            letterSpacing: "0.12em",
-          }}
-        >
+        <Link href="/" className="btn-cta-outline">
           {t.notFound.backHome}
         </Link>
-        <Link
-          href="/works"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            padding: "0.75rem 2rem",
-            border: "1px solid var(--yyc-ink)",
-            color: "var(--yyc-ink)",
-            fontSize: "0.8125rem",
-            letterSpacing: "0.12em",
-          }}
-        >
+        <Link href="/works" className="btn-cta-outline">
           {t.notFound.browseWorks}
         </Link>
       </div>

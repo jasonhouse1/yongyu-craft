@@ -9,16 +9,31 @@ export default function AdminLoginPage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!key.trim()) {
       setError("請輸入 Admin Key");
       return;
     }
     setLoading(true);
-    document.cookie = `admin_key=${encodeURIComponent(key.trim())}; path=/; max-age=86400; samesite=strict`;
-    router.push("/admin");
-    router.refresh();
+    setError("");
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
+      const res = await fetch(`${apiUrl}/api/admin/works?limit=1`, {
+        headers: { "x-admin-key": key.trim() },
+      });
+      if (res.status === 401 || res.status === 503) {
+        setError("金鑰錯誤");
+        return;
+      }
+      document.cookie = `admin_key=${encodeURIComponent(key.trim())}; path=/; max-age=86400; samesite=strict`;
+      router.push("/admin");
+      router.refresh();
+    } catch {
+      setError("連線失敗，請稍後再試");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
