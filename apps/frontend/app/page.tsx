@@ -37,29 +37,8 @@ export default async function HomePage() {
                 href={`/works/${work.categoryId}/${work.id}`}
                 style={{ display: "block" }}
               >
-                <div style={{
-                  aspectRatio: "4/5",
-                  backgroundColor: "rgba(184,150,90,0.06)",
-                  border: "1px solid rgba(184,150,90,0.1)",
-                  marginBottom: "1.25rem",
-                  position: "relative",
-                  overflow: "hidden",
-                }}>
-                  <div
-                    className="works-hover-overlay"
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      background: "rgba(0,0,0,0.55)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      opacity: 0,
-                      transition: "opacity 0.3s ease",
-                    }}
-                    onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
-                    onMouseLeave={e => (e.currentTarget.style.opacity = "0")}
-                  >
+                <div className="works-card-thumb">
+                  <div className="works-card-overlay">
                     <span style={{ color: "#E8ECF0", fontSize: "0.85rem", letterSpacing: "0.15em" }}>
                       查看作品 →
                     </span>
