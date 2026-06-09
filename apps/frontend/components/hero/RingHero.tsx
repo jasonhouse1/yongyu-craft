@@ -194,8 +194,8 @@ export default function RingHero() {
               <div
                 style={{
                   position: 'relative',
-                  WebkitMaskImage: "url('/images/works/lumiere-ring/alpha.png')",
-                  maskImage: "url('/images/works/lumiere-ring/alpha.png')",
+                  WebkitMaskImage: "url('/images/works/lumiere-ring/alpha-inverted.png')",
+                  maskImage: "url('/images/works/lumiere-ring/alpha-inverted.png')",
                   WebkitMaskSize: 'contain',
                   maskSize: 'contain',
                   WebkitMaskRepeat: 'no-repeat',
