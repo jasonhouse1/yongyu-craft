@@ -2,10 +2,10 @@
 
 import { motion } from 'framer-motion'
 
-const STATS = [
-  { number: '18K', unit: '純金', description: '純金鍛造' },
-  { number: '三週', unit: '工時', description: '反覆調整' },
-  { number: '一件', unit: '作品', description: '值得傳世' },
+const ITEMS = [
+  { text: '十八克拉', dir: 'left' as const },
+  { text: '三週鍛造', dir: 'right' as const },
+  { text: '一件傳世', dir: 'left' as const },
 ]
 
 export default function CraftSection() {
@@ -22,114 +22,96 @@ export default function CraftSection() {
         overflow: 'hidden',
       }}
     >
-      {/* Block 1: craft stats */}
-      <div style={{ maxWidth: '800px', width: '100%', margin: '0 auto 6rem' }}>
-        {STATS.map((item, i) => (
-          <div key={i}>
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-10%' }}
-              transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.2 }}
-              style={{
-                display: 'flex',
-                alignItems: 'baseline',
-                justifyContent: 'space-between',
-                padding: '2.5rem 0',
-              }}
-            >
-              {/* Left: number + unit */}
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
-                <span
-                  style={{
-                    fontFamily: 'var(--font-noto-serif-tc)',
-                    fontSize: 'clamp(4rem, 8vw, 9rem)',
-                    fontWeight: 300,
-                    color: '#E8ECF0',
-                    lineHeight: 1,
-                  }}
-                >
-                  {item.number}
-                </span>
-                <span
-                  style={{
-                    fontSize: 'clamp(1rem, 2vw, 1.5rem)',
-                    color: '#C49A5A',
-                    letterSpacing: '0.2em',
-                    fontWeight: 300,
-                  }}
-                >
-                  {item.unit}
-                </span>
-              </div>
-
-              {/* Right: description */}
-              <span
-                style={{
-                  fontSize: '0.85rem',
-                  color: '#9A9590',
-                  letterSpacing: '0.3em',
-                  fontWeight: 300,
-                }}
-              >
-                {item.description}
-              </span>
-            </motion.div>
-
-            {/* Divider (skip after last item) */}
-            {i < STATS.length - 1 && (
-              <div style={{ height: '1px', backgroundColor: '#1A1815' }} />
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Block 2: brand declaration */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-10%' }}
-        transition={{ duration: 1.0, ease: [0.25, 0.1, 0.25, 1] }}
-        style={{
-          maxWidth: '600px',
-          margin: '0 auto',
-          borderLeft: '2px solid #C49A5A',
-          paddingLeft: '2rem',
-        }}
-      >
-        <p
-          style={{
-            fontFamily: 'var(--font-noto-serif-tc)',
-            fontSize: 'clamp(1rem, 2.5vw, 1.6rem)',
-            color: '#7A7570',
-            fontWeight: 300,
-            lineHeight: 1.9,
-            margin: 0,
-          }}
-        >
-          不是裝飾，是工匠與金屬之間，最誠實的對話。
-        </p>
-      </motion.div>
-
-      {/* Block 3: corner label */}
+      {/* Global brushed texture base layer */}
       <div
         style={{
           position: 'absolute',
-          bottom: '3rem',
-          right: '3rem',
+          inset: 0,
+          backgroundImage: 'url(/images/works/lumiere-ring/detail-2.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.03,
+          pointerEvents: 'none',
         }}
-      >
-        <span
-          style={{
-            fontSize: '0.65rem',
-            color: '#C49A5A',
-            letterSpacing: '0.5em',
-            opacity: 0.5,
-            fontWeight: 300,
-          }}
-        >
-          CRAFTSMANSHIP · TAIWAN
-        </span>
+      />
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+        {ITEMS.map((item, i) => (
+          <div
+            key={i}
+            style={{
+              position: 'relative',
+              padding: '2.5rem 0',
+              overflow: 'hidden',
+            }}
+          >
+            {/* Per-line texture highlight */}
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                opacity: 0.07,
+                pointerEvents: 'none',
+              }}
+            >
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, margin: '-15%' }}
+                transition={{ duration: 2.0 }}
+                style={{
+                  height: '100%',
+                  backgroundImage: 'url(/images/works/lumiere-ring/detail-2.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: `center ${i * 33}%`,
+                }}
+              />
+            </div>
+
+            {/* Main text */}
+            <motion.div
+              initial={{ opacity: 0, x: item.dir === 'left' ? -80 : 80 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-10%' }}
+              transition={{ duration: 1.0, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.08 }}
+              style={{ position: 'relative', zIndex: 1 }}
+            >
+              <span
+                style={{
+                  fontFamily: 'var(--font-noto-serif-tc)',
+                  fontSize: 'clamp(3.5rem, 9vw, 8rem)',
+                  fontWeight: 300,
+                  color: 'rgba(255,255,255,0.88)',
+                  letterSpacing: '0.06em',
+                  display: 'block',
+                  textAlign: item.dir === 'right' ? 'right' : 'left',
+                  lineHeight: 1.1,
+                }}
+              >
+                {item.text}
+              </span>
+
+              {/* Gold accent line */}
+              <motion.div
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.0, delay: 0.25 + i * 0.08, ease: 'easeOut' }}
+                style={{
+                  height: '1px',
+                  width: '35%',
+                  background:
+                    item.dir === 'left'
+                      ? 'linear-gradient(to right, rgba(184,150,90,0.45), transparent)'
+                      : 'linear-gradient(to left, rgba(184,150,90,0.45), transparent)',
+                  transformOrigin: item.dir === 'left' ? 'left' : 'right',
+                  marginTop: '0.75rem',
+                  marginLeft: item.dir === 'right' ? 'auto' : '0',
+                }}
+              />
+            </motion.div>
+          </div>
+        ))}
       </div>
     </section>
   )

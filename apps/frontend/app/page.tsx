@@ -54,7 +54,7 @@ export default async function HomePage() {
                 <p style={{
                   fontSize: "0.9375rem",
                   letterSpacing: "0.05em",
-                  color: "#E8ECF0",
+                  color: "rgba(255,255,255,0.75)",
                 }}>
                   {work.titleZh}
                 </p>
