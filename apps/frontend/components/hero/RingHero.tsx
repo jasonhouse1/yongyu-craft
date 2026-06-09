@@ -43,8 +43,19 @@ export default function RingHero() {
   return (
     <div
       ref={containerRef}
+      className="hero-bg"
       style={{
-        backgroundColor: '#080706',
+        background: `
+          radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.5) 100%),
+          repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 60px,
+            rgba(196,154,90,0.012) 60px,
+            rgba(196,154,90,0.012) 61px
+          ),
+          #080706
+        `,
         height: '100vh',
         position: 'relative',
         overflow: 'hidden',
@@ -323,23 +334,28 @@ export default function RingHero() {
           />
         </div>
 
-        {/* Center: SCROLL with flowing line */}
+        {/* Center: SCROLL with SVG mouse icon */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 7.0, duration: 1.0 }}
           style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}
         >
-          <span style={{ color: '#C49A5A', fontSize: '0.65rem', letterSpacing: '0.4em', fontWeight: 300 }}>
+          <div style={{ animation: 'scrollHint 2s ease-in-out infinite' }}>
+            <svg width="24" height="36" viewBox="0 0 24 36" fill="none">
+              <path
+                d="M12 2C9.8 2 8 3.8 8 6v14c0 2.2 1.8 4 4 4s4-1.8 4-4V6c0-2.2-1.8-4-4-4z"
+                stroke="#C49A5A" strokeWidth="1" fill="none" opacity="0.6"
+              />
+              <path
+                d="M4 16v6c0 5.5 4 10 8 10s8-4.5 8-10v-6"
+                stroke="#C49A5A" strokeWidth="1" fill="none" opacity="0.4"
+              />
+            </svg>
+          </div>
+          <span style={{ color: '#C49A5A', fontSize: '0.55rem', letterSpacing: '0.4em', fontWeight: 300, opacity: 0.5 }}>
             SCROLL
           </span>
-          <div style={{ width: '1px', height: '40px', background: 'rgba(196,154,90,0.2)', position: 'relative', overflow: 'hidden' }}>
-            <motion.div
-              animate={{ y: ['-100%', '100%'] }}
-              transition={{ duration: 1.4, ease: 'linear', repeat: Infinity }}
-              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: '#C49A5A' }}
-            />
-          </div>
         </motion.div>
 
         {/* Right: subtitle */}
