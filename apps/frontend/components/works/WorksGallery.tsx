@@ -151,6 +151,7 @@ export default function WorksGallery({ works }: Props) {
 
   return (
     <div
+      className="works-grid"
       style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import BackButton from "@/components/ui/BackButton";
 import FavoriteButton from "@/components/ui/FavoriteButton";
+import WorkHeroImage from "@/components/ui/WorkHeroImage";
 
 export default async function WorkDetailPage({
   params,
@@ -47,9 +48,7 @@ export default async function WorkDetailPage({
       {/* ── Section 1: Full-screen hero ── */}
       <section style={{ position: "relative", height: "100vh", overflow: "hidden", display: "flex", alignItems: "flex-end" }}>
         {hasImage ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={work.coverImage} alt={work.titleZh}
-            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", zIndex: 0 }} />
+          <WorkHeroImage src={work.coverImage} alt={work.titleZh} />
         ) : (
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(196,154,90,0.08) 0%, #0D0D0B 100%)", zIndex: 0 }} />
         )}

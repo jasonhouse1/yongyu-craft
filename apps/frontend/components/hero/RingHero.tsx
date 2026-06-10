@@ -11,6 +11,13 @@ export default function RingHero() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [lightPos, setLightPos] = useState({ x: 50, y: 40 })
   const [isRingHovered, setIsRingHovered] = useState(false)
+  const [memberPath, setMemberPath] = useState('/member/login')
+
+  useEffect(() => {
+    if (localStorage.getItem('yyc_member_token')) {
+      setMemberPath('/member')
+    }
+  }, [])
 
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
@@ -170,6 +177,18 @@ export default function RingHero() {
             {item.label}
           </Link>
         ))}
+        <Link
+          href={memberPath}
+          className="nav-link-hero"
+          style={{
+            fontSize: '0.8rem',
+            letterSpacing: '0.15em',
+            color: '#C8C4BE',
+            fontWeight: 300,
+          }}
+        >
+          會員
+        </Link>
       </motion.nav>
 
       {/* Ring + reflection */}

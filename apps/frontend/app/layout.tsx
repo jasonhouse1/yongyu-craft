@@ -5,6 +5,8 @@ import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import CustomCursor from "@/components/ui/CustomCursor";
 import CampaignBanner from "@/components/ui/CampaignBanner";
 import { MemberProvider } from "@/lib/member-context";
+import PageTransition from "@/components/ui/PageTransition";
+import Footer from "@/components/ui/Footer";
 import "./globals.css";
 
 const notoSansTC = Noto_Sans_TC({
@@ -49,7 +51,10 @@ export default function RootLayout({
         <MemberProvider>
           <CampaignBanner />
           <CustomCursor />
-          <SmoothScrollProvider>{children}</SmoothScrollProvider>
+          <SmoothScrollProvider>
+            <PageTransition>{children}</PageTransition>
+            <Footer />
+          </SmoothScrollProvider>
         </MemberProvider>
       </body>
     </html>
