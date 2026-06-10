@@ -190,22 +190,10 @@ export default function RingHero() {
               onHoverStart={() => setIsRingHovered(true)}
               onHoverEnd={() => setIsRingHovered(false)}
             >
-              {/* Main ring with mask removal */}
-              <div
-                style={{
-                  position: 'relative',
-                  WebkitMaskImage: "url('/images/works/lumiere-ring/alpha-inverted.png')",
-                  maskImage: "url('/images/works/lumiere-ring/alpha-inverted.png')",
-                  WebkitMaskSize: 'contain',
-                  maskSize: 'contain',
-                  WebkitMaskRepeat: 'no-repeat',
-                  maskRepeat: 'no-repeat',
-                  WebkitMaskPosition: 'center',
-                  maskPosition: 'center',
-                }}
-              >
+              {/* Main ring — pre-composited transparent PNG */}
+              <div style={{ position: 'relative' }}>
                 <Image
-                  src="/images/works/lumiere-ring/main.png"
+                  src="/images/works/lumiere-ring/ring-transparent.png"
                   alt="Lumière Ring"
                   width={371}
                   height={326}
@@ -234,7 +222,7 @@ export default function RingHero() {
               {/* Reflection */}
               <div style={{ position: 'relative', marginTop: '-20%' }}>
                 <Image
-                  src="/images/works/lumiere-ring/main.png"
+                  src="/images/works/lumiere-ring/ring-transparent.png"
                   alt=""
                   aria-hidden
                   width={371}
