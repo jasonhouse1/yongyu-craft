@@ -2,6 +2,7 @@ import { getWork } from "@/lib/api";
 import messages from "@/messages/zh.json";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import BackButton from "@/components/ui/BackButton";
 
 export default async function WorkDetailPage({
   params,
@@ -55,6 +56,7 @@ export default async function WorkDetailPage({
           background: "linear-gradient(to top, #080706 30%, transparent 70%)",
         }} />
         <div style={{ position: "relative", zIndex: 2, padding: "0 3rem 5rem", maxWidth: "700px" }}>
+          <div style={{ marginBottom: "1.5rem" }}><BackButton /></div>
           <p style={{ fontSize: "0.6875rem", letterSpacing: "0.2em", color: "rgba(196,154,90,0.7)", textTransform: "uppercase", marginBottom: "1rem" }}>
             {work.categoryId}
           </p>

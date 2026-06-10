@@ -173,7 +173,7 @@ export default function RingHero() {
       </motion.nav>
 
       {/* Ring + reflection */}
-      <div style={{ perspective: '1200px', zIndex: 10, position: 'relative' }}>
+      <div style={{ perspective: '1200px', zIndex: 10, position: 'relative', marginTop: '-8vh' }}>
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -199,7 +199,7 @@ export default function RingHero() {
                   height={326}
                   priority
                   style={{
-                    height: '65vh',
+                    height: '70vh',
                     width: 'auto',
                     objectFit: 'contain',
                     display: 'block',
@@ -228,7 +228,7 @@ export default function RingHero() {
                   width={371}
                   height={326}
                   style={{
-                    height: '65vh',
+                    height: '70vh',
                     width: 'auto',
                     objectFit: 'contain',
                     display: 'block',
@@ -277,6 +277,7 @@ export default function RingHero() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 5.0 + i * 0.3, duration: 0.8, ease: 'easeOut' }}
+                className="hero-brand-name"
                 style={{
                   fontFamily: 'var(--font-noto-serif-tc)',
                   fontSize: 'clamp(2.5rem, 5vw, 5rem)',

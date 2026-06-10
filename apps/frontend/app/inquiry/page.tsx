@@ -2,6 +2,7 @@ import { getWork } from "@/lib/api";
 import messages from "@/messages/zh.json";
 import Link from "next/link";
 import InquiryForm from "./_components/InquiryForm";
+import BackButton from "@/components/ui/BackButton";
 
 export default async function InquiryPage({
   searchParams,
@@ -55,6 +56,7 @@ export default async function InquiryPage({
       </nav>
 
       <section style={{ padding: "10rem 3rem 0" }}>
+        <div style={{ marginBottom: "1.5rem" }}><BackButton /></div>
         <p style={{
           fontSize: "0.75rem",
           letterSpacing: "0.25em",

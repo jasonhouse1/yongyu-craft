@@ -1,5 +1,6 @@
 import messages from "@/messages/zh.json";
 import Link from "next/link";
+import BackButton from "@/components/ui/BackButton";
 
 export default function AboutPage() {
   const t = messages;
@@ -19,6 +20,9 @@ export default function AboutPage() {
     { num: "2010", label: "創立年份" },
     { num: "300+", label: "累計作品" },
     { num: "18", label: "製作工序" },
+    { num: "20+", label: "服務年資" },
+    { num: "100%", label: "手工製作" },
+    { num: "∞", label: "創作可能" },
   ];
 
   return (
@@ -44,6 +48,7 @@ export default function AboutPage() {
 
       {/* Hero */}
       <section style={{ padding: "10rem 3rem 5rem", maxWidth: "720px" }}>
+        <div style={{ marginBottom: "1.5rem" }}><BackButton /></div>
         <p style={{ fontSize: "0.75rem", letterSpacing: "0.5em", color: "#C49A5A", marginBottom: "0.75rem", textTransform: "uppercase" }}>
           CRAFTSMANSHIP · SINCE TAIWAN
         </p>
@@ -85,7 +90,7 @@ export default function AboutPage() {
           </div>
 
           {/* Right: brand numbers */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "2rem" }}>
             {brandNumbers.map((item) => (
               <div key={item.num} style={{ borderLeft: "1px solid rgba(196,154,90,0.25)", paddingLeft: "1.5rem" }}>
                 <p style={{

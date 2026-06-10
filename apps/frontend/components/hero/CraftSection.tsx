@@ -8,9 +8,11 @@ gsap.registerPlugin(ScrollTrigger)
 
 const ITEMS = [
   { text: '十八克拉', dir: 'left' as const },
-  { text: '三週鍛造', dir: 'right' as const },
-  { text: '一件傳世', dir: 'left' as const },
+  { text: '三週鍛造', dir: 'center' as const },
+  { text: '一件傳世', dir: 'right' as const },
 ]
+
+type Dir = 'left' | 'center' | 'right'
 
 export default function CraftSection() {
   const containerRef = useRef<HTMLElement>(null)
@@ -21,12 +23,12 @@ export default function CraftSection() {
 
     gsap.fromTo(
       rows,
-      { x: -60, opacity: 0 },
+      { y: -40, opacity: 0 },
       {
-        x: 0,
+        y: 0,
         opacity: 1,
         duration: 1.2,
-        stagger: 0.25,
+        stagger: 0.2,
         ease: 'power3.out',
         scrollTrigger: {
           trigger: containerRef.current,
@@ -37,21 +39,46 @@ export default function CraftSection() {
     )
   }, { scope: containerRef })
 
+  function textAlign(dir: Dir): 'left' | 'center' | 'right' {
+    if (dir === 'right') return 'right'
+    if (dir === 'center') return 'center'
+    return 'left'
+  }
+
+  function accentLine(dir: Dir) {
+    if (dir === 'center') {
+      return {
+        background: 'linear-gradient(to right, transparent, rgba(184,150,90,0.45), transparent)',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        width: '50%',
+      }
+    }
+    if (dir === 'right') {
+      return {
+        background: 'linear-gradient(to left, rgba(184,150,90,0.45), transparent)',
+        marginLeft: 'auto',
+        width: '40%',
+      }
+    }
+    return {
+      background: 'linear-gradient(to right, rgba(184,150,90,0.45), transparent)',
+      marginLeft: '0',
+      width: '40%',
+    }
+  }
+
   return (
     <section
       ref={containerRef}
       style={{
         backgroundColor: '#080706',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        padding: '6rem 3rem',
+        padding: '6vh 5vw',
         position: 'relative',
         overflow: 'hidden',
       }}
     >
-      {/* Global brushed texture base layer */}
+      {/* Brushed texture base */}
       <div
         style={{
           position: 'absolute',
@@ -64,59 +91,52 @@ export default function CraftSection() {
         }}
       />
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
         {ITEMS.map((item, i) => (
           <div
             key={i}
             className="craft-row"
             style={{
               position: 'relative',
-              padding: '2.5rem 0',
+              padding: '3rem 2rem',
               overflow: 'hidden',
+              borderRight: i < 2 ? '1px solid rgba(196,154,90,0.08)' : 'none',
             }}
           >
-            {/* Per-line texture highlight */}
+            {/* Per-column texture */}
             <div
               style={{
                 position: 'absolute',
                 inset: 0,
                 opacity: 0.07,
                 pointerEvents: 'none',
-                height: '100%',
                 backgroundImage: 'url(/images/works/lumiere-ring/detail-2.png)',
                 backgroundSize: 'cover',
                 backgroundPosition: `center ${i * 33}%`,
               }}
             />
 
-            {/* Main text */}
             <div style={{ position: 'relative', zIndex: 1 }}>
               <span
                 style={{
                   fontFamily: 'var(--font-noto-serif-tc)',
-                  fontSize: 'clamp(3.5rem, 9vw, 8rem)',
+                  fontSize: 'clamp(2.5rem, 4.5vw, 6rem)',
                   fontWeight: 300,
                   color: 'rgba(255,255,255,0.88)',
                   letterSpacing: '0.06em',
                   display: 'block',
-                  textAlign: item.dir === 'right' ? 'right' : 'left',
+                  textAlign: textAlign(item.dir),
                   lineHeight: 1.1,
                 }}
               >
                 {item.text}
               </span>
 
-              {/* Gold accent line */}
               <div
                 style={{
                   height: '1px',
-                  width: '35%',
-                  background:
-                    item.dir === 'left'
-                      ? 'linear-gradient(to right, rgba(184,150,90,0.45), transparent)'
-                      : 'linear-gradient(to left, rgba(184,150,90,0.45), transparent)',
                   marginTop: '0.75rem',
-                  marginLeft: item.dir === 'right' ? 'auto' : '0',
+                  ...accentLine(item.dir),
                 }}
               />
             </div>

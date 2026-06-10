@@ -1,5 +1,6 @@
 import messages from "@/messages/zh.json";
 import Link from "next/link";
+import BackButton from "@/components/ui/BackButton";
 
 export default function ContactPage() {
   const t = messages;
@@ -32,6 +33,7 @@ export default function ContactPage() {
       </nav>
 
       <section style={{ padding: "10rem 3rem 4rem" }}>
+        <div style={{ marginBottom: "1.5rem" }}><BackButton /></div>
         <p style={{ fontSize: "0.75rem", letterSpacing: "0.2em", color: "#C49A5A", marginBottom: "1rem", textTransform: "uppercase" }}>
           CONTACT
         </p>
