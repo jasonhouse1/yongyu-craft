@@ -7,6 +7,8 @@ import { workRouter } from "./modules/work/work.controller";
 import { inquiryRouter } from "./modules/inquiry/inquiry.controller";
 import { adminWorksRouter } from "./modules/admin/admin-works.controller";
 import { adminInquiriesRouter } from "./modules/admin/admin-inquiries.controller";
+import { campaignRouter } from "./modules/campaign/campaign.controller";
+import { adminCampaignRouter } from "./modules/campaign/admin-campaign.controller";
 import { outboxProcessor } from "./shared/outbox/outbox-processor";
 import { prisma } from "./shared/db/prisma";
 
@@ -59,8 +61,10 @@ app.get("/health", async (_req, res) => {
 
 app.use("/api/works", workRouter);
 app.use("/api/inquiries", inquiryRouter);
+app.use("/api/campaigns", campaignRouter);
 app.use("/api/admin/works", adminWorksRouter);
 app.use("/api/admin/inquiries", adminInquiriesRouter);
+app.use("/api/admin/campaigns", adminCampaignRouter);
 
 const server = app.listen(PORT, () => {
   console.log(`Backend running at http://localhost:${PORT}`);

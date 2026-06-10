@@ -190,6 +190,23 @@ enum OrderStatus {
   refunded
 }
 
+model Campaign {
+  id          String    @id @default(cuid())
+  title       String
+  subtitle    String?
+  ctaText     String?
+  ctaUrl      String?
+  isActive    Boolean   @default(false)
+  startDate   DateTime?
+  endDate     DateTime?
+  bgColor     String    @default("#080706")
+  accentColor String    @default("#C49A5A")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("campaigns")
+}
+
 model SnapshotSequence {
   scope      String   @id
   currentSeq BigInt   @default(0)

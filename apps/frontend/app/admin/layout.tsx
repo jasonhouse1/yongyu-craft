@@ -47,6 +47,9 @@ export default function AdminLayout({
         <Link href="/admin/inquiries" style={navLinkStyle}>
           詢價
         </Link>
+        <Link href="/admin/campaigns" style={navLinkStyle}>
+          活動
+        </Link>
         <button
           onClick={() => {
             document.cookie = "admin_key=; path=/; max-age=0";

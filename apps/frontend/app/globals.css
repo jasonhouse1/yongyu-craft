@@ -237,6 +237,15 @@ select {
   opacity: 1;
 }
 
+.campaign-banner {
+  height: 52px;
+}
+@media (max-width: 767px) {
+  .campaign-banner {
+    height: 44px;
+  }
+}
+
 @keyframes scrollHint {
   0% { transform: translateY(0); opacity: 0.8; }
   50% { transform: translateY(4px); opacity: 0.4; }
