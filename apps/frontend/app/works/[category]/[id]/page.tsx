@@ -3,13 +3,14 @@ import messages from "@/messages/zh.json";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import BackButton from "@/components/ui/BackButton";
+import FavoriteButton from "@/components/ui/FavoriteButton";
 
 export default async function WorkDetailPage({
   params,
 }: {
   params: Promise<{ category: string; id: string }>;
 }) {
-  const { id } = await params;
+  const { id, category } = await params;
   const t = messages;
 
   const work = await getWork(id).catch(() => null);
@@ -33,12 +34,13 @@ export default async function WorkDetailPage({
         <Link href="/" style={{ fontFamily: "var(--font-noto-serif-tc)", fontSize: "1rem", letterSpacing: "0.12em", color: "#C49A5A" }}>
           YY
         </Link>
-        <div style={{ display: "flex", gap: "2.5rem" }}>
+        <div style={{ display: "flex", gap: "2.5rem", alignItems: "center" }}>
           {[{ href: "/works", label: t.nav.works }, { href: "/about", label: t.nav.about }, { href: "/contact", label: t.nav.contact }].map(item => (
             <Link key={item.href} href={item.href} style={{ fontSize: "0.75rem", letterSpacing: "0.15em", color: "rgba(232,236,240,0.4)", fontWeight: 300 }}>
               {item.label}
             </Link>
           ))}
+          <FavoriteButton workId={work.id} categoryId={category} />
         </div>
       </nav>
 

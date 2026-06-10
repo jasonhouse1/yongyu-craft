@@ -4,6 +4,7 @@ import messages from "@/messages/zh.json";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import CustomCursor from "@/components/ui/CustomCursor";
 import CampaignBanner from "@/components/ui/CampaignBanner";
+import { MemberProvider } from "@/lib/member-context";
 import "./globals.css";
 
 const notoSansTC = Noto_Sans_TC({
@@ -45,9 +46,11 @@ export default function RootLayout({
       className={`${notoSansTC.variable} ${notoSerifTC.variable}`}
     >
       <body>
-        <CampaignBanner />
-        <CustomCursor />
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <MemberProvider>
+          <CampaignBanner />
+          <CustomCursor />
+          <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        </MemberProvider>
       </body>
     </html>
   );
