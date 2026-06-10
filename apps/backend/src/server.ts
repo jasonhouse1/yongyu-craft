@@ -1,6 +1,8 @@
-﻿import "dotenv/config";
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 import { workRouter } from "./modules/work/work.controller";
 import { inquiryRouter } from "./modules/inquiry/inquiry.controller";
 import { adminWorksRouter } from "./modules/admin/admin-works.controller";
@@ -10,6 +12,8 @@ import { prisma } from "./shared/db/prisma";
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
+
+app.use(helmet({ contentSecurityPolicy: false }));
 
 app.use(cors({
   origin: [
@@ -22,12 +26,27 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use((req, res, next) => {
-  res.setHeader("X-Content-Type-Options", "nosniff");
-  res.setHeader("X-Frame-Options", "DENY");
-  res.setHeader("X-XSS-Protection", "1; mode=block");
-  next();
+const generalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: { code: 'TOO_MANY_REQUESTS', message: '請求過於頻繁' },
 });
+
+const inquiryLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 5,
+  message: { code: 'TOO_MANY_REQUESTS', message: '詢價提交過於頻繁' },
+});
+
+const adminLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: { code: 'TOO_MANY_REQUESTS', message: '嘗試次數過多' },
+});
+
+app.use('/api', generalLimiter);
+app.use('/api/inquiries', inquiryLimiter);
+app.use('/api/admin', adminLimiter);
 
 app.get("/health", async (_req, res) => {
   try {

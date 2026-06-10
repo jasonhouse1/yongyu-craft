@@ -1,6 +1,10 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { useGSAP } from '@gsap/react'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const ITEMS = [
   { text: '十八克拉', dir: 'left' as const },
@@ -9,8 +13,33 @@ const ITEMS = [
 ]
 
 export default function CraftSection() {
+  const containerRef = useRef<HTMLElement>(null)
+
+  useGSAP(() => {
+    const rows = containerRef.current?.querySelectorAll('.craft-row')
+    if (!rows || rows.length === 0) return
+
+    gsap.fromTo(
+      rows,
+      { x: -60, opacity: 0 },
+      {
+        x: 0,
+        opacity: 1,
+        duration: 1.2,
+        stagger: 0.25,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top 75%',
+          toggleActions: 'play none none reverse',
+        },
+      }
+    )
+  }, { scope: containerRef })
+
   return (
     <section
+      ref={containerRef}
       style={{
         backgroundColor: '#080706',
         minHeight: '100vh',
@@ -39,6 +68,7 @@ export default function CraftSection() {
         {ITEMS.map((item, i) => (
           <div
             key={i}
+            className="craft-row"
             style={{
               position: 'relative',
               padding: '2.5rem 0',
@@ -52,30 +82,15 @@ export default function CraftSection() {
                 inset: 0,
                 opacity: 0.07,
                 pointerEvents: 'none',
+                height: '100%',
+                backgroundImage: 'url(/images/works/lumiere-ring/detail-2.png)',
+                backgroundSize: 'cover',
+                backgroundPosition: `center ${i * 33}%`,
               }}
-            >
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true, margin: '-15%' }}
-                transition={{ duration: 2.0 }}
-                style={{
-                  height: '100%',
-                  backgroundImage: 'url(/images/works/lumiere-ring/detail-2.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: `center ${i * 33}%`,
-                }}
-              />
-            </div>
+            />
 
             {/* Main text */}
-            <motion.div
-              initial={{ opacity: 0, x: item.dir === 'left' ? -80 : 80 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-10%' }}
-              transition={{ duration: 1.0, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.08 }}
-              style={{ position: 'relative', zIndex: 1 }}
-            >
+            <div style={{ position: 'relative', zIndex: 1 }}>
               <span
                 style={{
                   fontFamily: 'var(--font-noto-serif-tc)',
@@ -92,11 +107,7 @@ export default function CraftSection() {
               </span>
 
               {/* Gold accent line */}
-              <motion.div
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.0, delay: 0.25 + i * 0.08, ease: 'easeOut' }}
+              <div
                 style={{
                   height: '1px',
                   width: '35%',
@@ -104,12 +115,11 @@ export default function CraftSection() {
                     item.dir === 'left'
                       ? 'linear-gradient(to right, rgba(184,150,90,0.45), transparent)'
                       : 'linear-gradient(to left, rgba(184,150,90,0.45), transparent)',
-                  transformOrigin: item.dir === 'left' ? 'left' : 'right',
                   marginTop: '0.75rem',
                   marginLeft: item.dir === 'right' ? 'auto' : '0',
                 }}
               />
-            </motion.div>
+            </div>
           </div>
         ))}
       </div>

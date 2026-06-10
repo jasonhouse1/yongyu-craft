@@ -8,6 +8,7 @@ export const inquiryRouter: ExpressRouter = Router();
 const inquiryService = new InquiryService(new InquiryRepository());
 
 const CreateInquirySchema = z.object({
+  honeypot: z.string().max(0).optional(),
   name: z.string().min(1, "name is required"),
   email: z.string().email("invalid email"),
   phone: z.string().optional(),
@@ -44,7 +45,10 @@ inquiryRouter.post("/", async (req: Request, res: Response) => {
     });
   }
 
-  const { products: _products, ...input } = body.data;
+  const { products: _products, honeypot, ...input } = body.data;
+  if (honeypot) {
+    return res.json({ success: true });
+  }
   const result = await inquiryService.createInquiry(input);
 
   res.status(201).json(result);

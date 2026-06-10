@@ -1,9 +1,12 @@
 'use client'
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useRef, useState } from 'react'
+import { useGSAP } from '@gsap/react'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
 import Link from 'next/link'
 import type { WorkSnapshot } from '@/lib/api'
+
+gsap.registerPlugin(ScrollTrigger)
 
 interface Props {
   works: WorkSnapshot[]
@@ -11,14 +14,31 @@ interface Props {
 
 function WorkCard({ work, i }: { work: WorkSnapshot; i: number }) {
   const [hovered, setHovered] = useState(false)
+  const cardRef = useRef<HTMLDivElement>(null)
   const isEven = i % 2 === 0
 
+  useGSAP(() => {
+    if (!cardRef.current) return
+    gsap.fromTo(
+      cardRef.current,
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: cardRef.current,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+      }
+    )
+  }, { scope: cardRef })
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-10%' }}
-      transition={{ duration: 1.0, ease: [0.25, 0.1, 0.25, 1] }}
+    <div
+      ref={cardRef}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -137,7 +157,7 @@ function WorkCard({ work, i }: { work: WorkSnapshot; i: number }) {
           <p
             style={{
               fontSize: '0.8125rem',
-              color: '#9A9590',
+              color: '#A8A39D',
               letterSpacing: '0.1em',
               marginBottom: '2rem',
             }}
@@ -157,12 +177,11 @@ function WorkCard({ work, i }: { work: WorkSnapshot; i: number }) {
           </p>
         )}
         {work.priceType === 'inquiry' && (
-          <p style={{ fontSize: '0.875rem', color: '#9A9590', letterSpacing: '0.08em' }}>
+          <p style={{ fontSize: '0.875rem', color: '#A8A39D', letterSpacing: '0.08em' }}>
             洽詢價格
           </p>
         )}
 
-        {/* Arrow — appears on hover */}
         <div
           style={{
             marginTop: '3rem',
@@ -180,14 +199,14 @@ function WorkCard({ work, i }: { work: WorkSnapshot; i: number }) {
           <span>→</span>
         </div>
       </Link>
-    </motion.div>
+    </div>
   )
 }
 
 export default function WorksGallery({ works }: Props) {
   if (works.length === 0) {
     return (
-      <p style={{ fontSize: '0.875rem', color: '#9A9590', padding: '6rem 3rem' }}>
+      <p style={{ fontSize: '0.875rem', color: '#A8A39D', padding: '6rem 3rem' }}>
         目前尚無作品
       </p>
     )

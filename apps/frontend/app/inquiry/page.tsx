@@ -43,7 +43,7 @@ export default async function InquiryPage({
             { href: "/contact", label: t.nav.contact },
           ].map((item) => (
             <Link key={item.href} href={item.href} style={{
-              fontSize: "0.75rem",
+              fontSize: "0.875rem",
               letterSpacing: "0.15em",
               color: "rgba(232,236,240,0.4)",
               fontWeight: 300,
@@ -56,7 +56,7 @@ export default async function InquiryPage({
 
       <section style={{ padding: "10rem 3rem 0" }}>
         <p style={{
-          fontSize: "0.6875rem",
+          fontSize: "0.75rem",
           letterSpacing: "0.25em",
           color: "rgba(196,154,90,0.5)",
           marginBottom: "1.5rem",
@@ -65,7 +65,7 @@ export default async function InquiryPage({
           INQUIRY
         </p>
         <p style={{
-          fontSize: "0.65rem",
+          fontSize: "0.75rem",
           letterSpacing: "0.5em",
           color: "#C49A5A",
           marginBottom: "1rem",
@@ -86,7 +86,7 @@ export default async function InquiryPage({
         </h1>
         <p style={{
           fontSize: "0.875rem",
-          color: "#9A9590",
+          color: "#A8A39D",
           letterSpacing: "0.08em",
           lineHeight: 1.8,
           borderLeft: "2px solid #C49A5A",
@@ -98,13 +98,72 @@ export default async function InquiryPage({
 
       {displayWorkName && (
         <div style={{ padding: "1.5rem 3rem 0" }}>
-          <p style={{ fontSize: "0.8rem", color: "#C49A5A", letterSpacing: "0.2em", fontWeight: 300 }}>
+          <p style={{ fontSize: "0.875rem", color: "#C49A5A", letterSpacing: "0.2em", fontWeight: 300 }}>
             您正在詢問：{displayWorkName}
           </p>
         </div>
       )}
 
-      <InquiryForm workId={workId} workTitle={displayWorkName ?? undefined} />
+      {/* Desktop two-column layout */}
+      <div style={{
+        padding: "0 3rem",
+        display: "grid",
+        gridTemplateColumns: "1fr",
+        gap: "4rem",
+      }}
+        className="inquiry-layout"
+      >
+        <InquiryForm workId={workId} workTitle={displayWorkName ?? undefined} />
+
+        {/* Right panel: brand info (desktop only) */}
+        <aside style={{
+          display: "none",
+          paddingTop: "4rem",
+          borderLeft: "1px solid #C49A5A",
+          paddingLeft: "3rem",
+          alignSelf: "start",
+        }}
+          className="inquiry-aside"
+        >
+          <p style={{
+            fontFamily: "var(--font-noto-serif-tc)",
+            fontSize: "clamp(1.25rem, 2vw, 1.75rem)",
+            fontWeight: 300,
+            color: "#E8ECF0",
+            lineHeight: 1.8,
+            letterSpacing: "0.08em",
+            marginBottom: "3rem",
+          }}>
+            每一件作品，都從一段對話開始
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            {[
+              { label: "48 小時回覆", desc: "師傅親自回覆每一封詢問" },
+              { label: "台灣手工製作", desc: "每件作品皆由師傅手工打造" },
+              { label: "客製化服務", desc: "從設計到完成全程陪伴" },
+            ].map((item) => (
+              <div key={item.label} style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
+                <span style={{
+                  width: "4px",
+                  height: "4px",
+                  borderRadius: "50%",
+                  backgroundColor: "#C49A5A",
+                  marginTop: "0.6rem",
+                  flexShrink: 0,
+                }} />
+                <div>
+                  <p style={{ fontSize: "0.875rem", color: "#E8ECF0", letterSpacing: "0.05em", marginBottom: "0.25rem" }}>
+                    {item.label}
+                  </p>
+                  <p style={{ fontSize: "0.8125rem", color: "#A8A39D", letterSpacing: "0.03em" }}>
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </aside>
+      </div>
 
       <footer style={{
         backgroundColor: "#0D0D0B",

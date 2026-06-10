@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import ImageUploader from "@/components/admin/ImageUploader";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
 const CATEGORIES = ["rings", "necklaces", "bracelets", "earrings", "custom"];
@@ -29,12 +30,14 @@ type WorkForm = {
   isAvailable: boolean;
   isCustomizable: boolean;
   sortOrder: string;
+  coverImage: string;
 };
 
 const EMPTY: WorkForm = {
   titleZh: "", titleEn: "", subtitleZh: "", descriptionZh: "", storyZh: "",
   categoryId: "rings", priceType: "inquiry", price: "", currency: "TWD",
   status: "draft", isFeatured: false, isAvailable: true, isCustomizable: false, sortOrder: "0",
+  coverImage: "",
 };
 
 export default function AdminEditWorkPage() {
@@ -74,6 +77,7 @@ export default function AdminEditWorkPage() {
           isAvailable: w.isAvailable ?? true,
           isCustomizable: w.isCustomizable ?? false,
           sortOrder: String(w.sortOrder ?? 0),
+          coverImage: w.coverImage ?? "",
         });
       })
       .catch(() => setError("載入作品失敗"))
@@ -99,6 +103,7 @@ export default function AdminEditWorkPage() {
         isAvailable: form.isAvailable,
         isCustomizable: form.isCustomizable,
         sortOrder: parseInt(form.sortOrder) || 0,
+        coverImage: form.coverImage.trim() || undefined,
       };
       if (form.priceType === "fixed" && form.price) body.price = parseFloat(form.price);
       const res = await fetch(`${API_URL}/api/admin/works/${id}`, {
@@ -188,6 +193,11 @@ export default function AdminEditWorkPage() {
           <div style={group}>
             <label style={label}>作品故事</label>
             <textarea style={{ ...field, minHeight: 80, resize: "vertical" }} value={form.storyZh} onChange={e => set("storyZh", e.target.value)} />
+          </div>
+
+          <div style={group}>
+            <label style={label}>封面圖片</label>
+            <ImageUploader value={form.coverImage} onChange={v => set("coverImage", v)} />
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 20 }}>

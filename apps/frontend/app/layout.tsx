@@ -20,15 +20,16 @@ const notoSerifTC = Noto_Serif_TC({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://yongyucraft.com'),
   title: {
-    default: messages.meta.defaultTitle,
+    default: '永裕工藝 · 手工金工精品',
     template: `%s | ${messages.meta.siteName}`,
   },
-  description: messages.meta.defaultDescription,
+  description: '台灣手工金工精品，每一道工序都承載著心意',
   openGraph: {
     type: "website",
     locale: "zh_TW",
-    siteName: messages.meta.siteName,
+    siteName: '永裕工藝',
   },
 };
 

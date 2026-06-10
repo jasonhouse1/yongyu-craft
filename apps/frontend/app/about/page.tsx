@@ -11,9 +11,15 @@ export default function AboutPage() {
   ];
 
   const sectionLabel: React.CSSProperties = {
-    fontSize: "0.6875rem", letterSpacing: "0.2em", color: "#C49A5A",
+    fontSize: "0.75rem", letterSpacing: "0.2em", color: "#C49A5A",
     marginBottom: "1.25rem", textTransform: "uppercase",
   };
+
+  const brandNumbers = [
+    { num: "2010", label: "創立年份" },
+    { num: "300+", label: "累計作品" },
+    { num: "18", label: "製作工序" },
+  ];
 
   return (
     <main style={{ backgroundColor: "#080706", minHeight: "100vh" }}>
@@ -29,7 +35,7 @@ export default function AboutPage() {
         <div style={{ display: "flex", gap: "2.5rem" }}>
           {[{ href: "/works", label: t.nav.works }, { href: "/about", label: t.nav.about }, { href: "/contact", label: t.nav.contact }].map(item => (
             <Link key={item.href} href={item.href} className="nav-link-hero"
-              style={{ fontSize: "0.8rem", letterSpacing: "0.15em", color: "#C8C4BE", fontWeight: 300, opacity: item.href === "/about" ? 1 : 0.7 }}>
+              style={{ fontSize: "0.875rem", letterSpacing: "0.15em", color: "#C8C4BE", fontWeight: 300, opacity: item.href === "/about" ? 1 : 0.7 }}>
               {item.label}
             </Link>
           ))}
@@ -38,7 +44,7 @@ export default function AboutPage() {
 
       {/* Hero */}
       <section style={{ padding: "10rem 3rem 5rem", maxWidth: "720px" }}>
-        <p style={{ fontSize: "0.7rem", letterSpacing: "0.5em", color: "#C49A5A", marginBottom: "0.75rem", textTransform: "uppercase" }}>
+        <p style={{ fontSize: "0.75rem", letterSpacing: "0.5em", color: "#C49A5A", marginBottom: "0.75rem", textTransform: "uppercase" }}>
           CRAFTSMANSHIP · SINCE TAIWAN
         </p>
         <p style={{ fontSize: "0.75rem", letterSpacing: "0.2em", color: "#C49A5A", marginBottom: "1rem", textTransform: "uppercase" }}>
@@ -51,25 +57,55 @@ export default function AboutPage() {
         }}>
           {t.about.title}
         </h1>
-        <p style={{ fontSize: "1rem", color: "#9A9590", letterSpacing: "0.08em", fontFamily: "var(--font-noto-serif-tc)", fontWeight: 300 }}>
+        <p style={{ fontSize: "1rem", color: "#A8A39D", letterSpacing: "0.08em", fontFamily: "var(--font-noto-serif-tc)", fontWeight: 300 }}>
           {t.about.subtitle}
         </p>
       </section>
 
-      {/* Story */}
-      <section style={{ padding: "3rem 3rem 5rem", maxWidth: "720px", borderTop: "1px solid rgba(196,154,90,0.08)" }}>
-        <p style={sectionLabel}>{t.about.story}</p>
-        <p style={{ fontSize: "0.9375rem", color: "#E8ECF0", lineHeight: 2, letterSpacing: "0.05em", opacity: 0.85 }}>
-          {t.about.storyBody}
-        </p>
-      </section>
+      {/* Story + Numbers: two-column on desktop */}
+      <section style={{ padding: "3rem 3rem 5rem", borderTop: "1px solid rgba(196,154,90,0.08)" }}>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "1fr",
+          gap: "4rem",
+          alignItems: "start",
+        }}
+          className="about-two-col"
+        >
+          {/* Left: brand story */}
+          <div>
+            <p style={sectionLabel}>{t.about.story}</p>
+            <p style={{ fontSize: "0.9375rem", color: "#E8ECF0", lineHeight: 2, letterSpacing: "0.05em", opacity: 0.85, marginBottom: "3rem" }}>
+              {t.about.storyBody}
+            </p>
+            <p style={sectionLabel}>{t.about.craftsmanship}</p>
+            <p style={{ fontSize: "0.9375rem", color: "#E8ECF0", lineHeight: 2, letterSpacing: "0.05em", opacity: 0.85 }}>
+              {t.about.craftBody}
+            </p>
+          </div>
 
-      {/* Craftsmanship */}
-      <section style={{ padding: "3rem 3rem 5rem", maxWidth: "720px", borderTop: "1px solid rgba(196,154,90,0.08)" }}>
-        <p style={sectionLabel}>{t.about.craftsmanship}</p>
-        <p style={{ fontSize: "0.9375rem", color: "#E8ECF0", lineHeight: 2, letterSpacing: "0.05em", opacity: 0.85 }}>
-          {t.about.craftBody}
-        </p>
+          {/* Right: brand numbers */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
+            {brandNumbers.map((item) => (
+              <div key={item.num} style={{ borderLeft: "1px solid rgba(196,154,90,0.25)", paddingLeft: "1.5rem" }}>
+                <p style={{
+                  fontFamily: "var(--font-noto-serif-tc)",
+                  fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                  fontWeight: 300,
+                  color: "#C49A5A",
+                  letterSpacing: "0.04em",
+                  lineHeight: 1,
+                  marginBottom: "0.5rem",
+                }}>
+                  {item.num}
+                </p>
+                <p style={{ fontSize: "0.75rem", letterSpacing: "0.2em", color: "#A8A39D", textTransform: "uppercase" }}>
+                  {item.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Values */}
@@ -81,7 +117,7 @@ export default function AboutPage() {
               <p style={{ fontFamily: "var(--font-noto-serif-tc)", fontSize: "1rem", fontWeight: 300, letterSpacing: "0.08em", color: "#E8ECF0", marginBottom: "0.75rem" }}>
                 {v.title}
               </p>
-              <p style={{ fontSize: "0.8125rem", color: "#9A9590", lineHeight: 1.9, letterSpacing: "0.03em" }}>
+              <p style={{ fontSize: "0.8125rem", color: "#A8A39D", lineHeight: 1.9, letterSpacing: "0.03em" }}>
                 {v.body}
               </p>
             </div>

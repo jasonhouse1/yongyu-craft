@@ -8,7 +8,7 @@
   --color-gold-dark: #8C6E42;
   --color-gold-light: #D4B896;
   --color-text-primary: #E8ECF0;
-  --color-text-secondary: #9A9590;
+  --color-text-secondary: #A8A39D;
   --color-text-tertiary: #7A7570;
   --color-jade: #3D6B5C;
   --color-ember: #8B4A28;
@@ -44,6 +44,7 @@ html::-webkit-scrollbar {
 body {
   font-family: var(--font-noto-sans-tc);
   font-weight: 300;
+  font-size: 16px;
   line-height: 1.75;
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
@@ -94,7 +95,18 @@ a {
 nav a {
   color: #C8C4BE !important;
   letter-spacing: 0.15em;
-  font-size: 0.8rem;
+  font-size: 0.875rem;
+}
+
+/* Form labels */
+label {
+  font-size: 0.85rem;
+  color: #B8B3AD;
+}
+
+/* Section labels (CATALOGUE, INQUIRY, etc.) */
+.section-label {
+  font-size: 0.75rem;
 }
 
 /* Form fields */
@@ -127,7 +139,8 @@ select {
   border: 1px solid #C49A5A;
   color: #C49A5A;
   padding: 14px 48px;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
+  min-font-size: 0.875rem;
   letter-spacing: 0.3em;
   transition: all 0.4s ease;
   background: transparent;
@@ -163,6 +176,25 @@ select {
   opacity: 0.025;
   pointer-events: none;
   z-index: 1;
+}
+
+/* Desktop two-column layouts */
+@media (min-width: 768px) {
+  .inquiry-layout {
+    grid-template-columns: 55% 45%;
+  }
+  .inquiry-aside {
+    display: block !important;
+  }
+  .about-two-col {
+    grid-template-columns: 55% 45%;
+  }
+  .contact-two-col {
+    grid-template-columns: 55% 45%;
+  }
+  .contact-workshop {
+    display: flex !important;
+  }
 }
 
 /* Contact channel hover gold */

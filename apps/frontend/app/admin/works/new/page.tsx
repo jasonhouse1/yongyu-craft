@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import ImageUploader from "@/components/admin/ImageUploader";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
 
@@ -29,6 +30,7 @@ export default function AdminNewWorkPage() {
     price: "",
     status: "draft" as (typeof STATUSES)[number],
     isFeatured: false,
+    coverImage: "",
   });
 
   function set<K extends keyof typeof form>(k: K, v: (typeof form)[K]) {
@@ -49,6 +51,7 @@ export default function AdminNewWorkPage() {
         priceType: form.priceType,
         status: form.status,
         isFeatured: form.isFeatured,
+        coverImage: form.coverImage.trim() || undefined,
       };
       if (form.priceType === "fixed" && form.price) {
         body.price = parseFloat(form.price);
@@ -108,6 +111,11 @@ export default function AdminNewWorkPage() {
           <div style={group}>
             <label style={label}>副標題</label>
             <input style={field} value={form.subtitleZh} onChange={e => set("subtitleZh", e.target.value)} />
+          </div>
+
+          <div style={group}>
+            <label style={label}>封面圖片</label>
+            <ImageUploader value={form.coverImage} onChange={v => set("coverImage", v)} />
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 20 }}>

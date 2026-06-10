@@ -24,14 +24,14 @@ export default function ContactPage() {
         <div style={{ display: "flex", gap: "2.5rem" }}>
           {[{ href: "/works", label: t.nav.works }, { href: "/about", label: t.nav.about }, { href: "/contact", label: t.nav.contact }].map(item => (
             <Link key={item.href} href={item.href} className="nav-link-hero"
-              style={{ fontSize: "0.8rem", letterSpacing: "0.15em", color: "#C8C4BE", fontWeight: 300, opacity: item.href === "/contact" ? 1 : 0.7 }}>
+              style={{ fontSize: "0.875rem", letterSpacing: "0.15em", color: "#C8C4BE", fontWeight: 300, opacity: item.href === "/contact" ? 1 : 0.7 }}>
               {item.label}
             </Link>
           ))}
         </div>
       </nav>
 
-      <section style={{ padding: "10rem 3rem 4rem", maxWidth: "600px" }}>
+      <section style={{ padding: "10rem 3rem 4rem" }}>
         <p style={{ fontSize: "0.75rem", letterSpacing: "0.2em", color: "#C49A5A", marginBottom: "1rem", textTransform: "uppercase" }}>
           CONTACT
         </p>
@@ -42,40 +42,75 @@ export default function ContactPage() {
         }}>
           {t.contact.title}
         </h1>
-        <p style={{ fontSize: "0.875rem", color: "#9A9590", letterSpacing: "0.05em" }}>
+        <p style={{ fontSize: "0.875rem", color: "#A8A39D", letterSpacing: "0.05em" }}>
           {t.contact.subtitle}
         </p>
       </section>
 
-      <section style={{ padding: "0 3rem 6rem", maxWidth: "480px" }}>
-        <div style={{ display: "flex", flexDirection: "column", borderTop: "1px solid rgba(196,154,90,0.08)" }}>
-          {channels.map(ch => (
-            <div key={ch.label} className="contact-channel" style={{
-              display: "flex", justifyContent: "space-between", alignItems: "center",
-              padding: "1.5rem 0", borderBottom: "1px solid rgba(196,154,90,0.08)",
-              transition: "border-color 0.3s ease",
-            }}>
-              <span style={{ fontSize: "0.6875rem", letterSpacing: "0.15em", color: "#6B6560", textTransform: "uppercase", minWidth: "6rem" }}>
-                {ch.label}
-              </span>
-              {ch.href ? (
-                <a href={ch.href} style={{ fontSize: "0.9375rem", color: "#E8ECF0", letterSpacing: "0.03em" }}>
-                  {ch.value}
-                </a>
-              ) : (
-                <span style={{ fontSize: "0.9375rem", color: "#E8ECF0", letterSpacing: "0.03em" }}>{ch.value}</span>
-              )}
+      {/* Two-column on desktop */}
+      <section style={{ padding: "0 3rem 6rem" }}>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "1fr",
+          gap: "4rem",
+          alignItems: "start",
+        }}
+          className="contact-two-col"
+        >
+          {/* Left: contact methods */}
+          <div style={{ maxWidth: "480px" }}>
+            <div style={{ display: "flex", flexDirection: "column", borderTop: "1px solid rgba(196,154,90,0.08)" }}>
+              {channels.map(ch => (
+                <div key={ch.label} className="contact-channel" style={{
+                  display: "flex", justifyContent: "space-between", alignItems: "center",
+                  padding: "1.5rem 0", borderBottom: "1px solid rgba(196,154,90,0.08)",
+                  transition: "border-color 0.3s ease",
+                }}>
+                  <span style={{ fontSize: "0.6875rem", letterSpacing: "0.15em", color: "#6B6560", textTransform: "uppercase", minWidth: "6rem" }}>
+                    {ch.label}
+                  </span>
+                  {ch.href ? (
+                    <a href={ch.href} style={{ fontSize: "0.9375rem", color: "#E8ECF0", letterSpacing: "0.03em" }}>
+                      {ch.value}
+                    </a>
+                  ) : (
+                    <span style={{ fontSize: "0.9375rem", color: "#E8ECF0", letterSpacing: "0.03em" }}>{ch.value}</span>
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <div style={{ marginTop: "3rem" }}>
-          <p style={{ fontSize: "0.75rem", letterSpacing: "0.12em", color: "#9A9590", marginBottom: "1.25rem" }}>
-            {t.contact.or}
-          </p>
-          <Link href="/inquiry" className="btn-cta-outline">
-            {t.contact.inquiryBtn}
-          </Link>
+            <div style={{ marginTop: "3rem" }}>
+              <p style={{ fontSize: "0.75rem", letterSpacing: "0.12em", color: "#A8A39D", marginBottom: "1.25rem" }}>
+                {t.contact.or}
+              </p>
+              <Link href="/inquiry" className="btn-cta-outline">
+                {t.contact.inquiryBtn}
+              </Link>
+            </div>
+          </div>
+
+          {/* Right: workshop placeholder */}
+          <div style={{
+            display: "none",
+            background: "#0D0C0B",
+            minHeight: "320px",
+            alignItems: "center",
+            justifyContent: "center",
+            border: "1px solid rgba(196,154,90,0.08)",
+          }}
+            className="contact-workshop"
+          >
+            <p style={{
+              fontFamily: "var(--font-noto-serif-tc)",
+              fontSize: "1rem",
+              letterSpacing: "0.12em",
+              color: "rgba(196,154,90,0.35)",
+              fontWeight: 300,
+            }}>
+              拜訪我們的工坊
+            </p>
+          </div>
         </div>
       </section>
 
