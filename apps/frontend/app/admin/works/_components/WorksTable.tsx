@@ -50,50 +50,16 @@ export default function WorksTable({ items }: { items: WorkItem[] }) {
   }
 
   if (items.length === 0) {
-    return (
-      <div
-        style={{
-          background: "#111",
-          border: "1px solid #1f1f1f",
-          borderRadius: 8,
-          padding: "48px 0",
-          textAlign: "center",
-          color: "#444",
-          fontSize: 14,
-        }}
-      >
-        尚無作品
-      </div>
-    );
+    return <div className="admin-table-container admin-empty">尚無作品</div>;
   }
 
   return (
-    <div
-      style={{
-        background: "#111",
-        border: "1px solid #1f1f1f",
-        borderRadius: 8,
-        overflow: "hidden",
-      }}
-    >
-      <table
-        style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}
-      >
+    <div className="admin-table-container">
+      <table className="admin-table" style={{ fontSize: 13 }}>
         <thead>
-          <tr style={{ borderBottom: "1px solid #1f1f1f" }}>
+          <tr>
             {["標題 / Slug", "分類", "狀態", "價格類型", ""].map((h) => (
-              <th
-                key={h}
-                style={{
-                  padding: "10px 16px",
-                  textAlign: h === "" ? "right" : "left",
-                  color: "#555",
-                  fontWeight: 400,
-                  fontSize: 11,
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                }}
-              >
+              <th key={h} style={h === "" ? { textAlign: "right" } : undefined}>
                 {h}
               </th>
             ))}
@@ -101,19 +67,14 @@ export default function WorksTable({ items }: { items: WorkItem[] }) {
         </thead>
         <tbody>
           {items.map((work) => (
-            <tr
-              key={work.id}
-              style={{
-                borderBottom: "1px solid #161616",
-              }}
-            >
-              <td style={{ padding: "12px 16px" }}>
-                <div style={{ color: "#e5e5e5" }}>{work.titleZh}</div>
-                <div style={{ color: "#444", fontSize: 11, marginTop: 2 }}>
+            <tr key={work.id}>
+              <td>
+                <div style={{ color: "#E8ECF0" }}>{work.titleZh}</div>
+                <div style={{ color: "#9A9590", fontSize: 11, marginTop: 2 }}>
                   {work.slug}
                 </div>
               </td>
-              <td style={{ padding: "12px 16px", color: "#888" }}>
+              <td style={{ color: "#E8ECF0" }}>
                 {work.categoryId}
               </td>
               <td style={{ padding: "12px 16px" }}>
@@ -129,10 +90,10 @@ export default function WorksTable({ items }: { items: WorkItem[] }) {
                   {work.status}
                 </span>
               </td>
-              <td style={{ padding: "12px 16px", color: "#888" }}>
+              <td style={{ color: "#E8ECF0" }}>
                 {work.priceType}
               </td>
-              <td style={{ padding: "12px 16px", textAlign: "right" }}>
+              <td style={{ textAlign: "right" }}>
                 <div style={{ display: "flex", gap: 6, justifyContent: "flex-end" }}>
                   <a
                     href={`/admin/works/${work.id}/edit`}

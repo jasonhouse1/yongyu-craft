@@ -26,12 +26,8 @@ export default async function AdminInquiriesPage() {
   return (
     <>
       <div style={{ marginBottom: 24 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 500, color: "#e5e5e5", marginBottom: 4 }}>
-          詢價管理
-        </h1>
-        <p style={{ color: "#555", fontSize: 12 }}>
-          共 {items.length} 筆
-        </p>
+        <h1 className="admin-page-title">詢價管理</h1>
+        <p className="admin-subtitle">共 {items.length} 筆</p>
       </div>
       <InquiriesTable items={items as Parameters<typeof InquiriesTable>[0]["items"]} />
     </>

@@ -34,12 +34,8 @@ export default async function AdminWorksPage() {
         }}
       >
         <div>
-          <h1 style={{ fontSize: 22, fontWeight: 500, color: "#e5e5e5", marginBottom: 4 }}>
-            作品管理
-          </h1>
-          <p style={{ color: "#555", fontSize: 12 }}>
-            共 {items.length} 筆
-          </p>
+          <h1 className="admin-page-title">作品管理</h1>
+          <p className="admin-subtitle">共 {items.length} 筆</p>
         </div>
         <a
           href="/admin/works/new"

@@ -18,19 +18,8 @@ const CARDS = [
 export default function AdminPage() {
   return (
     <>
-      <h1
-        style={{
-          fontSize: 22,
-          fontWeight: 500,
-          color: "#e5e5e5",
-          marginBottom: 6,
-        }}
-      >
-        控制台
-      </h1>
-      <p style={{ color: "#555", fontSize: 13, marginBottom: 32 }}>
-        永裕工藝後台管理系統
-      </p>
+      <h1 className="admin-page-title">控制台</h1>
+      <p className="admin-subtitle">永裕工藝後台管理系統</p>
       <div
         style={{
           display: "grid",
@@ -67,7 +56,7 @@ export default function AdminPage() {
               >
                 {c.label}
               </div>
-              <div style={{ fontSize: 12, color: "#555" }}>{c.desc}</div>
+              <div style={{ fontSize: 12, color: "#A8A39D" }}>{c.desc}</div>
             </div>
           </Link>
         ))}

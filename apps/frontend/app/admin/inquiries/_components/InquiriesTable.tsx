@@ -91,68 +91,29 @@ export default function InquiriesTable({ items }: { items: InquiryItem[] }) {
   }
 
   if (items.length === 0) {
-    return (
-      <div
-        style={{
-          background: "#111",
-          border: "1px solid #1f1f1f",
-          borderRadius: 8,
-          padding: "48px 0",
-          textAlign: "center",
-          color: "#444",
-          fontSize: 14,
-        }}
-      >
-        尚無詢價
-      </div>
-    );
+    return <div className="admin-table-container admin-empty">尚無詢價</div>;
   }
 
   return (
-    <div
-      style={{
-        background: "#111",
-        border: "1px solid #1f1f1f",
-        borderRadius: 8,
-        overflow: "hidden",
-      }}
-    >
-      <table
-        style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}
-      >
+    <div className="admin-table-container">
+      <table className="admin-table" style={{ fontSize: 13 }}>
         <thead>
-          <tr style={{ borderBottom: "1px solid #1f1f1f" }}>
+          <tr>
             {["姓名 / Email", "類型", "狀態", "日期", "更新狀態"].map((h) => (
-              <th
-                key={h}
-                style={{
-                  padding: "10px 16px",
-                  textAlign: "left",
-                  color: "#555",
-                  fontWeight: 400,
-                  fontSize: 11,
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                }}
-              >
-                {h}
-              </th>
+              <th key={h}>{h}</th>
             ))}
           </tr>
         </thead>
         <tbody>
           {items.map((inq) => (
-            <tr
-              key={inq.id}
-              style={{ borderBottom: "1px solid #161616" }}
-            >
-              <td style={{ padding: "12px 16px" }}>
-                <div style={{ color: "#e5e5e5" }}>{inq.name}</div>
-                <div style={{ color: "#444", fontSize: 11, marginTop: 2 }}>
+            <tr key={inq.id}>
+              <td>
+                <div style={{ color: "#E8ECF0" }}>{inq.name}</div>
+                <div style={{ color: "#9A9590", fontSize: 11, marginTop: 2 }}>
                   {inq.email}
                 </div>
               </td>
-              <td style={{ padding: "12px 16px", color: "#888" }}>
+              <td style={{ color: "#E8ECF0" }}>
                 {inq.inquiryType}
               </td>
               <td style={{ padding: "12px 16px" }}>
@@ -168,17 +129,10 @@ export default function InquiriesTable({ items }: { items: InquiryItem[] }) {
                   {STATUS_LABEL[inq.status] ?? inq.status}
                 </span>
               </td>
-              <td
-                style={{
-                  padding: "12px 16px",
-                  color: "#555",
-                  fontSize: 12,
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <td style={{ color: "#A8A39D", fontSize: 12, whiteSpace: "nowrap" }}>
                 {formatDate(inq.createdAt)}
               </td>
-              <td style={{ padding: "12px 16px" }}>
+              <td>
                 <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
                   <select
                     value={selected[inq.id] ?? inq.status}
@@ -247,5 +201,5 @@ export default function InquiriesTable({ items }: { items: InquiryItem[] }) {
         </tbody>
       </table>
     </div>
-  );
+  )
 }

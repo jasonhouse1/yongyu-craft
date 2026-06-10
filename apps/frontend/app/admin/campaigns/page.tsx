@@ -79,13 +79,13 @@ export default function AdminCampaignsPage() {
     await load();
   }
 
-  const cell: React.CSSProperties = { padding: "12px 16px", fontSize: 13, color: "#ccc", borderBottom: "1px solid #1a1a1a" };
-  const th: React.CSSProperties = { padding: "10px 16px", fontSize: 11, color: "#555", letterSpacing: "0.06em", textTransform: "uppercase", borderBottom: "1px solid #1f1f1f", textAlign: "left" };
+  const cell: React.CSSProperties = { padding: "12px 16px", fontSize: 13, color: "#E8ECF0", borderBottom: "1px solid #1A1815" };
+  const th: React.CSSProperties = { padding: "10px 16px", fontSize: "0.75rem", color: "#C49A5A", letterSpacing: "0.2em", textTransform: "uppercase", borderBottom: "1px solid #1A1815", textAlign: "left", fontWeight: 400 };
 
   return (
     <>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 500, color: "#e5e5e5" }}>活動橫幅</h1>
+        <h1 className="admin-page-title">活動橫幅</h1>
         <Link
           href="/admin/campaigns/new"
           style={{ padding: "8px 20px", background: "#8c7355", border: "none", borderRadius: 4, color: "#fff", fontSize: 13, textDecoration: "none" }}
@@ -95,11 +95,11 @@ export default function AdminCampaignsPage() {
       </div>
 
       {loading ? (
-        <p style={{ color: "#555", fontSize: 13 }}>載入中...</p>
+        <p style={{ color: "#A8A39D", fontSize: "0.875rem" }}>載入中...</p>
       ) : items.length === 0 ? (
-        <p style={{ color: "#555", fontSize: 13 }}>尚無活動</p>
+        <p className="admin-empty">尚無活動</p>
       ) : (
-        <div style={{ background: "#111", border: "1px solid #1f1f1f", borderRadius: 8, overflow: "hidden" }}>
+        <div className="admin-table-container">
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr>
@@ -117,11 +117,11 @@ export default function AdminCampaignsPage() {
                 return (
                   <tr key={c.id}>
                     <td style={cell}>{c.title}</td>
-                    <td style={{ ...cell, color: "#777" }}>{c.subtitle ?? "—"}</td>
+                    <td style={{ ...cell, color: "#9A9590" }}>{c.subtitle ?? "—"}</td>
                     <td style={cell}>
                       <span style={{ color: status.color, fontSize: 12 }}>{status.label}</span>
                     </td>
-                    <td style={{ ...cell, fontSize: 11, color: "#666" }}>
+                    <td style={{ ...cell, fontSize: 12, color: "#A8A39D" }}>
                       {c.startDate ? new Date(c.startDate).toLocaleDateString("zh-TW") : "—"}
                       {" → "}
                       {c.endDate ? new Date(c.endDate).toLocaleDateString("zh-TW") : "無限期"}
