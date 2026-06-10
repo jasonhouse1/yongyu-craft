@@ -6,13 +6,11 @@ import { gsap, ScrollTrigger } from '@/lib/gsap'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const ITEMS = [
-  { text: '十八克拉', dir: 'left' as const },
-  { text: '三週鍛造', dir: 'center' as const },
-  { text: '一件傳世', dir: 'right' as const },
+const ROWS = [
+  { value: '18K', unit: '純金', desc: '純金鍛造' },
+  { value: '三週', unit: '', desc: '反覆調整' },
+  { value: '一件', unit: '', desc: '值得傳世' },
 ]
-
-type Dir = 'left' | 'center' | 'right'
 
 export default function CraftSection() {
   const containerRef = useRef<HTMLElement>(null)
@@ -23,12 +21,12 @@ export default function CraftSection() {
 
     gsap.fromTo(
       rows,
-      { y: -40, opacity: 0 },
+      { x: -60, opacity: 0 },
       {
-        y: 0,
+        x: 0,
         opacity: 1,
         duration: 1.2,
-        stagger: 0.2,
+        stagger: 0.25,
         ease: 'power3.out',
         scrollTrigger: {
           trigger: containerRef.current,
@@ -39,109 +37,127 @@ export default function CraftSection() {
     )
   }, { scope: containerRef })
 
-  function textAlign(dir: Dir): 'left' | 'center' | 'right' {
-    if (dir === 'right') return 'right'
-    if (dir === 'center') return 'center'
-    return 'left'
-  }
-
-  function accentLine(dir: Dir) {
-    if (dir === 'center') {
-      return {
-        background: 'linear-gradient(to right, transparent, rgba(184,150,90,0.45), transparent)',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        width: '50%',
-      }
-    }
-    if (dir === 'right') {
-      return {
-        background: 'linear-gradient(to left, rgba(184,150,90,0.45), transparent)',
-        marginLeft: 'auto',
-        width: '40%',
-      }
-    }
-    return {
-      background: 'linear-gradient(to right, rgba(184,150,90,0.45), transparent)',
-      marginLeft: '0',
-      width: '40%',
-    }
-  }
-
   return (
     <section
       ref={containerRef}
       style={{
         backgroundColor: '#080706',
-        padding: '6vh 5vw',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        padding: '6rem 5vw',
         position: 'relative',
-        overflow: 'hidden',
       }}
     >
-      {/* Brushed texture base */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: 'url(/images/works/lumiere-ring/detail-2.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          opacity: 0.03,
-          pointerEvents: 'none',
-        }}
-      />
-
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
-        {ITEMS.map((item, i) => (
-          <div
-            key={i}
-            className="craft-row"
-            style={{
-              position: 'relative',
-              padding: '3rem 2rem',
-              overflow: 'hidden',
-              borderRight: i < 2 ? '1px solid rgba(196,154,90,0.08)' : 'none',
-            }}
-          >
-            {/* Per-column texture */}
+      {/* Rows */}
+      <div style={{ maxWidth: '900px', width: '100%', margin: '0 auto' }}>
+        {ROWS.map((row, i) => (
+          <div key={i}>
             <div
+              className="craft-row"
               style={{
-                position: 'absolute',
-                inset: 0,
-                opacity: 0.07,
-                pointerEvents: 'none',
-                backgroundImage: 'url(/images/works/lumiere-ring/detail-2.png)',
-                backgroundSize: 'cover',
-                backgroundPosition: `center ${i * 33}%`,
+                display: 'flex',
+                alignItems: 'baseline',
+                justifyContent: 'space-between',
+                padding: '2.5rem 0',
               }}
-            />
+            >
+              {/* Left: large value + unit */}
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
+                <span
+                  style={{
+                    fontFamily: 'var(--font-noto-serif-tc)',
+                    fontSize: 'clamp(3.5rem, 8vw, 7rem)',
+                    fontWeight: 300,
+                    color: 'rgba(255,255,255,0.88)',
+                    letterSpacing: '0.04em',
+                    lineHeight: 1,
+                  }}
+                >
+                  {row.value}
+                </span>
+                {row.unit && (
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-noto-serif-tc)',
+                      fontSize: 'clamp(1rem, 2vw, 1.5rem)',
+                      fontWeight: 300,
+                      color: '#C49A5A',
+                      letterSpacing: '0.1em',
+                    }}
+                  >
+                    {row.unit}
+                  </span>
+                )}
+              </div>
 
-            <div style={{ position: 'relative', zIndex: 1 }}>
+              {/* Right: description */}
               <span
                 style={{
                   fontFamily: 'var(--font-noto-serif-tc)',
-                  fontSize: 'clamp(2.5rem, 4.5vw, 6rem)',
+                  fontSize: 'clamp(1rem, 2vw, 1.5rem)',
                   fontWeight: 300,
-                  color: 'rgba(255,255,255,0.88)',
-                  letterSpacing: '0.06em',
-                  display: 'block',
-                  textAlign: textAlign(item.dir),
-                  lineHeight: 1.1,
+                  color: '#9A9590',
+                  letterSpacing: '0.2em',
                 }}
               >
-                {item.text}
+                {row.desc}
               </span>
-
-              <div
-                style={{
-                  height: '1px',
-                  marginTop: '0.75rem',
-                  ...accentLine(item.dir),
-                }}
-              />
             </div>
+
+            {/* Divider — not after last row */}
+            {i < ROWS.length - 1 && (
+              <div style={{ height: '1px', backgroundColor: '#1A1815' }} />
+            )}
           </div>
         ))}
+      </div>
+
+      {/* Brand statement */}
+      <div
+        style={{
+          maxWidth: '600px',
+          width: '100%',
+          margin: '4rem auto 0',
+          borderLeft: '2px solid #C49A5A',
+          paddingLeft: '2rem',
+        }}
+      >
+        <p
+          style={{
+            fontFamily: 'var(--font-noto-serif-tc)',
+            fontSize: 'clamp(0.875rem, 1.5vw, 1.1rem)',
+            fontWeight: 300,
+            color: '#7A7570',
+            letterSpacing: '0.08em',
+            lineHeight: 2,
+          }}
+        >
+          不是裝飾，是工匠與金屬之間，最誠實的對話。
+        </p>
+      </div>
+
+      {/* Bottom-right label */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '3rem',
+          right: '5vw',
+        }}
+      >
+        <span
+          style={{
+            fontSize: '0.65rem',
+            letterSpacing: '0.3em',
+            color: '#C49A5A',
+            opacity: 0.5,
+            textTransform: 'uppercase',
+            fontWeight: 300,
+          }}
+        >
+          CRAFTSMANSHIP · TAIWAN
+        </span>
       </div>
     </section>
   )
