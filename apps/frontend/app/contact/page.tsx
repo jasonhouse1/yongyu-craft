@@ -68,7 +68,7 @@ export default function ContactPage() {
                   padding: "1.5rem 0", borderBottom: "1px solid rgba(196,154,90,0.08)",
                   transition: "border-color 0.3s ease",
                 }}>
-                  <span style={{ fontSize: "0.6875rem", letterSpacing: "0.15em", color: "#6B6560", textTransform: "uppercase", minWidth: "6rem" }}>
+                  <span style={{ fontSize: "0.6875rem", letterSpacing: "0.15em", color: "#A8A39D", textTransform: "uppercase", minWidth: "6rem" }}>
                     {ch.label}
                   </span>
                   {ch.href ? (
@@ -107,7 +107,7 @@ export default function ContactPage() {
               fontFamily: "var(--font-noto-serif-tc)",
               fontSize: "1rem",
               letterSpacing: "0.12em",
-              color: "rgba(196,154,90,0.35)",
+              color: "rgba(196,154,90,0.6)",
               fontWeight: 300,
             }}>
               拜訪我們的工坊
@@ -121,10 +121,10 @@ export default function ContactPage() {
         display: "flex", justifyContent: "space-between", alignItems: "center",
         flexWrap: "wrap", gap: "1rem", borderTop: "1px solid rgba(196,154,90,0.08)",
       }}>
-        <span style={{ fontFamily: "var(--font-noto-serif-tc)", fontSize: "0.875rem", letterSpacing: "0.12em", color: "rgba(196,154,90,0.55)" }}>
+        <span style={{ fontFamily: "var(--font-noto-serif-tc)", fontSize: "0.875rem", letterSpacing: "0.12em", color: "rgba(196,154,90,0.85)" }}>
           {t.footer.brand}
         </span>
-        <span style={{ fontSize: "0.75rem", color: "rgba(232,236,240,0.18)", letterSpacing: "0.05em" }}>
+        <span style={{ fontSize: "0.75rem", color: "#9A9590", letterSpacing: "0.05em" }}>
           {t.footer.copyright}
         </span>
       </footer>

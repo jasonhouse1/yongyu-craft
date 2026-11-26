@@ -49,11 +49,8 @@ export default function AboutPage() {
       {/* Hero */}
       <section style={{ padding: "10rem 3rem 5rem", maxWidth: "720px" }}>
         <div style={{ marginBottom: "1.5rem" }}><BackButton /></div>
-        <p style={{ fontSize: "0.75rem", letterSpacing: "0.5em", color: "#C49A5A", marginBottom: "0.75rem", textTransform: "uppercase" }}>
+        <p style={{ fontSize: "0.75rem", letterSpacing: "0.5em", color: "#C49A5A", marginBottom: "1.25rem", textTransform: "uppercase" }}>
           CRAFTSMANSHIP · SINCE TAIWAN
-        </p>
-        <p style={{ fontSize: "0.75rem", letterSpacing: "0.2em", color: "#C49A5A", marginBottom: "1rem", textTransform: "uppercase" }}>
-          ABOUT
         </p>
         <h1 style={{
           fontFamily: "var(--font-noto-serif-tc)", fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
@@ -135,10 +132,10 @@ export default function AboutPage() {
         display: "flex", justifyContent: "space-between", alignItems: "center",
         flexWrap: "wrap", gap: "1rem", borderTop: "1px solid rgba(196,154,90,0.08)",
       }}>
-        <span style={{ fontFamily: "var(--font-noto-serif-tc)", fontSize: "0.875rem", letterSpacing: "0.12em", color: "rgba(196,154,90,0.55)" }}>
+        <span style={{ fontFamily: "var(--font-noto-serif-tc)", fontSize: "0.875rem", letterSpacing: "0.12em", color: "rgba(196,154,90,0.85)" }}>
           {t.footer.brand}
         </span>
-        <span style={{ fontSize: "0.75rem", color: "rgba(232,236,240,0.18)", letterSpacing: "0.05em" }}>
+        <span style={{ fontSize: "0.75rem", color: "#9A9590", letterSpacing: "0.05em" }}>
           {t.footer.copyright}
         </span>
       </footer>
