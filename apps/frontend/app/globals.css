@@ -29,6 +29,18 @@
   box-sizing: border-box;
 }
 
+/* 無障礙：尊重「減少動態」——砍掉 CSS 過場與動畫，停用平滑捲動 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 html {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
