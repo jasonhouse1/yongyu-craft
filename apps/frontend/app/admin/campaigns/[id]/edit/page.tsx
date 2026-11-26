@@ -99,7 +99,7 @@ export default function AdminEditCampaignPage() {
     color: "#e5e5e5", fontSize: 13, boxSizing: "border-box",
   };
   const label: React.CSSProperties = {
-    display: "block", color: "#666", fontSize: 11,
+    display: "block", color: "#999", fontSize: 11,
     letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 6,
   };
   const group: React.CSSProperties = { marginBottom: 20 };

@@ -55,7 +55,7 @@ export default function AdminLayout({
             document.cookie = "admin_key=; path=/; max-age=0";
             router.push("/admin/login");
           }}
-          style={{ ...navLinkStyle, marginLeft: "auto", background: "none", border: "none", cursor: "pointer", color: "#555" }}
+          style={{ ...navLinkStyle, marginLeft: "auto", background: "none", border: "none", cursor: "pointer", color: "#888" }}
         >
           登出
         </button>
