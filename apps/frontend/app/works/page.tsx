@@ -1,4 +1,5 @@
 import { getWorks } from "@/lib/api";
+import { categoryLabel } from "@/lib/categories";
 import messages from "@/messages/zh.json";
 import Link from "next/link";
 import WorksGallery from "@/components/works/WorksGallery";
@@ -136,7 +137,7 @@ export default async function WorksPage({
                 fontWeight: 300,
               }}
             >
-              {cat}
+              {categoryLabel(cat)}
             </Link>
           ))}
         </div>

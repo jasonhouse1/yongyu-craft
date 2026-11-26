@@ -1,4 +1,5 @@
 import { getWorks } from "@/lib/api";
+import { categoryLabel } from "@/lib/categories";
 import messages from "@/messages/zh.json";
 import Link from "next/link";
 import RingHero from "@/components/hero/RingHero";
@@ -58,7 +59,7 @@ export default async function HomePage() {
                   color: "rgba(196,154,90,0.75)",
                   marginBottom: "0.5rem",
                 }}>
-                  {work.categoryId}
+                  {categoryLabel(work.categoryId)}
                 </p>
                 <p style={{
                   fontSize: "0.9375rem",
