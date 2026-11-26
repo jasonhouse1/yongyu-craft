@@ -47,10 +47,10 @@ export default function MemberFavoritesPage() {
       <h1 style={{ fontFamily: 'var(--font-noto-serif-tc)', fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', fontWeight: 300, color: '#E8ECF0', letterSpacing: '0.06em', marginBottom: '3rem' }}>
         收藏作品
       </h1>
-      {loading && <p style={{ color: '#6B6560', fontSize: '0.85rem' }}>載入中...</p>}
+      {loading && <p style={{ color: '#A8A39D', fontSize: '0.85rem' }}>載入中...</p>}
       {!loading && works.length === 0 && (
         <div style={{ textAlign: 'center', padding: '4rem 0' }}>
-          <p style={{ color: '#6B6560', fontSize: '0.875rem', marginBottom: '1.5rem' }}>尚未收藏任何作品</p>
+          <p style={{ color: '#A8A39D', fontSize: '0.875rem', marginBottom: '1.5rem' }}>尚未收藏任何作品</p>
           <Link href="/works" style={{ fontSize: '0.75rem', letterSpacing: '0.15em', color: 'rgba(196,154,90,0.6)' }}>
             瀏覽作品 →
           </Link>
@@ -73,7 +73,7 @@ export default function MemberFavoritesPage() {
               <p style={{ fontFamily: 'var(--font-noto-serif-tc)', fontSize: '1rem', color: '#E8ECF0', fontWeight: 300, marginBottom: '0.25rem' }}>
                 {work.titleZh}
               </p>
-              <p style={{ fontSize: '0.7rem', color: '#6B6560', letterSpacing: '0.08em' }}>
+              <p style={{ fontSize: '0.7rem', color: '#A8A39D', letterSpacing: '0.08em' }}>
                 {work.categoryId}
               </p>
             </Link>

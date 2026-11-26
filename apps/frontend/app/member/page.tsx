@@ -53,7 +53,7 @@ export default function MemberDashboardPage() {
       <p style={{ fontFamily: 'var(--font-noto-serif-tc)', fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', fontWeight: 300, color: '#E8ECF0', letterSpacing: '0.06em', marginBottom: '0.5rem' }}>
         {member?.name ? `歡迎，${member.name}` : '會員中心'}
       </p>
-      <p style={{ fontSize: '0.75rem', color: '#6B6560', letterSpacing: '0.08em', marginBottom: '3rem' }}>
+      <p style={{ fontSize: '0.75rem', color: '#A8A39D', letterSpacing: '0.08em', marginBottom: '3rem' }}>
         {member?.email}
       </p>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1.5rem' }}>
@@ -79,7 +79,7 @@ export default function MemberDashboardPage() {
         ))}
       </div>
       <div style={{ marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid rgba(196,154,90,0.08)' }}>
-        <Link href="/works" style={{ fontSize: '0.75rem', letterSpacing: '0.15em', color: 'rgba(196,154,90,0.5)' }}>
+        <Link href="/works" style={{ fontSize: '0.75rem', letterSpacing: '0.15em', color: 'rgba(196,154,90,0.75)' }}>
           瀏覽作品 →
         </Link>
       </div>

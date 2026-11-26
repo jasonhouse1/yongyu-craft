@@ -48,10 +48,10 @@ export default function MemberInquiriesPage() {
       <h1 style={{ fontFamily: 'var(--font-noto-serif-tc)', fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', fontWeight: 300, color: '#E8ECF0', letterSpacing: '0.06em', marginBottom: '3rem' }}>
         詢價記錄
       </h1>
-      {loading && <p style={{ color: '#6B6560', fontSize: '0.85rem' }}>載入中...</p>}
+      {loading && <p style={{ color: '#A8A39D', fontSize: '0.85rem' }}>載入中...</p>}
       {!loading && items.length === 0 && (
         <div style={{ textAlign: 'center', padding: '4rem 0' }}>
-          <p style={{ color: '#6B6560', fontSize: '0.875rem', marginBottom: '1.5rem' }}>尚無詢價記錄</p>
+          <p style={{ color: '#A8A39D', fontSize: '0.875rem', marginBottom: '1.5rem' }}>尚無詢價記錄</p>
           <Link href="/inquiry" style={{ fontSize: '0.75rem', letterSpacing: '0.15em', color: 'rgba(196,154,90,0.6)' }}>
             開始詢價 →
           </Link>
@@ -73,7 +73,7 @@ export default function MemberInquiriesPage() {
                   {STATUS_LABEL[item.status] ?? item.status}
                 </span>
               </div>
-              <span style={{ fontSize: '0.7rem', color: '#6B6560' }}>
+              <span style={{ fontSize: '0.7rem', color: '#A8A39D' }}>
                 {new Date(item.createdAt).toLocaleDateString('zh-TW')}
               </span>
             </div>

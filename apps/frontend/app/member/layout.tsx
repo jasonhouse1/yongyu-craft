@@ -70,7 +70,7 @@ export default function MemberLayout({ children }: { children: React.ReactNode }
           {navLinks.map(l => (
             <Link key={l.href} href={l.href} style={{
               fontSize: '0.75rem', letterSpacing: '0.12em',
-              color: pathname === l.href ? '#C49A5A' : 'rgba(232,236,240,0.4)',
+              color: pathname === l.href ? '#C49A5A' : 'rgba(232,236,240,0.6)',
               fontWeight: 300,
             }}>
               {l.label}
@@ -81,7 +81,7 @@ export default function MemberLayout({ children }: { children: React.ReactNode }
             style={{
               background: 'none', border: 'none',
               fontSize: '0.75rem', letterSpacing: '0.12em',
-              color: 'rgba(232,236,240,0.25)',
+              color: 'rgba(232,236,240,0.5)',
               cursor: 'pointer', fontFamily: 'inherit',
             }}
           >
@@ -91,7 +91,7 @@ export default function MemberLayout({ children }: { children: React.ReactNode }
       </nav>
       <div style={{ paddingTop: '4.5rem', minHeight: '100vh', color: '#E8ECF0' }}>
         {member && (
-          <div style={{ padding: '2rem 3rem 0', fontSize: '0.75rem', color: 'rgba(196,154,90,0.55)', letterSpacing: '0.1em' }}>
+          <div style={{ padding: '2rem 3rem 0', fontSize: '0.75rem', color: 'rgba(196,154,90,0.75)', letterSpacing: '0.1em' }}>
             {member.name ?? member.email}
           </div>
         )}
