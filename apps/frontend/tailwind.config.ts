@@ -8,17 +8,6 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        yyc: {
-          bg: "#F7F5F0",
-          ink: "#1A1A18",
-          gold: "#8C7355",
-          sand: "#C4B49A",
-          dark: "#2C2C2A",
-          white: "#FFFFFF",
-          "border-light": "rgba(26,26,24,0.12)",
-        },
-      },
       fontFamily: {
         sans: ["var(--font-noto-sans-tc)", "sans-serif"],
         serif: ["var(--font-noto-serif-tc)", "serif"],
