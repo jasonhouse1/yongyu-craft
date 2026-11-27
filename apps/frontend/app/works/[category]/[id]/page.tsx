@@ -6,6 +6,8 @@ import { notFound } from "next/navigation";
 import BackButton from "@/components/ui/BackButton";
 import FavoriteButton from "@/components/ui/FavoriteButton";
 import WorkHeroImage from "@/components/ui/WorkHeroImage";
+import WorkHeroVideo from "@/components/ui/WorkHeroVideo";
+import { heroVideoFor } from "@/lib/heroVideos";
 
 export default async function WorkDetailPage({
   params,
@@ -19,6 +21,7 @@ export default async function WorkDetailPage({
   if (!work) notFound();
 
   const hasImage = !!work.coverImage;
+  const heroVideo = heroVideoFor(work.coverImage);
   const material = work.materials[0] ?? "精選材質";
   const technique = work.techniques[0] ?? "傳統工法";
   const processCount = work.techniques.length > 0 ? `${work.techniques.length} 道` : "多道";
@@ -48,7 +51,9 @@ export default async function WorkDetailPage({
 
       {/* ── Section 1: Full-screen hero ── */}
       <section style={{ position: "relative", height: "100vh", overflow: "hidden", display: "flex", alignItems: "flex-end" }}>
-        {hasImage ? (
+        {heroVideo ? (
+          <WorkHeroVideo src={heroVideo} poster={hasImage ? work.coverImage : undefined} alt={work.titleZh} />
+        ) : hasImage ? (
           <WorkHeroImage src={work.coverImage} alt={work.titleZh} />
         ) : (
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(196,154,90,0.08) 0%, #0D0D0B 100%)", zIndex: 0 }} />

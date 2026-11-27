@@ -49,6 +49,7 @@
 
 ## 元件與範式 Patterns
 - **作品卡縮圖** `.works-card-thumb`（3:4）：有 `coverImage` → `.works-card-img`（`object-fit:cover`，hover 微放大 1.04，尊重 reduced-motion）；無圖 → `.works-card-fallback`（襯線字首字、`opacity:0.12`）。**首頁與型錄一致。**
+- **作品詳情 Hero 影片**（可選）：少數作品配有 bespoke 氛圍循環影片（1920×1080、約 10s 無縫循環、近黑底金光、無文字）。`lib/heroVideos.ts` 以 coverImage 的資料夾 slug（`/images/works/<slug>/…`）對照 `/videos/…`；命中則詳情頁 Section 1 用 `WorkHeroVideo`（`muted/autoplay/loop/playsInline`、`object-fit:cover`、poster=封面、尊重 `prefers-reduced-motion` 時只顯示靜態 poster），未命中則回退 `WorkHeroImage`。影片本身在倉庫外的 HyperFrames 專案產生，成片置於 `public/videos/`。**首頁 hero 已是互動式戒指 hero，不套用此影片**（避免兩只戒指打架或失去互動）。
 - **空狀態**：資料為 0 時必須有設計過的空狀態（標題＋說明＋導流 CTA），不可讓區塊直接消失。
 - **CTA 按鈕** `.btn-cta-outline`：金色描邊，hover 由左 `scaleX` 填滿、文字轉深色。
 - **頁尾**：左品牌（襯線，金 `0.85`）／右版權（`#9A9590`）。全站統一。
