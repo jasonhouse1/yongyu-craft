@@ -33,7 +33,7 @@ export default function InquiryForm({ workId, workTitle }: Props) {
 
   const fieldStyle = (id: string): React.CSSProperties => ({
     border: "none",
-    borderBottom: `1px solid ${focusedField === id ? "#C49A5A" : "#3A3530"}`,
+    borderBottom: `1px solid ${focusedField === id ? "#C49A5A" : "#5A5550"}`,
     background: "transparent",
     color: "#E8ECF0",
     padding: "16px 0",
@@ -50,7 +50,7 @@ export default function InquiryForm({ workId, workTitle }: Props) {
     display: "block",
     fontSize: "0.6875rem",
     letterSpacing: "0.18em",
-    color: "#6B6560",
+    color: "#A8A39D",
     marginBottom: "0",
     textTransform: "uppercase",
     fontWeight: 300,
@@ -81,7 +81,7 @@ export default function InquiryForm({ workId, workTitle }: Props) {
         </h2>
         <p style={{
           fontSize: "0.9375rem",
-          color: "#6B6560",
+          color: "#A8A39D",
           letterSpacing: "0.05em",
           lineHeight: 1.9,
         }}>
@@ -122,7 +122,7 @@ export default function InquiryForm({ workId, workTitle }: Props) {
           gap: "1rem",
           alignItems: "baseline",
         }}>
-          <span style={{ fontSize: "0.6875rem", letterSpacing: "0.15em", color: "#6B6560" }}>
+          <span style={{ fontSize: "0.6875rem", letterSpacing: "0.15em", color: "#A8A39D" }}>
             {t.inquiry.relatedWork}
           </span>
           <span style={{ fontSize: "0.9375rem", color: "rgba(232,236,240,0.8)", letterSpacing: "0.03em" }}>
@@ -224,7 +224,7 @@ export default function InquiryForm({ workId, workTitle }: Props) {
       </div>
 
       {status === "error" && (
-        <p style={{ fontSize: "0.8125rem", color: "#c0392b", letterSpacing: "0.03em" }}>
+        <p role="alert" style={{ fontSize: "0.8125rem", color: "#f87171", letterSpacing: "0.03em" }}>
           {t.inquiry.errorMessage}
         </p>
       )}
@@ -232,10 +232,12 @@ export default function InquiryForm({ workId, workTitle }: Props) {
       <button
         type="submit"
         disabled={status === "submitting"}
+        aria-busy={status === "submitting"}
         className="btn-cta-outline"
         style={{
           alignSelf: "flex-start",
           opacity: status === "submitting" ? 0.5 : 1,
+          cursor: status === "submitting" ? "not-allowed" : "pointer",
         }}
       >
         {status === "submitting" ? t.inquiry.submitting : "開始對話"}
