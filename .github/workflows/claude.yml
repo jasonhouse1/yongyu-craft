@@ -1,0 +1,46 @@
+name: Claude Code
+
+# 自動實作者（雲端版的 Claude Code）。
+# 在 issue / PR 留言裡提到 @claude，或開一個內文含 @claude 的 issue，
+# 它就在 GitHub Actions 跑起來：分析、在分支上實作、開 / 更新 PR。
+# 不需要開老闆的電腦。密鑰只放在 repo Secrets（ANTHROPIC_API_KEY），永不進程式碼。
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+  issues:
+    types: [opened, assigned]
+
+jobs:
+  claude:
+    # 只有在真的被 @claude 呼叫時才跑，避免每則留言都觸發、浪費 Actions 分鐘數。
+    if: |
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
+      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
+    runs-on: ubuntu-latest
+    # 同一個 issue/PR 同時只跑一個，後到的取代前一個，省資源也避免打架。
+    concurrency:
+      group: claude-${{ github.event.issue.number || github.event.pull_request.number }}
+      cancel-in-progress: false
+    permissions:
+      contents: write        # 在分支提交、開 PR
+      pull-requests: write    # 開 / 更新 PR、留言
+      issues: write           # 回應 / 更新 issue
+      id-token: write         # OIDC 驗證
+      actions: read           # 讀自己的 CI 結果
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude Code
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
