@@ -31,6 +31,30 @@ jobs:
       - name: Typecheck
         run: cd apps/backend && pnpm typecheck
 
+  backend-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: cd apps/backend && pnpm install
+
+      - name: Generate Prisma client
+        run: cd apps/backend && pnpm db:generate
+
+      - name: Test
+        run: cd apps/backend && pnpm test
+
   frontend-typecheck:
     runs-on: ubuntu-latest
     steps:
@@ -51,3 +75,24 @@ jobs:
 
       - name: Typecheck
         run: cd apps/frontend && pnpm typecheck
+
+  frontend-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: cd apps/frontend && pnpm install
+
+      - name: Lint
+        run: cd apps/frontend && pnpm lint
