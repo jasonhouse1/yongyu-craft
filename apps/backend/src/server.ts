@@ -12,6 +12,7 @@ import { adminCampaignRouter } from "./modules/campaign/admin-campaign.controlle
 import { memberAuthRouter } from "./modules/member/member-auth.controller";
 import { memberProfileRouter } from "./modules/member/member-profile.controller";
 import { outboxProcessor } from "./shared/outbox/outbox-processor";
+import { registerInquirySubscribers } from "./modules/inquiry/inquiry.subscribers";
 import { prisma } from "./shared/db/prisma";
 
 const app = express();
@@ -80,6 +81,7 @@ app.use("/api/member", memberProfileRouter);
 
 const server = app.listen(PORT, () => {
   console.log(`Backend running at http://localhost:${PORT}`);
+  registerInquirySubscribers();
   outboxProcessor.start();
 });
 
