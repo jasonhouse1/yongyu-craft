@@ -55,6 +55,30 @@ jobs:
       - name: Test
         run: cd apps/backend && pnpm test
 
+  backend-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: cd apps/backend && pnpm install
+
+      - name: Generate Prisma client
+        run: cd apps/backend && pnpm db:generate
+
+      - name: Build
+        run: cd apps/backend && pnpm build
+
   frontend-typecheck:
     runs-on: ubuntu-latest
     steps:
@@ -96,3 +120,24 @@ jobs:
 
       - name: Lint
         run: cd apps/frontend && pnpm lint
+
+  frontend-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: cd apps/frontend && pnpm install
+
+      - name: Build
+        run: cd apps/frontend && pnpm build
