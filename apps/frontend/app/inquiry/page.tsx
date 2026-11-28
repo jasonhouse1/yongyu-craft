@@ -46,7 +46,7 @@ export default async function InquiryPage({
             <Link key={item.href} href={item.href} style={{
               fontSize: "0.875rem",
               letterSpacing: "0.15em",
-              color: "rgba(232,236,240,0.4)",
+              color: "rgba(232,236,240,0.6)",
               fontWeight: 300,
             }}>
               {item.label}
@@ -60,7 +60,7 @@ export default async function InquiryPage({
         <p style={{
           fontSize: "0.75rem",
           letterSpacing: "0.25em",
-          color: "rgba(196,154,90,0.5)",
+          color: "rgba(196,154,90,0.75)",
           marginBottom: "1.5rem",
           textTransform: "uppercase",
         }}>
@@ -181,11 +181,11 @@ export default async function InquiryPage({
           fontFamily: "var(--font-noto-serif-tc)",
           fontSize: "0.875rem",
           letterSpacing: "0.12em",
-          color: "rgba(196,154,90,0.55)",
+          color: "rgba(196,154,90,0.85)",
         }}>
           {t.footer.brand}
         </span>
-        <span style={{ fontSize: "0.75rem", color: "rgba(232,236,240,0.18)", letterSpacing: "0.05em" }}>
+        <span style={{ fontSize: "0.75rem", color: "#9A9590", letterSpacing: "0.05em" }}>
           {t.footer.copyright}
         </span>
       </footer>

@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
 import Link from 'next/link'
 import type { WorkSnapshot } from '@/lib/api'
+import { categoryLabel } from '@/lib/categories'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -94,12 +95,11 @@ function WorkCard({ work, i }: { work: WorkSnapshot; i: number }) {
             style={{
               fontSize: '0.6875rem',
               letterSpacing: '0.2em',
-              color: 'rgba(196,154,90,0.55)',
-              textTransform: 'uppercase',
+              color: 'rgba(196,154,90,0.75)',
               marginBottom: '0.5rem',
             }}
           >
-            {work.categoryId}
+            {categoryLabel(work.categoryId)}
           </p>
           <h2
             style={{

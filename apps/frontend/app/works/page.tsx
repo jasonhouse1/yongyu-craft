@@ -1,4 +1,5 @@
 import { getWorks } from "@/lib/api";
+import { categoryLabel } from "@/lib/categories";
 import messages from "@/messages/zh.json";
 import Link from "next/link";
 import WorksGallery from "@/components/works/WorksGallery";
@@ -62,7 +63,7 @@ export default async function WorksPage({
                 letterSpacing: "0.15em",
                 color: item.href === "/works"
                   ? "rgba(196,154,90,0.9)"
-                  : "rgba(232,236,240,0.4)",
+                  : "rgba(232,236,240,0.6)",
                 fontWeight: 300,
               }}
             >
@@ -77,7 +78,7 @@ export default async function WorksPage({
         <p style={{
           fontSize: "0.6875rem",
           letterSpacing: "0.25em",
-          color: "rgba(196,154,90,0.5)",
+          color: "rgba(196,154,90,0.75)",
           marginBottom: "1rem",
           textTransform: "uppercase",
         }}>
@@ -93,7 +94,7 @@ export default async function WorksPage({
         }}>
           {t.works.pageTitle}
         </h1>
-        <p style={{ fontSize: "0.875rem", color: "#6B6560", letterSpacing: "0.05em" }}>
+        <p style={{ fontSize: "0.875rem", color: "#A8A39D", letterSpacing: "0.05em" }}>
           {t.works.pageSubtitle}
         </p>
       </section>
@@ -113,7 +114,7 @@ export default async function WorksPage({
             style={{
               fontSize: "0.75rem",
               letterSpacing: "0.1em",
-              color: !category ? "#C49A5A" : "rgba(232,236,240,0.35)",
+              color: !category ? "#C49A5A" : "rgba(232,236,240,0.6)",
               padding: "0.375rem 1.25rem",
               border: "1px solid",
               borderColor: !category ? "rgba(196,154,90,0.4)" : "rgba(196,154,90,0.1)",
@@ -129,14 +130,14 @@ export default async function WorksPage({
               style={{
                 fontSize: "0.75rem",
                 letterSpacing: "0.1em",
-                color: category === cat ? "#C49A5A" : "rgba(232,236,240,0.35)",
+                color: category === cat ? "#C49A5A" : "rgba(232,236,240,0.6)",
                 padding: "0.375rem 1.25rem",
                 border: "1px solid",
                 borderColor: category === cat ? "rgba(196,154,90,0.4)" : "rgba(196,154,90,0.1)",
                 fontWeight: 300,
               }}
             >
-              {cat}
+              {categoryLabel(cat)}
             </Link>
           ))}
         </div>
@@ -162,11 +163,11 @@ export default async function WorksPage({
           fontFamily: "var(--font-noto-serif-tc)",
           fontSize: "0.875rem",
           letterSpacing: "0.12em",
-          color: "rgba(196,154,90,0.55)",
+          color: "rgba(196,154,90,0.85)",
         }}>
           {t.footer.brand}
         </span>
-        <span style={{ fontSize: "0.75rem", color: "rgba(232,236,240,0.18)", letterSpacing: "0.05em" }}>
+        <span style={{ fontSize: "0.75rem", color: "#9A9590", letterSpacing: "0.05em" }}>
           {t.footer.copyright}
         </span>
       </footer>

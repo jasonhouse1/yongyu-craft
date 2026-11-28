@@ -1,10 +1,13 @@
 import { getWork } from "@/lib/api";
+import { categoryLabel } from "@/lib/categories";
 import messages from "@/messages/zh.json";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import BackButton from "@/components/ui/BackButton";
 import FavoriteButton from "@/components/ui/FavoriteButton";
 import WorkHeroImage from "@/components/ui/WorkHeroImage";
+import WorkHeroVideo from "@/components/ui/WorkHeroVideo";
+import { heroVideoFor } from "@/lib/heroVideos";
 
 export default async function WorkDetailPage({
   params,
@@ -18,6 +21,7 @@ export default async function WorkDetailPage({
   if (!work) notFound();
 
   const hasImage = !!work.coverImage;
+  const heroVideo = heroVideoFor(work.coverImage);
   const material = work.materials[0] ?? "精選材質";
   const technique = work.techniques[0] ?? "傳統工法";
   const processCount = work.techniques.length > 0 ? `${work.techniques.length} 道` : "多道";
@@ -37,7 +41,7 @@ export default async function WorkDetailPage({
         </Link>
         <div style={{ display: "flex", gap: "2.5rem", alignItems: "center" }}>
           {[{ href: "/works", label: t.nav.works }, { href: "/about", label: t.nav.about }, { href: "/contact", label: t.nav.contact }].map(item => (
-            <Link key={item.href} href={item.href} style={{ fontSize: "0.75rem", letterSpacing: "0.15em", color: "rgba(232,236,240,0.4)", fontWeight: 300 }}>
+            <Link key={item.href} href={item.href} style={{ fontSize: "0.75rem", letterSpacing: "0.15em", color: "rgba(232,236,240,0.6)", fontWeight: 300 }}>
               {item.label}
             </Link>
           ))}
@@ -47,7 +51,9 @@ export default async function WorkDetailPage({
 
       {/* ── Section 1: Full-screen hero ── */}
       <section style={{ position: "relative", height: "100vh", overflow: "hidden", display: "flex", alignItems: "flex-end" }}>
-        {hasImage ? (
+        {heroVideo ? (
+          <WorkHeroVideo src={heroVideo} poster={hasImage ? work.coverImage : undefined} alt={work.titleZh} />
+        ) : hasImage ? (
           <WorkHeroImage src={work.coverImage} alt={work.titleZh} />
         ) : (
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(196,154,90,0.08) 0%, #0D0D0B 100%)", zIndex: 0 }} />
@@ -58,8 +64,8 @@ export default async function WorkDetailPage({
         }} />
         <div style={{ position: "relative", zIndex: 2, padding: "0 3rem 5rem", maxWidth: "700px" }}>
           <div style={{ marginBottom: "1.5rem" }}><BackButton /></div>
-          <p style={{ fontSize: "0.6875rem", letterSpacing: "0.2em", color: "rgba(196,154,90,0.7)", textTransform: "uppercase", marginBottom: "1rem" }}>
-            {work.categoryId}
+          <p style={{ fontSize: "0.6875rem", letterSpacing: "0.2em", color: "rgba(196,154,90,0.75)", marginBottom: "1rem" }}>
+            {categoryLabel(work.categoryId)}
           </p>
           <h1 style={{
             fontFamily: "var(--font-noto-serif-tc)", fontWeight: 300, color: "#E8ECF0",
@@ -129,13 +135,13 @@ export default async function WorkDetailPage({
             <dl style={{ marginTop: "3rem", display: "flex", flexDirection: "column", gap: "0.875rem", borderTop: "1px solid rgba(196,154,90,0.1)", paddingTop: "2rem" }}>
               {work.dimensions && (
                 <div style={{ display: "flex", gap: "2rem" }}>
-                  <dt style={{ fontSize: "0.6875rem", letterSpacing: "0.12em", color: "#6B6560", minWidth: "4rem" }}>{t.works.dimensions}</dt>
+                  <dt style={{ fontSize: "0.6875rem", letterSpacing: "0.12em", color: "#A8A39D", minWidth: "4rem" }}>{t.works.dimensions}</dt>
                   <dd style={{ fontSize: "0.875rem", color: "rgba(232,236,240,0.65)" }}>{work.dimensions}</dd>
                 </div>
               )}
               {work.year && (
                 <div style={{ display: "flex", gap: "2rem" }}>
-                  <dt style={{ fontSize: "0.6875rem", letterSpacing: "0.12em", color: "#6B6560", minWidth: "4rem" }}>{t.works.year}</dt>
+                  <dt style={{ fontSize: "0.6875rem", letterSpacing: "0.12em", color: "#A8A39D", minWidth: "4rem" }}>{t.works.year}</dt>
                   <dd style={{ fontSize: "0.875rem", color: "rgba(232,236,240,0.65)" }}>{work.year}</dd>
                 </div>
               )}
@@ -162,7 +168,7 @@ export default async function WorkDetailPage({
         </Link>
         <Link href="/works" style={{
           position: "absolute", bottom: "3rem", left: "3rem",
-          fontSize: "0.75rem", letterSpacing: "0.12em", color: "rgba(232,236,240,0.25)",
+          fontSize: "0.75rem", letterSpacing: "0.12em", color: "rgba(232,236,240,0.55)",
         }}>
           ← {t.works.backToWorks}
         </Link>
@@ -173,10 +179,10 @@ export default async function WorkDetailPage({
         display: "flex", justifyContent: "space-between", alignItems: "center",
         flexWrap: "wrap", gap: "1rem", borderTop: "1px solid rgba(196,154,90,0.08)",
       }}>
-        <span style={{ fontFamily: "var(--font-noto-serif-tc)", fontSize: "0.875rem", letterSpacing: "0.12em", color: "rgba(196,154,90,0.55)" }}>
+        <span style={{ fontFamily: "var(--font-noto-serif-tc)", fontSize: "0.875rem", letterSpacing: "0.12em", color: "rgba(196,154,90,0.85)" }}>
           {t.footer.brand}
         </span>
-        <span style={{ fontSize: "0.75rem", color: "rgba(232,236,240,0.18)", letterSpacing: "0.05em" }}>
+        <span style={{ fontSize: "0.75rem", color: "#9A9590", letterSpacing: "0.05em" }}>
           {t.footer.copyright}
         </span>
       </footer>

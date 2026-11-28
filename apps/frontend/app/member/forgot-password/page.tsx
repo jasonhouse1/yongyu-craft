@@ -77,7 +77,7 @@ export default function ForgotPasswordPage() {
               type="email" value={email} onChange={e => setEmail(e.target.value)}
               required style={{
                 width: '100%', background: 'none', border: 'none',
-                borderBottom: '1px solid rgba(196,154,90,0.2)',
+                borderBottom: '1px solid rgba(196,154,90,0.3)',
                 color: '#E8ECF0', fontSize: '1rem', padding: '0.75rem 0',
                 outline: 'none', fontFamily: 'inherit',
               }}
@@ -90,7 +90,7 @@ export default function ForgotPasswordPage() {
           </button>
         </form>
         <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-          <Link href="/member/login" style={{ fontSize: '0.75rem', color: 'rgba(232,236,240,0.3)', letterSpacing: '0.08em' }}>
+          <Link href="/member/login" style={{ fontSize: '0.75rem', color: 'rgba(232,236,240,0.55)', letterSpacing: '0.08em' }}>
             返回登入
           </Link>
         </div>

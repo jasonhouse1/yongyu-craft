@@ -92,7 +92,7 @@ export default function ResetPasswordPage() {
               required autoComplete="new-password"
               style={{
                 width: '100%', background: 'none', border: 'none',
-                borderBottom: '1px solid rgba(196,154,90,0.2)',
+                borderBottom: '1px solid rgba(196,154,90,0.3)',
                 color: '#E8ECF0', fontSize: '1rem', padding: '0.75rem 0',
                 outline: 'none', fontFamily: 'inherit',
               }}

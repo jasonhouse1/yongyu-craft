@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Noto_Sans_TC, Noto_Serif_TC } from "next/font/google";
 import messages from "@/messages/zh.json";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
-import CustomCursor from "@/components/ui/CustomCursor";
 import CampaignBanner from "@/components/ui/CampaignBanner";
 import { MemberProvider } from "@/lib/member-context";
 import PageTransition from "@/components/ui/PageTransition";
@@ -50,7 +49,6 @@ export default function RootLayout({
       <body>
         <MemberProvider>
           <CampaignBanner />
-          <CustomCursor />
           <SmoothScrollProvider>
             <PageTransition>{children}</PageTransition>
             <Footer />

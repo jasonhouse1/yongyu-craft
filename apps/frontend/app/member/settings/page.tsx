@@ -76,7 +76,7 @@ export default function MemberSettingsPage() {
 
   const field: React.CSSProperties = {
     width: '100%', background: 'none', border: 'none',
-    borderBottom: '1px solid rgba(196,154,90,0.2)',
+    borderBottom: '1px solid rgba(196,154,90,0.3)',
     color: '#E8ECF0', fontSize: '1rem', padding: '0.75rem 0',
     outline: 'none', fontFamily: 'inherit',
   }
@@ -98,7 +98,7 @@ export default function MemberSettingsPage() {
         <form onSubmit={saveProfile} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <div>
             <label style={{ fontSize: '0.7rem', letterSpacing: '0.15em', color: '#9A9590', display: 'block', marginBottom: '0.5rem' }}>EMAIL（不可更改）</label>
-            <p style={{ fontSize: '0.875rem', color: '#6B6560', padding: '0.75rem 0' }}>{member?.email}</p>
+            <p style={{ fontSize: '0.875rem', color: '#A8A39D', padding: '0.75rem 0' }}>{member?.email}</p>
           </div>
           <div>
             <label style={{ fontSize: '0.7rem', letterSpacing: '0.15em', color: '#9A9590', display: 'block', marginBottom: '0.5rem' }}>姓名</label>
