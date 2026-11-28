@@ -147,30 +147,6 @@ export default async function WorksPage({
       <div style={{ padding: "0 3rem 8rem" }}>
         <WorksGallery works={works} />
       </div>
-
-      {/* Footer */}
-      <footer style={{
-        backgroundColor: "#0D0D0B",
-        padding: "3rem",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        flexWrap: "wrap",
-        gap: "1rem",
-        borderTop: "1px solid rgba(196,154,90,0.08)",
-      }}>
-        <span style={{
-          fontFamily: "var(--font-noto-serif-tc)",
-          fontSize: "0.875rem",
-          letterSpacing: "0.12em",
-          color: "rgba(196,154,90,0.85)",
-        }}>
-          {t.footer.brand}
-        </span>
-        <span style={{ fontSize: "0.75rem", color: "#9A9590", letterSpacing: "0.05em" }}>
-          {t.footer.copyright}
-        </span>
-      </footer>
     </main>
   );
 }
