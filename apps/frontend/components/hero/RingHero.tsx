@@ -208,7 +208,7 @@ export default function RingHero() {
         {/* Scroll hint */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 8.2, duration: 1 }}
           style={{ position: 'absolute', bottom: '2.2rem', left: '50%', transform: 'translateX(-50%)', zIndex: 20, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-          <span style={{ fontFamily: 'var(--font-space-mono, monospace)', color: 'rgba(196,154,90,0.6)', fontSize: '0.55rem', letterSpacing: '0.4em' }}>SCROLL</span>
+          <span style={{ fontFamily: 'var(--font-noto-sans-tc)', color: 'rgba(196,154,90,0.6)', fontSize: '0.55rem', letterSpacing: '0.4em' }}>SCROLL</span>
           <div style={{ animation: 'scrollHint 2s ease-in-out infinite' }}>
             <svg width="20" height="30" viewBox="0 0 24 36" fill="none">
               <path d="M12 2C9.8 2 8 3.8 8 6v14c0 2.2 1.8 4 4 4s4-1.8 4-4V6c0-2.2-1.8-4-4-4z" stroke="#C49A5A" strokeWidth="1" fill="none" opacity="0.5" />

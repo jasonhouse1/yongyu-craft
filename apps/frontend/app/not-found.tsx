@@ -45,7 +45,7 @@ export default function NotFound() {
       <p
         style={{
           fontSize: "0.875rem",
-          color: "#6B6560",
+          color: "#A8A39D",
           letterSpacing: "0.05em",
           marginBottom: "3rem",
         }}

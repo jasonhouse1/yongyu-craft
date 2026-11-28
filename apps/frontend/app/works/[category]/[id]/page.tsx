@@ -163,7 +163,7 @@ export default async function WorkDetailPage({
         }}>
           這件作品，等待屬於它的主人
         </p>
-        <Link href={`/inquiry?work=${encodeURIComponent(work.titleZh)}`} className="btn-cta-outline">
+        <Link href={`/inquiry?workId=${work.id}&work=${encodeURIComponent(work.titleZh)}`} className="btn-cta-outline">
           開始對話
         </Link>
         <Link href="/works" style={{

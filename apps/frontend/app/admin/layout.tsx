@@ -1,7 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+
+function hasAdminKey(): boolean {
+  if (typeof document === "undefined") return false;
+  return /(?:^|;\s*)admin_key=[^;]+/.test(document.cookie);
+}
 
 export default function AdminLayout({
   children,
@@ -9,6 +15,22 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  const isLoginPage = pathname === "/admin/login";
+
+  useEffect(() => {
+    if (!mounted) return;
+    if (!isLoginPage && !hasAdminKey()) router.replace("/admin/login");
+  }, [mounted, isLoginPage, pathname, router]);
+
+  // Don't flash protected admin content to a visitor being redirected to login.
+  if (mounted && !isLoginPage && !hasAdminKey()) {
+    return <div style={{ minHeight: "100vh", background: "#0a0a0a" }} />;
+  }
+
   return (
     <div
       style={{

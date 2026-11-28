@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useMember } from '@/lib/member-context'
+import { categoryLabel } from '@/lib/categories'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000'
 
@@ -32,11 +33,12 @@ export default function MemberFavoritesPage() {
   }, [token])
 
   async function removeFavorite(workId: string) {
-    await fetch(`${API_URL}/api/member/favorites/${workId}`, {
+    const res = await fetch(`${API_URL}/api/member/favorites/${workId}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token ?? ''}` },
     })
-    setWorks(ws => ws.filter(w => w.id !== workId))
+    // Only drop it from the list if the server actually removed it.
+    if (res.ok) setWorks(ws => ws.filter(w => w.id !== workId))
   }
 
   return (
@@ -74,7 +76,7 @@ export default function MemberFavoritesPage() {
                 {work.titleZh}
               </p>
               <p style={{ fontSize: '0.7rem', color: '#A8A39D', letterSpacing: '0.08em' }}>
-                {work.categoryId}
+                {categoryLabel(work.categoryId)}
               </p>
             </Link>
             <button
