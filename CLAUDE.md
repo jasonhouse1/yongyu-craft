@@ -29,8 +29,8 @@ Node ≥ 20、pnpm ≥ 9。
 
 ## CI（目前）
 
-`.github/workflows/ci.yml`：對 main 的 push / PR 跑 **前端 typecheck ＋ 後端 typecheck**。
-**目前沒有**在 CI 跑 lint、build 或 vitest 測試——這是已知缺口，補強要走 PR + PO 同意。
+`.github/workflows/ci.yml`：對 main 的 push / PR 跑四個 job——**backend-typecheck、backend-test（vitest，目前零測試用 `--passWithNoTests` 綠）、frontend-typecheck、frontend-lint**。後端的 typecheck/test 會先 `pnpm db:generate` 生成 Prisma client。
+**目前仍沒有**在 CI 跑 `build`——已知缺口，補強要走 PR + PO 同意。
 → 送 PR 前，本地至少把你動到的那個 app 的 `typecheck` 跑過（有改前端就連 `lint` 一起）。
 
 ## 慣例
