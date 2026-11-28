@@ -143,7 +143,7 @@ function WorkCard({ work, i }: { work: WorkSnapshot; i: number }) {
 export default function WorksGallery({ works }: Props) {
   if (works.length === 0) {
     return (
-      <div style={{ padding: '4rem 3rem 8rem', maxWidth: '44ch', borderTop: '1px solid rgba(196,154,90,0.12)' }}>
+      <div style={{ padding: '4rem 0 8rem', maxWidth: '44ch', borderTop: '1px solid rgba(196,154,90,0.12)' }}>
         <p style={{
           fontFamily: 'var(--font-noto-serif-tc)', fontSize: '1.25rem', color: '#F0EBE0',
           letterSpacing: '0.08em', marginTop: '2rem', marginBottom: '0.75rem',

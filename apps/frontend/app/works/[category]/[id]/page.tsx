@@ -83,7 +83,7 @@ export default async function WorkDetailPage({
 
       {/* ── Section 2: Craft numbers ── */}
       <section style={{ backgroundColor: "#080706", padding: "6rem 3rem" }}>
-        <div style={{ maxWidth: "900px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 0 }}>
+        <div className="work-stats" style={{ maxWidth: "900px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 0 }}>
           {[
             { value: material, label: t.works.materials },
             { value: technique, label: t.works.techniques },
@@ -166,7 +166,7 @@ export default async function WorkDetailPage({
         <Link href={`/inquiry?workId=${work.id}&work=${encodeURIComponent(work.titleZh)}`} className="btn-cta-outline">
           開始對話
         </Link>
-        <Link href="/works" style={{
+        <Link href="/works" className="work-cta-back" style={{
           position: "absolute", bottom: "3rem", left: "3rem",
           fontSize: "0.75rem", letterSpacing: "0.12em", color: "rgba(232,236,240,0.55)",
         }}>
