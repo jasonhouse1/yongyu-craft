@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { JWT_SECRET } from "../auth/jwt";
 
 export function memberAuthMiddleware(
   req: Request,
@@ -13,10 +14,7 @@ export function memberAuthMiddleware(
   }
   const token = auth.slice(7);
   try {
-    const payload = jwt.verify(
-      token,
-      process.env.JWT_SECRET ?? "yongyu-craft-jwt-2026"
-    );
+    const payload = jwt.verify(token, JWT_SECRET);
     (req as any).member = payload;
     next();
   } catch {
