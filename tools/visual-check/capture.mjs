@@ -19,6 +19,7 @@ import { chromium } from 'playwright';
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, rmSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { analyzeVideo, printReport } from './analyze.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map(a => {
   const m = a.match(/^--([^=]+)=(.*)$/);
@@ -85,3 +86,10 @@ execFileSync(FFMPEG, [
 ], { stdio: 'inherit' });
 
 console.log(`[visual-check] 完成：${join(out, 'contact.png')}  共 ${frames.length} 格（${cols}x${rows}），每格間隔 ${1000 / fps}ms，第 i 格時間 ≈ i×${1000 / fps}ms`);
+
+// 自動亮度異常偵測：白閃/黑閃/突跳。幫你把可疑的瞬間先標出來，再去 contact.png 對同一格看。
+try {
+  printReport(analyzeVideo(video, fps, FFMPEG));
+} catch (e) {
+  console.error('[analyze] 略過（分析失敗）：', e.message);
+}

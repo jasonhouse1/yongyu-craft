@@ -36,6 +36,24 @@ node capture.mjs --url=http://localhost:3001/ --scroll --duration=12000
 接著由 AI（或人）直接看 `contact.png`，掃視整段時間軸找瞬間瑕疵；
 可疑的某一格再去 `frames/` 看全解析度原圖。
 
+## 自動異常偵測（不用逐格人工掃）
+
+`capture.mjs` 收尾會**自動**跑逐格亮度分析，把可疑的瞬間先標出來，例如：
+
+```
+[analyze] ⚠ 抓到 6 個可疑格（contact sheet 上去對同一格看）：
+  第 0 格 (~0ms): 過亮 YAVG=235（疑白閃）
+  ...
+```
+
+原理：ffmpeg `signalstats` 逐格算平均亮度 YAVG(0–255)，判三類異常——
+**過亮**（疑白閃/爆閃）、**驟暗**（疑黑閃）、**相鄰突跳**（疑閃爍/彈跳）。
+報告的「第 i 格」對應 contact sheet 同一格，直接去看就知道發生什麼。
+
+也可單獨對任何影片跑：`FFMPEG=... node analyze.mjs <video.webm> [fps]`。
+
+> 實測：對 dev 版 hero 正確標出開場 ~0.5s 白閃；對 production build 版回報 `✅ 無亮度異常`。
+
 ## 參數
 
 | 參數 | 預設 | 說明 |
