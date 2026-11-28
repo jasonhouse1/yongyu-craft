@@ -353,6 +353,10 @@ select {
 
 @media (max-width: 768px) {
   nav a { font-size: 0.8rem; letter-spacing: 0.1em; }
+  .hero-split { flex-direction: column !important; text-align: center !important; gap: 1.6rem !important; }
+  .hero-split > div { max-width: none !important; }
+  .hero-split > div > div { justify-content: center !important; }
+  .hero-split .btn-cta-outline { display: inline-block; margin: 0 auto; }
   .hero-brand-name { font-size: clamp(2rem, 10vw, 4rem) !important; }
   .btn-cta-outline { padding: 12px 32px; font-size: 0.875rem; }
   section { padding: 4rem 1.5rem !important; }
