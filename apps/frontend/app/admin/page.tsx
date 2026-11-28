@@ -13,6 +13,12 @@ const CARDS = [
     desc: "查看並處理客戶詢價",
     accent: "#7ab8c4",
   },
+  {
+    href: "/admin/campaigns",
+    label: "活動管理",
+    desc: "建立與編輯行銷活動橫幅",
+    accent: "#b89ac4",
+  },
 ];
 
 export default function AdminPage() {

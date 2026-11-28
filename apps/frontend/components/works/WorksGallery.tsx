@@ -143,9 +143,22 @@ function WorkCard({ work, i }: { work: WorkSnapshot; i: number }) {
 export default function WorksGallery({ works }: Props) {
   if (works.length === 0) {
     return (
-      <p style={{ fontSize: '0.875rem', color: '#A8A39D', padding: '6rem 3rem' }}>
-        目前尚無作品
-      </p>
+      <div style={{ padding: '4rem 0 8rem', maxWidth: '44ch', borderTop: '1px solid rgba(196,154,90,0.12)' }}>
+        <p style={{
+          fontFamily: 'var(--font-noto-serif-tc)', fontSize: '1.25rem', color: '#F0EBE0',
+          letterSpacing: '0.08em', marginTop: '2rem', marginBottom: '0.75rem',
+        }}>
+          精選作品即將呈現
+        </p>
+        <p style={{ fontSize: '0.9375rem', color: '#B8B3AD', lineHeight: 1.8, marginBottom: '2rem' }}>
+          每一件手工金工作品都在細細打磨中。歡迎先與我們談談您心中的那一件。
+        </p>
+        <Link href="/inquiry" className="nav-link-hero" style={{
+          fontSize: '0.9rem', letterSpacing: '0.2em', color: '#C49A5A', textTransform: 'uppercase',
+        }}>
+          開始對話 →
+        </Link>
+      </div>
     )
   }
 

@@ -359,7 +359,9 @@ select {
   .hero-split .btn-cta-outline { display: inline-block; margin: 0 auto; }
   .hero-brand-name { font-size: clamp(2rem, 10vw, 4rem) !important; }
   .btn-cta-outline { padding: 12px 32px; font-size: 0.875rem; }
-  section { padding: 4rem 1.5rem !important; }
+  /* Only shrink the side gutters on phones; keep each section's own vertical
+     padding so first sections still clear the fixed nav (no clipped eyebrows). */
+  section { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
   .works-grid { grid-template-columns: 1fr !important; }
   .inquiry-layout { grid-template-columns: 1fr !important; }
   .admin-table { font-size: 0.8rem; }
@@ -370,4 +372,33 @@ select {
 @media (max-width: 480px) {
   .hero-brand-name { font-size: clamp(1.8rem, 8vw, 3rem) !important; }
   nav { gap: 1rem !important; }
+}
+
+/* ── RWD 階段 1：作品詳情在手機/平板的收斂 ── */
+
+/* 工序數字：手機由三欄改單欄堆疊，避免長詞（如「花絲鑲嵌」）在窄欄溢出 */
+@media (max-width: 600px) {
+  .work-stats {
+    grid-template-columns: 1fr !important;
+  }
+  .work-stats > div {
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(196,154,90,0.1);
+    padding: 1.75rem 0 !important;
+  }
+  .work-stats > div:last-child {
+    border-bottom: none !important;
+  }
+}
+
+/* 詳情頁 CTA 區「返回作品」：手機改隨內容流排，避免與置中 CTA 疊字 */
+@media (max-width: 767px) {
+  .work-cta-back {
+    position: static !important;
+    left: auto !important;
+    bottom: auto !important;
+    margin-top: 2.5rem;
+    display: inline-block;
+  }
 }

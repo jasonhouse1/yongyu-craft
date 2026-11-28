@@ -96,7 +96,7 @@ export default function CraftSection() {
                   fontFamily: 'var(--font-noto-serif-tc)',
                   fontSize: 'clamp(3.5rem, 9vw, 8rem)',
                   fontWeight: 300,
-                  color: 'rgba(255,255,255,0.88)',
+                  color: 'var(--color-text-primary)',
                   letterSpacing: '0.06em',
                   display: 'block',
                   textAlign: item.dir === 'right' ? 'right' : 'left',

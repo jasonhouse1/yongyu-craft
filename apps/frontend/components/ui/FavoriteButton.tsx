@@ -38,11 +38,19 @@ export default function FavoriteButton({ workId, categoryId }: Props) {
     setLoading(true)
     try {
       const method = favorited ? 'DELETE' : 'POST'
-      await fetch(`${API_URL}/api/member/favorites/${workId}`, {
+      const res = await fetch(`${API_URL}/api/member/favorites/${workId}`, {
         method,
         headers: { Authorization: `Bearer ${token}` },
       })
-      setFavorited(f => !f)
+      // Expired/invalid token: send to login, keep the user's intent.
+      if (res.status === 401) {
+        router.push(`/member/login?redirect=/works/${categoryId}/${workId}`)
+        return
+      }
+      // Only reflect the change if the server actually saved it.
+      if (res.ok) setFavorited(f => !f)
+    } catch {
+      // Network error: leave the state unchanged rather than lying to the user.
     } finally {
       setLoading(false)
     }
