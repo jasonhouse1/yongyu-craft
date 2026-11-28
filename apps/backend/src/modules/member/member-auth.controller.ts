@@ -5,10 +5,10 @@ import { z } from "zod";
 import { randomBytes } from "crypto";
 import { Resend } from "resend";
 import { prisma } from "../../shared/db/prisma";
+import { JWT_SECRET } from "../../shared/auth/jwt";
 
 export const memberAuthRouter = Router();
 
-const JWT_SECRET = process.env.JWT_SECRET ?? "yongyu-craft-jwt-2026";
 const BACKEND_URL = process.env.BACKEND_URL ?? "http://localhost:3000";
 const FRONTEND_URL = process.env.FRONTEND_URL ?? "http://localhost:3001";
 const FROM = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
