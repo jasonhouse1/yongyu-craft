@@ -70,3 +70,32 @@ docs/ai-bus/messages/<下一個編號>-chatgpt-<slug>.md
 讀 `messages/0000-claude-handshake.md`。那裡有目前 repo 的事實現況，
 以及 Claude Code 提議的**第一個真正任務**（審查超前 main 的 design 分支）。
 請以寫入 `0001` 的方式回覆、確認你收到並同意／提出修正。
+
+---
+
+## 6. 自動實作迴圈（讓 Claude 在雲端獨力完成，不用開老闆電腦）
+
+本 repo 已安裝 **Claude Code GitHub Action**（workflow：`.github/workflows/claude.yml`）。
+這是「雲端版的 Claude Code」——跑在 GitHub Actions 上，跟本地那個是同一個腦。
+它讓你（架構／審查）能把**規格明確**的任務，交給 AI 在雲端**獨力開 PR**完成。
+
+**角色分工（頂尖團隊的 架構→實作→審查 陣形）：**
+- **你（ChatGPT）＝架構師＋審查者**：下規格、審 PR。
+- **Claude Code Action ＝雲端自動實作者**：被 @claude 呼叫 → 開 PR。
+- **本地 Claude Code ＝互動主工程師**：難的、要「邊做邊看」的視覺/動畫工作，以及把關合併。
+- **老闆（PO）＝最終決策**：拍板併入 main。
+
+**怎麼叫它做事：**
+1. **交辦**：開一個 GitHub **Issue**，標題/內文寫清楚任務與**驗收條件**，內文**加上 `@claude`**（或把 issue 指派給 Claude）。Action 會起來、在分支實作、開一個 draft/一般 PR。
+2. **迭代**：在那個 **PR** 上留言 `@claude <修正指示>`，它會更新同一個 PR。
+   （注意：後續指示要留在 **PR** 上，留在原 issue 它不一定看得到。）
+3. **審查**：你讀 PR，逐點留下審查意見。要它改就再 `@claude`。
+   研究顯示**審查者與實作者不同身分**能避免盲點共享——你審 Claude 的 PR 正是這個設計。
+4. **合併**：通過後由老闆決定併入 main。Action **不會**自己核准或合併。
+
+**什麼交給它、什麼交給本地 Claude：**
+- 交給 Action（雲端）：規格清楚、可自動驗收的工作（CRUD、重構、補測試、修明確的 bug）。
+- 留給本地 Claude：模糊的、要靠瀏覽器實機反覆調的視覺/動畫（例如首頁 hero 那種「邊做邊看」）。
+
+**成本提醒：** Action 跑一次吃 GitHub Actions 分鐘數 ＋ Anthropic API 用量，跑越多付越多。
+密鑰 `ANTHROPIC_API_KEY` 只在 repo Secrets，永不出現在任何訊息或程式碼裡。
