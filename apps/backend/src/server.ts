@@ -16,6 +16,7 @@ import { prisma } from "./shared/db/prisma";
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
+const isDev = process.env.NODE_ENV !== "production";
 
 app.use(helmet({ contentSecurityPolicy: false }));
 
@@ -33,24 +34,28 @@ app.use(express.json());
 const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
+  skip: () => isDev,
   message: { code: 'TOO_MANY_REQUESTS', message: '請求過於頻繁' },
 });
 
 const inquiryLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   max: 5,
+  skip: () => isDev,
   message: { code: 'TOO_MANY_REQUESTS', message: '詢價提交過於頻繁' },
 });
 
 const adminLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10,
+  skip: () => isDev,
   message: { code: 'TOO_MANY_REQUESTS', message: '嘗試次數過多' },
 });
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10,
+  skip: () => isDev,
   message: { code: 'TOO_MANY_REQUESTS', message: '嘗試次數過多' },
 });
 
