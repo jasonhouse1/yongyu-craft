@@ -1,0 +1,13 @@
+{
+  "name": "visual-check",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Record a real-browser render of a page/animation and extract a frame-by-frame contact sheet to catch transient visual glitches.",
+  "scripts": {
+    "setup": "npm install && npx playwright install chromium"
+  },
+  "dependencies": {
+    "playwright": "^1.49.0"
+  }
+}

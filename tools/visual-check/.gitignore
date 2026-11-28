@@ -1,0 +1,4 @@
+node_modules/
+out/
+*.webm
+package-lock.json
