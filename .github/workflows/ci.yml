@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: cd apps/backend && pnpm install
 
+      - name: Generate Prisma client
+        run: cd apps/backend && pnpm db:generate
+
       - name: Typecheck
         run: cd apps/backend && pnpm typecheck
 
