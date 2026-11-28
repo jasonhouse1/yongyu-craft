@@ -1,0 +1,56 @@
+name: AI 開發任務（AI Task）
+description: 給 Claude（雲端 Action 或本地）執行的開發任務，含驗收條件
+title: "[AI Task] "
+labels: ["ai-task"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        交辦給 AI 的工程任務。要讓雲端 Claude Action 自動開 PR，請在「如何觸發」保留 `@claude`。
+        規格越清楚、驗收條件越可自動驗證，成功率越高。模糊的視覺/動畫工作請改交本地 Claude。
+  - type: textarea
+    id: goal
+    attributes:
+      label: 目標（要做什麼、為什麼）
+      placeholder: 一兩句話講清楚這個任務要達成的結果。
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: 脈絡（相關檔案、現況、限制）
+      placeholder: |
+        - 涉及檔案 / 元件：
+        - 現在的行為：
+        - 限制 / 不可動的東西：
+    validations:
+      required: false
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 驗收條件（Acceptance Criteria，逐條、可驗證）
+      placeholder: |
+        - [ ] …
+        - [ ] typecheck 通過
+        - [ ] （有改前端）lint 通過
+    validations:
+      required: true
+  - type: dropdown
+    id: executor
+    attributes:
+      label: 由誰實作
+      options:
+        - 雲端 Claude Action（在下方 @claude 觸發）
+        - 本地 Claude Code（老闆在終端機跑）
+        - 皆可
+    validations:
+      required: true
+  - type: textarea
+    id: trigger
+    attributes:
+      label: 如何觸發（交給雲端時保留 @claude）
+      value: |
+        @claude 請依上面的目標與驗收條件實作，在新分支開 PR 連回本 issue。
+        完成前自行跑過相關 typecheck；不要 commit 任何密鑰；不做破壞性資料庫操作。
+    validations:
+      required: false
